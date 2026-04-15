@@ -349,10 +349,103 @@ const VIRAL_MUSIC = [
 function startDashboard() {
   const app = express();
 
-  // Serve generated media
-  app.use('/media', express.static(path.join(OUTPUT_DIR, 'videos')));
+  // ── STATIC FILE SERVING with proper headers ──
+  const staticOpts = {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.mp4')) {
+        res.setHeader('Content-Type', 'video/mp4');
+        res.setHeader('Content-Disposition', 'inline');
+        res.setHeader('Accept-Ranges', 'bytes');
+      }
+    }
+  };
+  app.use('/media', express.static(path.join(OUTPUT_DIR, 'videos'), staticOpts));
   app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
-  app.use('/output', express.static(OUTPUT_DIR));
+  app.use('/output', express.static(OUTPUT_DIR, staticOpts));
+
+  // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
+  app.get('/download/:filename', (req, res) => {
+    const filename = decodeURIComponent(req.params.filename);
+    const filePath = path.join(OUTPUT_DIR, filename);
+    
+    if (!fs.existsSync(filePath)) {
+      console.log(`❌ Download 404: ${filename} not found at ${filePath}`);
+      return res.status(404).json({ error: 'File not found', requested: filename, path: filePath });
+    }
+    
+    const stat = fs.statSync(filePath);
+    res.setHeader('Content-Type', 'video/mp4');
+    res.setHeader('Content-Length', stat.size);
+    res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`);
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    
+    const stream = fs.createReadStream(filePath);
+    stream.pipe(res);
+  });
+
+  // ── DEDICATED VIDEO STREAM ROUTE — for reliable playback ──
+  app.get('/video/:filename', (req, res) => {
+    const filename = decodeURIComponent(req.params.filename);
+    const filePath = path.join(OUTPUT_DIR, filename);
+    
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: 'Video not found', requested: filename });
+    }
+    
+    const stat = fs.statSync(filePath);
+    const fileSize = stat.size;
+    const range = req.headers.range;
+    
+    if (range) {
+      const parts = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+      const chunkSize = (end - start) + 1;
+      const file = fs.createReadStream(filePath, { start, end });
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunkSize,
+        'Content-Type': 'video/mp4',
+      });
+      file.pipe(res);
+    } else {
+      res.writeHead(200, {
+        'Content-Length': fileSize,
+        'Content-Type': 'video/mp4',
+      });
+      fs.createReadStream(filePath).pipe(res);
+    }
+  });
+
+  // ── DIAGNOSTIC ENDPOINT — verify all files on Railway ──
+  app.get('/api/diagnostic', (req, res) => {
+    const allFiles = fs.existsSync(OUTPUT_DIR) ? fs.readdirSync(OUTPUT_DIR) : [];
+    const mp4Files = allFiles.filter(f => f.endsWith('.mp4'));
+    const pngFiles = allFiles.filter(f => f.endsWith('.png'));
+    const videoDir = path.join(OUTPUT_DIR, 'videos');
+    const videoFiles = fs.existsSync(videoDir) ? fs.readdirSync(videoDir).filter(f => f.endsWith('.mp4')) : [];
+    
+    // Check which POSTS_DATA videos exist
+    const postVideoStatus = POSTS_DATA.map(p => ({
+      day: p.day,
+      slot: p.slot,
+      verse: p.verse,
+      videoFile: p.videoFile,
+      existsInOutput: fs.existsSync(path.join(OUTPUT_DIR, p.videoFile)),
+      existsInVideos: fs.existsSync(path.join(videoDir, p.videoFile)),
+    }));
+    
+    res.json({
+      outputDir: OUTPUT_DIR,
+      totalFilesInOutput: allFiles.length,
+      mp4InOutput: mp4Files,
+      pngInOutput: pngFiles.length,
+      mp4InVideosSubdir: videoFiles,
+      postVideoStatus,
+      missingVideos: postVideoStatus.filter(v => !v.existsInOutput),
+    });
+  });
 
   // API endpoints
   app.get('/api/stats', (req, res) => {
@@ -1101,8 +1194,9 @@ function startDashboard() {
           </div>
           <div class="post-card-body">
             <div class="post-video-wrap">
-              <video controls muted playsinline preload="metadata" poster="">
-                <source src="/output/${p.videoFile}" type="video/mp4">
+              <video controls muted playsinline preload="metadata">
+                <source src="/video/${encodeURIComponent(p.videoFile)}" type="video/mp4">
+                Seu navegador não suporta vídeo.
               </video>
             </div>
             <div class="post-content">
@@ -1119,7 +1213,7 @@ function startDashboard() {
               </div>
               <div class="post-actions">
                 <button class="btn btn-gold" onclick="copyCaption(${i})">📋 Copiar Legenda</button>
-                <a class="btn btn-outline" href="/output/${p.videoFile}" download>⬇️ Baixar Vídeo</a>
+                <a class="btn btn-outline" href="/download/${encodeURIComponent(p.videoFile)}" download="${p.videoFile}">⬇️ Baixar Vídeo</a>
                 <button class="btn btn-green" onclick="markAsPosted(${i}, '${p.verse}')">✅ Marcar Postado</button>
               </div>
             </div>
