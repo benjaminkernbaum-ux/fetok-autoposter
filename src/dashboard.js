@@ -16,8 +16,10 @@ const PORT = process.env.PORT || 3000;
 function startDashboard() {
   const app = express();
 
-  // Serve generated videos
+  // Serve generated videos and AI videos
   app.use('/videos', express.static(OUTPUT_DIR));
+  app.use('/videos/hq', express.static(path.join(OUTPUT_DIR, 'videos')));
+  app.use('/videos/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
 
   // API: Stats
   app.get('/api/stats', (req, res) => {
@@ -113,10 +115,15 @@ function startDashboard() {
           <span class="post-time">${p.emoji} ${p.slot}</span>
         </div>
         <div class="post-ref">${p.ref}</div>
+        <div class="post-media">
+          <video controls muted playsinline preload="metadata" poster="/videos/images/${p.video.replace('.mp4','')}_preview.png"><source src="/videos/hq/${p.video}" type="video/mp4"></video>
+        </div>
         <div class="post-music">🎵 ${p.music}</div>
-        <div class="post-video">🎬 ${p.video}</div>
         <pre class="post-caption" id="caption-${i}">${p.caption.replace(/\\n/g, '\n')}</pre>
-        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('caption-${i}').textContent).then(()=>this.textContent='✅ Copiado!')">📋 Copiar Legenda</button>
+        <div class="btn-row">
+          <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('caption-${i}').textContent).then(()=>this.textContent='✅ Copiado!')">📋 Copiar Legenda</button>
+          <a class="download-btn" href="/videos/hq/${p.video}" download>⬇️ Baixar Vídeo</a>
+        </div>
       </div>
     `).join('');
 
@@ -134,12 +141,16 @@ h1 span{background:linear-gradient(135deg,#d4a853,#f0d78c);-webkit-background-cl
 .post-header{display:flex;justify-content:space-between;margin-bottom:8px}
 .post-day{font-size:0.7rem;font-weight:700;color:#d4a853;text-transform:uppercase;letter-spacing:0.05em}
 .post-time{font-size:0.8rem;font-weight:600}
-.post-ref{font-size:1.1rem;font-weight:800;margin-bottom:6px}
-.post-music{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-bottom:4px}
-.post-video{font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px}
+.post-ref{font-size:1.1rem;font-weight:800;margin-bottom:8px}
+.post-media{margin-bottom:12px;border-radius:12px;overflow:hidden;max-width:280px}
+.post-media video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;background:#111}
+.post-music{font-size:0.8rem;color:#d4a853;margin-bottom:8px;padding:6px 10px;background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.2);border-radius:8px;display:inline-block}
 .post-caption{font-family:inherit;font-size:0.78rem;color:rgba(255,255,255,0.7);background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;white-space:pre-wrap;word-wrap:break-word;line-height:1.5;margin-bottom:10px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
 .copy-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;background:#d4a853;color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;transition:all 0.2s}
 .copy-btn:hover{opacity:0.85;transform:scale(1.02)}
+.download-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;background:rgba(255,255,255,0.08);color:#fff;border-radius:8px;font-weight:600;font-size:0.78rem;text-decoration:none;transition:all 0.2s}
+.download-btn:hover{background:rgba(255,255,255,0.15)}
 .back{display:inline-flex;padding:6px 14px;background:rgba(255,255,255,0.06);color:#fff;border-radius:8px;font-size:0.75rem;text-decoration:none;margin-bottom:16px}
 </style></head><body><div class="container">
 <a href="/" class="back">← Dashboard</a>
