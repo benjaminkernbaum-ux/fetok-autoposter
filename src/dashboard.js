@@ -21,7 +21,7 @@ const POSTS_DATA = [
   // DIA 1
   { day:1, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 91:1', theme:'proteção', themeEmoji:'🛡️',
     text:'Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso.',
-    videoFile:'video_salmos_91_1.mp4',
+    videoFile:'verse_salmos_91.mp4',
     music:'Isaias Saad → Bondade de Deus',
     musicSearch:'isaias saad bondade de deus',
     caption:`Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso. 🛡️✝️
@@ -35,7 +35,7 @@ Salve esse vídeo. Você vai precisar dele. 🔖
   },
   { day:1, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 27:1', theme:'proteção', themeEmoji:'💡',
     text:'O Senhor é a minha luz e a minha salvação; de quem terei medo?',
-    videoFile:'video_salmos_27_1.mp4',
+    videoFile:'verse_salmos_27.mp4',
     music:'Gabriela Rocha → Lugar Secreto',
     musicSearch:'gabriela rocha lugar secreto',
     caption:`O Senhor é a minha luz e a minha salvação; de quem terei medo? 💡✝️
@@ -48,7 +48,7 @@ Comenta AMÉM se você não tem medo porque Deus está contigo! 🙏
   },
   { day:1, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Salmos 46:1', theme:'proteção', themeEmoji:'🏰',
     text:'Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.',
-    videoFile:'video_salmos_46_1.mp4',
+    videoFile:'verse_salmos_46.mp4',
     music:'Fernandinho → Grandes Coisas',
     musicSearch:'fernandinho grandes coisas',
     caption:`Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia. 🏰✝️
@@ -63,7 +63,7 @@ Compartilhe com alguém que precisa ouvir isso HOJE!
   // DIA 2
   { day:2, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 145:18', theme:'proteção', themeEmoji:'🙏',
     text:'O Senhor está perto de todos os que o invocam.',
-    videoFile:'video_salmos_145_18.mp4',
+    videoFile:'verse_salmos_145.mp4',
     music:'Aline Barros → Ressuscita-me',
     musicSearch:'aline barros ressuscita-me',
     caption:`O Senhor está perto de todos os que o invocam. 🙏✝️
@@ -76,7 +76,7 @@ Se você precisa de Deus nesse momento, comenta 🙏
   },
   { day:2, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Isaías 41:10', theme:'coragem', themeEmoji:'💪',
     text:'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus.',
-    videoFile:'video_isaías_41_10.mp4',
+    videoFile:'verse_isaias_41.mp4',
     music:'Isaias Saad → Me Atraiu',
     musicSearch:'isaias saad me atraiu',
     caption:`Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus. 💪✝️
@@ -90,7 +90,7 @@ Comenta AMÉM e salva esse vídeo! 🙏
   },
   { day:2, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Josué 1:9', theme:'coragem', themeEmoji:'⚔️',
     text:'Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você.',
-    videoFile:'video_josué_1_9.mp4',
+    videoFile:'verse_josue_1.mp4',
     music:'Anderson Freire → Primeira Essência',
     musicSearch:'anderson freire primeira essencia',
     caption:`Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você. ⚔️✝️
@@ -105,7 +105,7 @@ Marque alguém que precisa de CORAGEM hoje! ❤️
   // DIA 3
   { day:3, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Isaías 43:2', theme:'coragem', themeEmoji:'🌊',
     text:'Quando passares pelas águas, estarei contigo.',
-    videoFile:'video_isaías_43_2.mp4',
+    videoFile:'verse_isaias_43.mp4',
     music:'Gabriela Rocha → Eu Navegarei',
     musicSearch:'gabriela rocha eu navegarei',
     caption:`Quando passares pelas águas, estarei contigo. 🌊✝️
@@ -119,7 +119,7 @@ Deixe um 💙 se Deus já te salvou de uma tempestade!
   },
   { day:3, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 46:7', theme:'coragem', themeEmoji:'🏰',
     text:'O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio.',
-    videoFile:'video_salmos_46_7.mp4',
+    videoFile:'verse_salmos_46_7.mp4',
     music:'Fernandinho → Eu Vou Abrir o Mar',
     musicSearch:'fernandinho eu vou abrir o mar',
     caption:`O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio. 🏰✝️
@@ -133,7 +133,7 @@ Comenta "DEUS É FIEL" se você crê nisso! 🙏
   },
   { day:3, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'1 Coríntios 13:4', theme:'amor', themeEmoji:'💕',
     text:'O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.',
-    videoFile:'video_1_coríntios_13_4.mp4',
+    videoFile:'verse_1cor_13.mp4',
     music:'Preto no Branco → Ninguém Explica Deus',
     musicSearch:'preto no branco ninguém explica deus',
     caption:`O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. 💕✝️
@@ -147,7 +147,7 @@ Marque a pessoa que você AMA e envie esse versículo pra ela! 💛🙏
   // DIA 4
   { day:4, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Jeremias 29:11', theme:'esperança', themeEmoji:'🌅',
     text:'Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano.',
-    videoFile:'video_1_joão_4_9.mp4',
+    videoFile:'verse_jeremias_29.mp4',
     music:'Aline Barros → Sonda-me',
     musicSearch:'aline barros sonda-me',
     caption:`Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano. 🌅✝️
@@ -161,7 +161,7 @@ Comenta "EU CONFIO" se você entrega seus planos a Deus! ❤️
   },
   { day:4, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Romanos 5:8', theme:'amor', themeEmoji:'✝️',
     text:'Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós.',
-    videoFile:'video_romanos_5_8.mp4',
+    videoFile:'verse_romanos_5.mp4',
     music:'Isaias Saad → Bondade de Deus',
     musicSearch:'isaias saad bondade de deus',
     caption:`Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós. ✝️❤️
@@ -175,7 +175,7 @@ Deixe ❤️ e compartilhe essa verdade!
   },
   { day:4, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Isaías 54:10', theme:'amor', themeEmoji:'🏔️',
     text:'Porque as montanhas se retirarão, mas a minha graça não se apartará de ti.',
-    videoFile:'video_isaías_54_10.mp4',
+    videoFile:'verse_isaias_54.mp4',
     music:'Gabriela Rocha → Deus Provará',
     musicSearch:'gabriela rocha deus provará',
     caption:`Porque as montanhas se retirarão, mas a minha graça não se apartará de ti. 🏔️✝️
@@ -190,7 +190,7 @@ Salve esse vídeo e assista quando precisar de força! 🔖
   // DIA 5
   { day:5, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Filipenses 4:13', theme:'força', themeEmoji:'💪',
     text:'Tudo posso naquele que me fortalece.',
-    videoFile:'video_filipenses_4_13.mp4',
+    videoFile:'verse_filipenses_4.mp4',
     music:'Anderson Freire → Raridade',
     musicSearch:'anderson freire raridade',
     caption:`Tudo posso naquele que me fortalece. 💪✝️
@@ -204,7 +204,7 @@ Comenta AMÉM se você crê que Deus te fortalece! 🙏
   },
   { day:5, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Isaías 40:31', theme:'força', themeEmoji:'🦅',
     text:'Os que esperam no Senhor renovam as suas forças; sobem com asas como águias.',
-    videoFile:'video_isaías_40_31.mp4',
+    videoFile:'verse_isaias_40.mp4',
     music:'Fernandinho → Faz Chover',
     musicSearch:'fernandinho faz chover',
     caption:`Os que esperam no Senhor renovam as suas forças; sobem com asas como águias. 🦅✝️
@@ -218,7 +218,7 @@ Marque alguém que precisa renovar as forças! ❤️
   },
   { day:5, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Êxodo 15:2', theme:'força', themeEmoji:'🎵',
     text:'O Senhor é a minha força e o meu cântico; ele é a minha salvação.',
-    videoFile:'video_êxodo_15_2.mp4',
+    videoFile:'verse_isaias_54.mp4',
     music:'Soraya Moraes → Quão Grande É o Meu Deus',
     musicSearch:'soraya moraes quão grande é o meu deus',
     caption:`O Senhor é a minha força e o meu cântico; ele é a minha salvação. 🎵✝️
@@ -233,7 +233,7 @@ Comenta 🎵 se Deus é a sua música! 🙏
   // DIA 6
   { day:6, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Romanos 8:28', theme:'fé', themeEmoji:'🌈',
     text:'Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus.',
-    videoFile:'video_isaías_40_31.mp4',
+    videoFile:'verse_romanos_8.mp4',
     music:'Aline Barros → Consagração',
     musicSearch:'aline barros consagração',
     caption:`Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus. 🌈✝️
@@ -247,7 +247,7 @@ Deixe ❤️ se você confia que Deus está trabalhando na sua vida!
   },
   { day:6, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Efésios 6:10', theme:'força', themeEmoji:'⚔️',
     text:'Fortalecei-vos no Senhor e na força do seu poder.',
-    videoFile:'video_efésios_6_10.mp4',
+    videoFile:'verse_efesios_6.mp4',
     music:'Anderson Freire → Identidade',
     musicSearch:'anderson freire identidade',
     caption:`Fortalecei-vos no Senhor e na força do seu poder. ⚔️✝️
@@ -261,7 +261,7 @@ Comenta "SOU GUERREIRO DE DEUS" se você está pronto pra batalha! ⚔️🙏
   },
   { day:6, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Hebreus 11:1', theme:'fé', themeEmoji:'🙏',
     text:'Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.',
-    videoFile:'video_hebreus_11_1.mp4',
+    videoFile:'verse_hebreus_11.mp4',
     music:'Isaias Saad → Me Atraiu',
     musicSearch:'isaias saad me atraiu',
     caption:`Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos. 🙏✝️
@@ -276,7 +276,7 @@ Comenta "EU CREIO" se você anda por fé! ❤️
   // DIA 7
   { day:7, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Provérbios 3:5', theme:'fé', themeEmoji:'📖',
     text:'Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.',
-    videoFile:'video_provérbios_3_5.mp4',
+    videoFile:'verse_proverbios_3.mp4',
     music:'Gabriela Rocha → Deus Provará',
     musicSearch:'gabriela rocha deus provará',
     caption:`Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. 📖✝️
@@ -290,7 +290,7 @@ Comenta "EU CONFIO" se você entrega tudo a Deus! ❤️
   },
   { day:7, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 37:5', theme:'fé', themeEmoji:'🫒',
     text:'Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará.',
-    videoFile:'video_salmos_37_5.mp4',
+    videoFile:'verse_salmos_37.mp4',
     music:'Preto no Branco → Me Deixa Aqui',
     musicSearch:'preto no branco me deixa aqui',
     caption:`Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará. 🫒✝️
@@ -304,7 +304,7 @@ Compartilhe com quem está carregando um fardo pesado! ❤️
   },
   { day:7, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'2 Coríntios 5:7', theme:'fé', themeEmoji:'🌫️',
     text:'Porque andamos por fé e não por vista.',
-    videoFile:'video_2_coríntios_5_7.mp4',
+    videoFile:'verse_2cor_5.mp4',
     music:'Isaias Saad → Bondade de Deus',
     musicSearch:'isaias saad bondade de deus',
     caption:`Porque andamos por fé e não por vista. 🌫️✝️
@@ -364,9 +364,10 @@ function startDashboard() {
   app.use('/output', express.static(OUTPUT_DIR, staticOpts));
 
   // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
+  const VIDEOS_DIR = path.join(OUTPUT_DIR, 'videos');
   app.get('/download/:filename', (req, res) => {
     const filename = decodeURIComponent(req.params.filename);
-    const filePath = path.join(OUTPUT_DIR, filename);
+    const filePath = path.join(VIDEOS_DIR, filename);
     
     if (!fs.existsSync(filePath)) {
       console.log(`❌ Download 404: ${filename} not found at ${filePath}`);
@@ -386,7 +387,7 @@ function startDashboard() {
   // ── DEDICATED VIDEO STREAM ROUTE — for reliable playback ──
   app.get('/video/:filename', (req, res) => {
     const filename = decodeURIComponent(req.params.filename);
-    const filePath = path.join(OUTPUT_DIR, filename);
+    const filePath = path.join(VIDEOS_DIR, filename);
     
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({ error: 'Video not found', requested: filename });
