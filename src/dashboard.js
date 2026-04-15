@@ -70,6 +70,86 @@ function startDashboard() {
     }
   });
 
+  // Serve the guide markdown
+  app.get('/api/guide', (req, res) => {
+    const guidePath = path.resolve(__dirname, '../guia_21_posts.md');
+    if (fs.existsSync(guidePath)) {
+      res.type('text/markdown').send(fs.readFileSync(guidePath, 'utf8'));
+    } else {
+      res.status(404).send('Guide not found');
+    }
+  });
+
+  // GUIDE PAGE — 21 Posts with copy-to-clipboard
+  app.get('/guide', (req, res) => {
+    const posts = [
+      { day:1, slot:'06:00', emoji:'☀️', ref:'Salmos 91:1', video:'verse_salmos_91.mp4', music:'Isaias Saad → Bondade de Deus', caption:'Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso. 🛡️✝️\\nSalmos 91:1\\n\\nVocê está debaixo da proteção de Deus AGORA. 🙏\\nDeixe um ❤️ se você crê nessa promessa!\\nSalve esse vídeo. Você vai precisar dele. 🔖\\n\\n#versiculododia #biblia #fe #jesus #deus #salmos91 #proteção #deuscuida #fetok #fyp #viral #foryou #gospel #cristao #palavradedeus' },
+      { day:1, slot:'12:00', emoji:'🌤️', ref:'Salmos 27:1', video:'verse_salmos_27.mp4', music:'Gabriela Rocha → Lugar Secreto', caption:'O Senhor é a minha luz e a minha salvação; de quem terei medo? 💡✝️\\nSalmos 27:1\\n\\nNINGUÉM pode te derrubar quando Deus está ao seu lado! 🔥\\nComenta AMÉM se você não tem medo porque Deus está contigo! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #salmos #luz #salvação #naotemas #fetok #fyp #viral #gospel #cristao #deusefiel' },
+      { day:1, slot:'20:00', emoji:'🌙', ref:'Salmos 46:1', video:'verse_salmos_46.mp4', music:'Fernandinho → Grandes Coisas', caption:'Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia. 🏰✝️\\nSalmos 46:1\\n\\nSe você está passando por uma tempestade, PARE e leia isso de novo. 🙏\\nDeus é sua FORTALEZA. Nunca esqueça disso. ❤️\\nCompartilhe com alguém que precisa ouvir isso HOJE!\\n\\n#versiculododia #biblia #fe #jesus #deus #refúgio #fortaleza #angustia #fetok #fyp #viral #gospel #cristao #salmos' },
+      { day:2, slot:'06:00', emoji:'☀️', ref:'Salmos 145:18', video:'verse_salmos_145.mp4', music:'Aline Barros → Ressuscita-me', caption:'O Senhor está perto de todos os que o invocam. 🙏✝️\\nSalmos 145:18\\n\\nDeus NUNCA te abandonou. Ele está mais perto do que você imagina. 💛\\nSe você precisa de Deus nesse momento, comenta 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #oração #perto #fetok #fyp #viral #gospel #cristao #devocional' },
+      { day:2, slot:'12:00', emoji:'🌤️', ref:'Isaías 41:10', video:'verse_isaias_41.mp4', music:'Isaias Saad → Me Atraiu', caption:'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus. 💪✝️\\nIsaías 41:10\\n\\nIsso não foi coincidência. Deus te trouxe até esse vídeo AGORA. ✨\\nVocê NÃO está sozinho nessa luta! 🔥\\nComenta AMÉM e salva esse vídeo! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #naotemas #coragem #isaias #fetok #fyp #viral #gospel #cristao #fortaleza' },
+      { day:2, slot:'20:00', emoji:'🌙', ref:'Josué 1:9', video:'verse_josue_1.mp4', music:'Anderson Freire → Primeira Essência', caption:'Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você. ⚔️✝️\\nJosué 1:9\\n\\nGuerreiro de Deus, LEVANTE A CABEÇA! 👑\\nA batalha é do Senhor e a vitória já é SUA! 🔥\\nMarque alguém que precisa de CORAGEM hoje! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #coragem #guerreiro #josue #fetok #fyp #viral #gospel #cristao #vitoria' },
+      { day:3, slot:'06:00', emoji:'☀️', ref:'Isaías 43:2', video:'verse_isaias_43.mp4', music:'Gabriela Rocha → Eu Navegarei', caption:'Quando passares pelas águas, estarei contigo. 🌊✝️\\nIsaías 43:2\\n\\nNas águas mais profundas, Deus SEGURA sua mão. 🤝\\nVocê pode estar na tempestade, mas NÃO vai se afogar! 🙏\\nDeixe um 💙 se Deus já te salvou!\\n\\n#versiculododia #biblia #fe #jesus #deus #tempestade #águas #isaias #fetok #fyp #viral #gospel #cristao #proteção' },
+      { day:3, slot:'12:00', emoji:'🌤️', ref:'Salmos 46:7', video:'verse_salmos_46_7.mp4', music:'Fernandinho → Eu Vou Abrir o Mar', caption:'O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio. 🏰✝️\\nSalmos 46:7\\n\\nO DEUS DOS EXÉRCITOS luta por VOCÊ! ⚔️\\nNenhum inimigo prevalecerá! 🔥\\nComenta "DEUS É FIEL" se você crê nisso! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #exercitos #refúgio #salmos #fetok #fyp #viral #gospel #cristao #batalha' },
+      { day:3, slot:'20:00', emoji:'🌙', ref:'1 Coríntios 13:4', video:'verse_1cor_13.mp4', music:'Preto no Branco → Ninguém Explica Deus', caption:'O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. 💕✝️\\n1 Coríntios 13:4\\n\\nO verdadeiro amor vem de DEUS. ❤️\\nMarque a pessoa que você AMA! 💛🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #amor #corintios #fetok #fyp #viral #gospel #cristao #amordedeus' },
+      { day:4, slot:'06:00', emoji:'☀️', ref:'Jeremias 29:11', video:'verse_jeremias_29.mp4', music:'Aline Barros → Sonda-me', caption:'Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano. 🌅✝️\\nJeremias 29:11\\n\\nDeus tem um PLANO para sua vida! Confie no processo! ✨\\nComenta "EU CONFIO" se você entrega seus planos a Deus! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #planos #jeremias #fetok #fyp #viral #gospel #cristao' },
+      { day:4, slot:'12:00', emoji:'🌤️', ref:'Romanos 5:8', video:'verse_romanos_5.mp4', music:'Isaias Saad → Bondade de Deus', caption:'Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós. ✝️❤️\\nRomanos 5:8\\n\\nEle MORREU por você. Enquanto você ainda era pecador. 😭\\nNão existe amor MAIOR que esse! 🙏\\nDeixe ❤️ e compartilhe!\\n\\n#versiculododia #biblia #fe #jesus #deus #amor #cruz #romanos #fetok #fyp #viral #gospel #cristao #calvario' },
+      { day:4, slot:'20:00', emoji:'🌙', ref:'Isaías 54:10', video:'verse_isaias_54.mp4', music:'Gabriela Rocha → Deus Provará', caption:'Porque as montanhas se retirarão, mas a minha graça não se apartará de ti. 🏔️✝️\\nIsaías 54:10\\n\\nAs MONTANHAS vão cair. Mas o amor de Deus? JAMAIS. 💛\\nSalve esse vídeo e assista quando precisar de força! 🔖\\n\\n#versiculododia #biblia #fe #jesus #deus #graça #montanhas #isaias #fetok #fyp #viral #gospel #cristao #promessa' },
+      { day:5, slot:'06:00', emoji:'☀️', ref:'Filipenses 4:13', video:'verse_filipenses_4.mp4', music:'Anderson Freire → Raridade', caption:'Tudo posso naquele que me fortalece. 💪✝️\\nFilipenses 4:13\\n\\nTUDO. Não é "algumas coisas". É TUDO! 🔥\\nCom Deus, não existe limite pra você! ⚡\\nComenta AMÉM se você crê! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #tudoposso #força #filipenses #fetok #fyp #viral #gospel #cristao #guerreiro' },
+      { day:5, slot:'12:00', emoji:'🌤️', ref:'Isaías 40:31', video:'verse_isaias_40.mp4', music:'Fernandinho → Faz Chover', caption:'Os que esperam no Senhor renovam as suas forças; sobem com asas como águias. 🦅✝️\\nIsaías 40:31\\n\\nVocê tá cansado? ESPERE no Senhor! 🙏\\nEle vai te fazer VOAR como águia! ⚡\\nMarque alguém que precisa renovar as forças! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #águia #renovar #isaias #fetok #fyp #viral #gospel #cristao' },
+      { day:5, slot:'20:00', emoji:'🌙', ref:'Êxodo 15:2', video:'verse_isaias_54.mp4', music:'Soraya Moraes → Quão Grande É', caption:'O Senhor é a minha força e o meu cântico; ele é a minha salvação. 🎵✝️\\nÊxodo 15:2\\n\\nDeus é sua FORÇA quando você está fraco! 💪\\nComenta 🎵 se Deus é a sua música! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #força #salvação #exodo #fetok #fyp #viral #gospel #cristao #louvor' },
+      { day:6, slot:'06:00', emoji:'☀️', ref:'Romanos 8:28', video:'verse_romanos_8.mp4', music:'Aline Barros → Consagração', caption:'Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus. 🌈✝️\\nRomanos 8:28\\n\\nTUDO coopera pro seu bem. Até aquilo que parece ruim AGORA. ✨\\nDeixe ❤️ se você confia que Deus está trabalhando!\\n\\n#versiculododia #biblia #fe #jesus #deus #romanos #propósito #fetok #fyp #viral #gospel #cristao #confiança' },
+      { day:6, slot:'12:00', emoji:'🌤️', ref:'Efésios 6:10', video:'verse_efesios_6.mp4', music:'Anderson Freire → Identidade', caption:'Fortalecei-vos no Senhor e na força do seu poder. ⚔️✝️\\nEfésios 6:10\\n\\nVista a ARMADURA de Deus! 🛡️\\nComenta "SOU GUERREIRO DE DEUS" se você está pronto! ⚔️🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #armadura #guerreiro #efesios #fetok #fyp #viral #gospel #cristao #vitoria' },
+      { day:6, slot:'20:00', emoji:'🌙', ref:'Hebreus 11:1', video:'verse_hebreus_11.mp4', music:'Isaias Saad → Me Atraiu', caption:'Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos. 🙏✝️\\nHebreus 11:1\\n\\nVocê não precisa VER pra CRER. Isso é FÉ! 🔥\\nComenta "EU CREIO" se você anda por fé! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #hebreus #certeza #crer #fetok #fyp #viral #gospel #cristao #confiança' },
+      { day:7, slot:'06:00', emoji:'☀️', ref:'Provérbios 3:5', video:'verse_proverbios_3.mp4', music:'Gabriela Rocha → Deus Provará', caption:'Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. 📖✝️\\nProvérbios 3:5\\n\\nPare de tentar ENTENDER tudo. Apenas CONFIE! 🙏\\nComenta "EU CONFIO" se você entrega tudo a Deus! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #confiança #proverbios #fetok #fyp #viral #gospel #cristao #entrega' },
+      { day:7, slot:'12:00', emoji:'🌤️', ref:'Salmos 37:5', video:'verse_salmos_37.mp4', music:'Preto no Branco → Me Deixa Aqui', caption:'Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará. 🫒✝️\\nSalmos 37:5\\n\\nENTREGUE. CONFIE. E DESCANSE. Deus vai fazer! 🙏\\nCompartilhe com quem está carregando um fardo pesado! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #entrega #caminho #salmos #fetok #fyp #viral #gospel #cristao #descanso' },
+      { day:7, slot:'20:00', emoji:'🌙', ref:'2 Coríntios 5:7', video:'verse_2cor_5.mp4', music:'Isaias Saad → Bondade de Deus', caption:'Porque andamos por fé e não por vista. 🌫️✝️\\n2 Coríntios 5:7\\n\\nVocê não precisa ver o CAMINHO inteiro. Só o PRÓXIMO PASSO. 🚶‍♂️\\nComenta "FÉ" se você caminha confiando em Deus! 🙏❤️\\nSIGA para mais versículos diários! 🔔\\n\\n#versiculododia #biblia #fe #jesus #deus #fé #corintios #fetok #fyp #viral #gospel #cristao #jornada' },
+    ];
+
+    const postCards = posts.map((p, i) => `
+      <div class="post-card" id="post-${i}">
+        <div class="post-header">
+          <span class="post-day">Dia ${p.day}</span>
+          <span class="post-time">${p.emoji} ${p.slot}</span>
+        </div>
+        <div class="post-ref">${p.ref}</div>
+        <div class="post-music">🎵 ${p.music}</div>
+        <div class="post-video">🎬 ${p.video}</div>
+        <pre class="post-caption" id="caption-${i}">${p.caption.replace(/\\n/g, '\n')}</pre>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('caption-${i}').textContent).then(()=>this.textContent='✅ Copiado!')">📋 Copiar Legenda</button>
+      </div>
+    `).join('');
+
+    res.send(`<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FéTok — 21 Posts Guide</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a0f;color:#fff;min-height:100vh}
+.container{max-width:800px;margin:0 auto;padding:24px}
+h1{font-size:1.6rem;margin-bottom:4px}
+h1 span{background:linear-gradient(135deg,#d4a853,#f0d78c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:rgba(255,255,255,0.4);font-size:0.8rem;margin-bottom:24px}
+.post-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:16px}
+.post-header{display:flex;justify-content:space-between;margin-bottom:8px}
+.post-day{font-size:0.7rem;font-weight:700;color:#d4a853;text-transform:uppercase;letter-spacing:0.05em}
+.post-time{font-size:0.8rem;font-weight:600}
+.post-ref{font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.post-music{font-size:0.75rem;color:rgba(255,255,255,0.5);margin-bottom:4px}
+.post-video{font-size:0.7rem;color:rgba(255,255,255,0.35);margin-bottom:10px}
+.post-caption{font-family:inherit;font-size:0.78rem;color:rgba(255,255,255,0.7);background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;white-space:pre-wrap;word-wrap:break-word;line-height:1.5;margin-bottom:10px}
+.copy-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;background:#d4a853;color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;transition:all 0.2s}
+.copy-btn:hover{opacity:0.85;transform:scale(1.02)}
+.back{display:inline-flex;padding:6px 14px;background:rgba(255,255,255,0.06);color:#fff;border-radius:8px;font-size:0.75rem;text-decoration:none;margin-bottom:16px}
+</style></head><body><div class="container">
+<a href="/" class="back">← Dashboard</a>
+<h1>Fe<span>Tok</span> — 21 Posts Prontos ✝️</h1>
+<p class="sub">Clique "Copiar Legenda" e cole no TikTok Studio • 7 dias × 3 posts/dia</p>
+${postCards}
+<p style="text-align:center;color:rgba(255,255,255,0.2);font-size:0.65rem;margin-top:24px">FéTok Auto-Poster v1.0 · Pasta: fetok-autoposter/output/videos/</p>
+</div></body></html>`);
+  });
+
   // Dashboard HTML
   app.get('/', (req, res) => {
     const stats = getStats();
