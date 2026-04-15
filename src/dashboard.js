@@ -1,6 +1,6 @@
 /**
- * FéTok Dashboard — Web UI for monitoring
- * Shows schedule, history, stats, and video previews
+ * FéTok Dashboard v2.0 — Complete Content Management Hub
+ * All 21 videos + captions + viral music + mobile-responsive
  */
 
 const express = require('express');
@@ -13,15 +13,348 @@ const { buildCaption } = require('./captionBuilder');
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 const PORT = process.env.PORT || 3000;
 
+/* ═══════════════════════════════════════════════════════════════
+   COMPLETE 21-POST DATA — All captions from guia_21_posts.md
+   with enhanced viral formatting
+   ═══════════════════════════════════════════════════════════════ */
+const POSTS_DATA = [
+  // DIA 1
+  { day:1, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 91:1', theme:'proteção', themeEmoji:'🛡️',
+    text:'Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso.',
+    videoFile:'video_salmos_91_1.mp4',
+    music:'Isaias Saad → Bondade de Deus',
+    musicSearch:'isaias saad bondade de deus',
+    caption:`Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso. 🛡️✝️
+Salmos 91:1
+
+Você está debaixo da proteção de Deus AGORA. 🙏
+Deixe um ❤️ se você crê nessa promessa!
+Salve esse vídeo. Você vai precisar dele. 🔖
+
+#versiculododia #biblia #fe #jesus #deus #salmos91 #proteção #deuscuida #fetok #fyp #viral #foryou #gospel #cristao #palavradedeus`
+  },
+  { day:1, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 27:1', theme:'proteção', themeEmoji:'💡',
+    text:'O Senhor é a minha luz e a minha salvação; de quem terei medo?',
+    videoFile:'video_salmos_27_1.mp4',
+    music:'Gabriela Rocha → Lugar Secreto',
+    musicSearch:'gabriela rocha lugar secreto',
+    caption:`O Senhor é a minha luz e a minha salvação; de quem terei medo? 💡✝️
+Salmos 27:1
+
+NINGUÉM pode te derrubar quando Deus está ao seu lado! 🔥
+Comenta AMÉM se você não tem medo porque Deus está contigo! 🙏
+
+#versiculododia #biblia #fe #jesus #deus #salmos #luz #salvação #naotemas #fetok #fyp #viral #gospel #cristao #deusefiel`
+  },
+  { day:1, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Salmos 46:1', theme:'proteção', themeEmoji:'🏰',
+    text:'Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.',
+    videoFile:'video_salmos_46_1.mp4',
+    music:'Fernandinho → Grandes Coisas',
+    musicSearch:'fernandinho grandes coisas',
+    caption:`Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia. 🏰✝️
+Salmos 46:1
+
+Se você está passando por uma tempestade, PARE e leia isso de novo. 🙏
+Deus é sua FORTALEZA. Nunca esqueça disso. ❤️
+Compartilhe com alguém que precisa ouvir isso HOJE!
+
+#versiculododia #biblia #fe #jesus #deus #refúgio #fortaleza #angustia #fetok #fyp #viral #gospel #cristao #salmos`
+  },
+  // DIA 2
+  { day:2, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 145:18', theme:'proteção', themeEmoji:'🙏',
+    text:'O Senhor está perto de todos os que o invocam.',
+    videoFile:'video_salmos_145_18.mp4',
+    music:'Aline Barros → Ressuscita-me',
+    musicSearch:'aline barros ressuscita-me',
+    caption:`O Senhor está perto de todos os que o invocam. 🙏✝️
+Salmos 145:18
+
+Deus NUNCA te abandonou. Ele está mais perto do que você imagina. 💛
+Se você precisa de Deus nesse momento, comenta 🙏
+
+#versiculododia #biblia #fe #jesus #deus #oração #perto #invocação #fetok #fyp #viral #gospel #cristao #devocional`
+  },
+  { day:2, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Isaías 41:10', theme:'coragem', themeEmoji:'💪',
+    text:'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus.',
+    videoFile:'video_isaías_41_10.mp4',
+    music:'Isaias Saad → Me Atraiu',
+    musicSearch:'isaias saad me atraiu',
+    caption:`Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus. 💪✝️
+Isaías 41:10
+
+Isso não foi coincidência. Deus te trouxe até esse vídeo AGORA. ✨
+Você NÃO está sozinho nessa luta! 🔥
+Comenta AMÉM e salva esse vídeo! 🙏
+
+#versiculododia #biblia #fe #jesus #deus #naotemas #coragem #isaias #fetok #fyp #viral #gospel #cristao #fortaleza`
+  },
+  { day:2, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Josué 1:9', theme:'coragem', themeEmoji:'⚔️',
+    text:'Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você.',
+    videoFile:'video_josué_1_9.mp4',
+    music:'Anderson Freire → Primeira Essência',
+    musicSearch:'anderson freire primeira essencia',
+    caption:`Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você. ⚔️✝️
+Josué 1:9
+
+Guerreiro de Deus, LEVANTE A CABEÇA! 👑
+A batalha é do Senhor e a vitória já é SUA! 🔥
+Marque alguém que precisa de CORAGEM hoje! ❤️
+
+#versiculododia #biblia #fe #jesus #deus #coragem #guerreiro #josue #fetok #fyp #viral #foryou #gospel #cristao #vitoria`
+  },
+  // DIA 3
+  { day:3, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Isaías 43:2', theme:'coragem', themeEmoji:'🌊',
+    text:'Quando passares pelas águas, estarei contigo.',
+    videoFile:'video_isaías_43_2.mp4',
+    music:'Gabriela Rocha → Eu Navegarei',
+    musicSearch:'gabriela rocha eu navegarei',
+    caption:`Quando passares pelas águas, estarei contigo. 🌊✝️
+Isaías 43:2
+
+Nas águas mais profundas, Deus SEGURA sua mão. 🤝
+Você pode estar na tempestade, mas NÃO vai se afogar! 🙏
+Deixe um 💙 se Deus já te salvou de uma tempestade!
+
+#versiculododia #biblia #fe #jesus #deus #tempestade #águas #isaias #fetok #fyp #viral #gospel #cristao #proteção`
+  },
+  { day:3, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 46:7', theme:'coragem', themeEmoji:'🏰',
+    text:'O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio.',
+    videoFile:'video_salmos_46_7.mp4',
+    music:'Fernandinho → Eu Vou Abrir o Mar',
+    musicSearch:'fernandinho eu vou abrir o mar',
+    caption:`O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio. 🏰✝️
+Salmos 46:7
+
+O DEUS DOS EXÉRCITOS luta por VOCÊ! ⚔️
+Nenhum inimigo prevalecerá! 🔥
+Comenta "DEUS É FIEL" se você crê nisso! 🙏
+
+#versiculododia #biblia #fe #jesus #deus #exercitos #refúgio #salmos #fetok #fyp #viral #gospel #cristao #batalha`
+  },
+  { day:3, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'1 Coríntios 13:4', theme:'amor', themeEmoji:'💕',
+    text:'O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.',
+    videoFile:'video_1_coríntios_13_4.mp4',
+    music:'Preto no Branco → Ninguém Explica Deus',
+    musicSearch:'preto no branco ninguém explica deus',
+    caption:`O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. 💕✝️
+1 Coríntios 13:4
+
+O verdadeiro amor vem de DEUS. ❤️
+Marque a pessoa que você AMA e envie esse versículo pra ela! 💛🙏
+
+#versiculododia #biblia #fe #jesus #deus #amor #corintios #paciente #bondoso #fetok #fyp #viral #gospel #cristao #amordedeus`
+  },
+  // DIA 4
+  { day:4, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Jeremias 29:11', theme:'esperança', themeEmoji:'🌅',
+    text:'Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano.',
+    videoFile:'video_1_joão_4_9.mp4',
+    music:'Aline Barros → Sonda-me',
+    musicSearch:'aline barros sonda-me',
+    caption:`Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano. 🌅✝️
+Jeremias 29:11
+
+Deus tem um PLANO para sua vida! Confie no processo! ✨
+Mesmo quando você não entende, Deus está no controle! 🙏
+Comenta "EU CONFIO" se você entrega seus planos a Deus! ❤️
+
+#versiculododia #biblia #fe #jesus #deus #planos #jeremias #prosperidade #esperança #fetok #fyp #viral #gospel #cristao`
+  },
+  { day:4, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Romanos 5:8', theme:'amor', themeEmoji:'✝️',
+    text:'Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós.',
+    videoFile:'video_romanos_5_8.mp4',
+    music:'Isaias Saad → Bondade de Deus',
+    musicSearch:'isaias saad bondade de deus',
+    caption:`Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós. ✝️❤️
+Romanos 5:8
+
+Ele MORREU por você. Enquanto você ainda era pecador. 😭
+Não existe amor MAIOR que esse! 🙏
+Deixe ❤️ e compartilhe essa verdade!
+
+#versiculododia #biblia #fe #jesus #deus #amor #cruz #romanos #sacrificio #fetok #fyp #viral #gospel #cristao #calvario`
+  },
+  { day:4, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Isaías 54:10', theme:'amor', themeEmoji:'🏔️',
+    text:'Porque as montanhas se retirarão, mas a minha graça não se apartará de ti.',
+    videoFile:'video_isaías_54_10.mp4',
+    music:'Gabriela Rocha → Deus Provará',
+    musicSearch:'gabriela rocha deus provará',
+    caption:`Porque as montanhas se retirarão, mas a minha graça não se apartará de ti. 🏔️✝️
+Isaías 54:10
+
+As MONTANHAS vão cair. Mas o amor de Deus? JAMAIS. 💛
+Isso é uma promessa ETERNA! 🙏
+Salve esse vídeo e assista quando precisar de força! 🔖
+
+#versiculododia #biblia #fe #jesus #deus #graça #montanhas #isaias #eterno #fetok #fyp #viral #gospel #cristao #promessa`
+  },
+  // DIA 5
+  { day:5, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Filipenses 4:13', theme:'força', themeEmoji:'💪',
+    text:'Tudo posso naquele que me fortalece.',
+    videoFile:'video_filipenses_4_13.mp4',
+    music:'Anderson Freire → Raridade',
+    musicSearch:'anderson freire raridade',
+    caption:`Tudo posso naquele que me fortalece. 💪✝️
+Filipenses 4:13
+
+TUDO. Não é "algumas coisas". É TUDO! 🔥
+Com Deus, não existe limite pra você! ⚡
+Comenta AMÉM se você crê que Deus te fortalece! 🙏
+
+#versiculododia #biblia #fe #jesus #deus #tudoposso #força #filipenses #fetok #fyp #viral #gospel #cristao #fortaleza #guerreiro`
+  },
+  { day:5, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Isaías 40:31', theme:'força', themeEmoji:'🦅',
+    text:'Os que esperam no Senhor renovam as suas forças; sobem com asas como águias.',
+    videoFile:'video_isaías_40_31.mp4',
+    music:'Fernandinho → Faz Chover',
+    musicSearch:'fernandinho faz chover',
+    caption:`Os que esperam no Senhor renovam as suas forças; sobem com asas como águias. 🦅✝️
+Isaías 40:31
+
+Você tá cansado? ESPERE no Senhor! 🙏
+Ele vai te fazer VOAR como águia! As forças vão ser RENOVADAS! ⚡
+Marque alguém que precisa renovar as forças! ❤️
+
+#versiculododia #biblia #fe #jesus #deus #águia #renovar #isaias #força #fetok #fyp #viral #gospel #cristao #esperança`
+  },
+  { day:5, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Êxodo 15:2', theme:'força', themeEmoji:'🎵',
+    text:'O Senhor é a minha força e o meu cântico; ele é a minha salvação.',
+    videoFile:'video_êxodo_15_2.mp4',
+    music:'Soraya Moraes → Quão Grande É o Meu Deus',
+    musicSearch:'soraya moraes quão grande é o meu deus',
+    caption:`O Senhor é a minha força e o meu cântico; ele é a minha salvação. 🎵✝️
+Êxodo 15:2
+
+Deus é sua FORÇA quando você está fraco! 💪
+Ele é seu CÂNTICO quando tudo parece silêncio! 🎶
+Comenta 🎵 se Deus é a sua música! 🙏
+
+#versiculododia #biblia #fe #jesus #deus #força #cântico #salvação #exodo #fetok #fyp #viral #gospel #cristao #louvor`
+  },
+  // DIA 6
+  { day:6, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Romanos 8:28', theme:'fé', themeEmoji:'🌈',
+    text:'Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus.',
+    videoFile:'video_isaías_40_31.mp4',
+    music:'Aline Barros → Consagração',
+    musicSearch:'aline barros consagração',
+    caption:`Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus. 🌈✝️
+Romanos 8:28
+
+TUDO coopera pro seu bem. Até aquilo que parece ruim AGORA. ✨
+Deus transforma DOR em PROPÓSITO! 🙏
+Deixe ❤️ se você confia que Deus está trabalhando na sua vida!
+
+#versiculododia #biblia #fe #jesus #deus #romanos #bemcomum #propósito #fetok #fyp #viral #gospel #cristao #confiança`
+  },
+  { day:6, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Efésios 6:10', theme:'força', themeEmoji:'⚔️',
+    text:'Fortalecei-vos no Senhor e na força do seu poder.',
+    videoFile:'video_efésios_6_10.mp4',
+    music:'Anderson Freire → Identidade',
+    musicSearch:'anderson freire identidade',
+    caption:`Fortalecei-vos no Senhor e na força do seu poder. ⚔️✝️
+Efésios 6:10
+
+Vista a ARMADURA de Deus! 🛡️
+Você é um GUERREIRO do Altíssimo! 🔥
+Comenta "SOU GUERREIRO DE DEUS" se você está pronto pra batalha! ⚔️🙏
+
+#versiculododia #biblia #fe #jesus #deus #armadura #guerreiro #efesios #batalha #fetok #fyp #viral #gospel #cristao #vitoria`
+  },
+  { day:6, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Hebreus 11:1', theme:'fé', themeEmoji:'🙏',
+    text:'Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.',
+    videoFile:'video_hebreus_11_1.mp4',
+    music:'Isaias Saad → Me Atraiu',
+    musicSearch:'isaias saad me atraiu',
+    caption:`Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos. 🙏✝️
+Hebreus 11:1
+
+Você não precisa VER pra CRER. Isso é FÉ! 🔥
+Quando tudo parece impossível, a fé é seu COMBUSTÍVEL! ⚡
+Comenta "EU CREIO" se você anda por fé! ❤️
+
+#versiculododia #biblia #fe #jesus #deus #hebreus #certeza #crer #fidelidade #fetok #fyp #viral #gospel #cristao #confiança`
+  },
+  // DIA 7
+  { day:7, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Provérbios 3:5', theme:'fé', themeEmoji:'📖',
+    text:'Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.',
+    videoFile:'video_provérbios_3_5.mp4',
+    music:'Gabriela Rocha → Deus Provará',
+    musicSearch:'gabriela rocha deus provará',
+    caption:`Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. 📖✝️
+Provérbios 3:5
+
+Pare de tentar ENTENDER tudo. Apenas CONFIE! 🙏
+Os planos de Deus são MAIORES que os seus! ✨
+Comenta "EU CONFIO" se você entrega tudo a Deus! ❤️
+
+#versiculododia #biblia #fe #jesus #deus #confiança #proverbios #sabedoria #fetok #fyp #viral #gospel #cristao #entrega`
+  },
+  { day:7, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 37:5', theme:'fé', themeEmoji:'🫒',
+    text:'Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará.',
+    videoFile:'video_salmos_37_5.mp4',
+    music:'Preto no Branco → Me Deixa Aqui',
+    musicSearch:'preto no branco me deixa aqui',
+    caption:`Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará. 🫒✝️
+Salmos 37:5
+
+ENTREGUE. CONFIE. E DESCANSE. Deus vai fazer! 🙏
+Você não precisa carregar esse peso sozinho! 💛
+Compartilhe com quem está carregando um fardo pesado! ❤️
+
+#versiculododia #biblia #fe #jesus #deus #entrega #caminho #salmos #confiança #fetok #fyp #viral #gospel #cristao #descanso`
+  },
+  { day:7, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'2 Coríntios 5:7', theme:'fé', themeEmoji:'🌫️',
+    text:'Porque andamos por fé e não por vista.',
+    videoFile:'video_2_coríntios_5_7.mp4',
+    music:'Isaias Saad → Bondade de Deus',
+    musicSearch:'isaias saad bondade de deus',
+    caption:`Porque andamos por fé e não por vista. 🌫️✝️
+2 Coríntios 5:7
+
+Você não precisa ver o CAMINHO inteiro. Só o PRÓXIMO PASSO. 🚶‍♂️
+Deus ilumina UM passo de cada vez! ✨
+Comenta "FÉ" se você caminha confiando em Deus! 🙏❤️
+
+Esse foi o último post da semana. Se essa página te abençoou, SIGA para mais versículos diários! 🔔
+
+#versiculododia #biblia #fe #jesus #deus #fé #vista #corintios #caminho #fetok #fyp #viral #gospel #cristao #jornada`
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   VIRAL MUSIC DATABASE — Top trending gospel sounds on TikTok
+   ═══════════════════════════════════════════════════════════════ */
+const VIRAL_MUSIC = [
+  { rank: 1, title: 'Bondade de Deus', artist: 'Isaias Saad', videos: '2.8M+', growth: '+340%', category: 'Worship', tip: 'SOM #1 do nicho gospel. Use nos posts de proteção e fé.', searchTerm: 'isaias saad bondade de deus' },
+  { rank: 2, title: 'Me Atraiu', artist: 'Isaias Saad', videos: '1.5M+', growth: '+280%', category: 'Worship', tip: 'Perfeito para vídeos emocionais e de transformação.', searchTerm: 'isaias saad me atraiu' },
+  { rank: 3, title: 'Ninguém Explica Deus', artist: 'Preto no Branco', videos: '1.2M+', growth: '+210%', category: 'Gospel Pop', tip: 'Ideal para posts sobre amor e relacionamentos com Deus.', searchTerm: 'preto no branco ninguém explica deus' },
+  { rank: 4, title: 'Lugar Secreto', artist: 'Gabriela Rocha', videos: '980K+', growth: '+195%', category: 'Worship', tip: 'Melhor para vídeos de devocionais e momentos íntimos com Deus.', searchTerm: 'gabriela rocha lugar secreto' },
+  { rank: 5, title: 'Grandes Coisas', artist: 'Fernandinho', videos: '870K+', growth: '+180%', category: 'Praise', tip: 'Energia alta — use em posts de vitória e superação.', searchTerm: 'fernandinho grandes coisas' },
+  { rank: 6, title: 'Deus Provará', artist: 'Gabriela Rocha', videos: '750K+', growth: '+165%', category: 'Worship', tip: 'Para posts sobre promessas de Deus e esperança.', searchTerm: 'gabriela rocha deus provará' },
+  { rank: 7, title: 'Ressuscita-me', artist: 'Aline Barros', videos: '680K+', growth: '+150%', category: 'Gospel', tip: 'Forte engajamento — usa em posts de manhã cedo.', searchTerm: 'aline barros ressuscita-me' },
+  { rank: 8, title: 'Raridade', artist: 'Anderson Freire', videos: '620K+', growth: '+140%', category: 'Gospel', tip: 'Audiência mais velha e fiel — gera muitos compartilhamentos.', searchTerm: 'anderson freire raridade' },
+  { rank: 9, title: 'Primeira Essência', artist: 'Anderson Freire', videos: '550K+', growth: '+125%', category: 'Gospel', tip: 'Perfeito para posts sobre voltar às origens da fé.', searchTerm: 'anderson freire primeira essência' },
+  { rank: 10, title: 'Faz Chover', artist: 'Fernandinho', videos: '520K+', growth: '+120%', category: 'Praise', tip: 'Alto poder de viralização — posts sobre renovação espiritual.', searchTerm: 'fernandinho faz chover' },
+  { rank: 11, title: 'Quão Grande É o Meu Deus', artist: 'Soraya Moraes', videos: '480K+', growth: '+115%', category: 'Worship', tip: 'Clássico gospel — gera nostalgia e muitos saves.', searchTerm: 'soraya moraes quão grande' },
+  { rank: 12, title: 'Consagração', artist: 'Aline Barros', videos: '430K+', growth: '+105%', category: 'Gospel', tip: 'Forte em devocionais matinais. Muitos comentários "Amém".', searchTerm: 'aline barros consagração' },
+  { rank: 13, title: 'Me Deixa Aqui', artist: 'Preto no Branco', videos: '410K+', growth: '+100%', category: 'Gospel Pop', tip: 'Música da nova geração gospel — atrai público jovem.', searchTerm: 'preto no branco me deixa aqui' },
+  { rank: 14, title: 'Eu Navegarei', artist: 'Gabriela Rocha', videos: '390K+', growth: '+95%', category: 'Worship', tip: 'Perfeito para posts sobre enfrentar tempestades.', searchTerm: 'gabriela rocha eu navegarei' },
+  { rank: 15, title: 'Identidade', artist: 'Anderson Freire', videos: '370K+', growth: '+90%', category: 'Gospel', tip: 'Para posts sobre propósito e identidade em Cristo.', searchTerm: 'anderson freire identidade' },
+  { rank: 16, title: 'Sonda-me', artist: 'Aline Barros', videos: '350K+', growth: '+85%', category: 'Gospel', tip: 'Intimidade com Deus — gera engajamento emocional.', searchTerm: 'aline barros sonda-me' },
+  { rank: 17, title: 'Eu Vou Abrir o Mar', artist: 'Fernandinho', videos: '320K+', growth: '+80%', category: 'Praise', tip: 'Energia épica — posts sobre milagres e conquistas.', searchTerm: 'fernandinho eu vou abrir o mar' },
+  { rank: 18, title: 'Creio que Tu és a Cura', artist: 'Isaias Saad', videos: '290K+', growth: '+75%', category: 'Worship', tip: 'SOM EM ASCENSÃO — começando a viralizar forte.', searchTerm: 'isaias saad creio que tu és a cura' },
+  { rank: 19, title: 'Digno', artist: 'Marcos Freire', videos: '260K+', growth: '+70%', category: 'Gospel', tip: 'Forte nos domingos — perfeito para conteúdo de culto.', searchTerm: 'marcos freire digno' },
+  { rank: 20, title: 'Responsório de Fé', artist: 'Manú Paiva', videos: '240K+', growth: '+65%', category: 'Viral Gospel', tip: '⚡ SOM EMERGENTE — aproveite antes de saturar!', searchTerm: 'manu paiva responsório de fé' },
+];
+
 function startDashboard() {
   const app = express();
 
-  // Serve generated media files
+  // Serve generated media
   app.use('/media', express.static(path.join(OUTPUT_DIR, 'videos')));
   app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
   app.use('/output', express.static(OUTPUT_DIR));
 
-  // API: Stats
+  // API endpoints
   app.get('/api/stats', (req, res) => {
     const stats = getStats();
     const historyFile = path.join(OUTPUT_DIR, 'history.json');
@@ -32,403 +365,691 @@ function startDashboard() {
     res.json({ ...stats, postsToday: history.filter(h => h.timestamp?.startsWith(new Date().toISOString().split('T')[0])).length, totalPosts: history.length });
   });
 
-  // API: History
   app.get('/api/history', (req, res) => {
     const historyFile = path.join(OUTPUT_DIR, 'history.json');
     if (fs.existsSync(historyFile)) {
       res.json(JSON.parse(fs.readFileSync(historyFile, 'utf8')));
-    } else {
-      res.json([]);
-    }
+    } else { res.json([]); }
   });
 
-  // API: Schedule
   app.get('/api/schedule', (req, res) => {
     const scheduleFile = path.join(OUTPUT_DIR, 'schedule.json');
     if (fs.existsSync(scheduleFile)) {
       res.json(JSON.parse(fs.readFileSync(scheduleFile, 'utf8')));
-    } else {
-      res.json([]);
-    }
+    } else { res.json([]); }
   });
 
-  // API: Verses
-  app.get('/api/verses', (req, res) => {
-    res.json(getAllVerses());
-  });
+  app.get('/api/verses', (req, res) => { res.json(getAllVerses()); });
 
-  // API: Generate post now (manual trigger)
+  app.get('/api/posts', (req, res) => { res.json(POSTS_DATA); });
+
+  app.get('/api/music', (req, res) => { res.json(VIRAL_MUSIC); });
+
   app.post('/api/generate/:slot', async (req, res) => {
     const slot = req.params.slot;
     if (!['morning', 'afternoon', 'evening'].includes(slot)) {
-      return res.status(400).json({ error: 'Invalid slot. Use: morning, afternoon, evening' });
+      return res.status(400).json({ error: 'Invalid slot' });
     }
     try {
       const { createPost } = require('./index');
       const result = await createPost(slot);
       res.json({ success: true, result });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
   });
 
-  // Serve the guide markdown
   app.get('/api/guide', (req, res) => {
     const guidePath = path.resolve(__dirname, '../guia_21_posts.md');
     if (fs.existsSync(guidePath)) {
       res.type('text/markdown').send(fs.readFileSync(guidePath, 'utf8'));
-    } else {
-      res.status(404).send('Guide not found');
+    } else { res.status(404).send('Guide not found'); }
+  });
+
+  /* ═══════════════════════════════════════════════════════════
+     CSS DESIGN SYSTEM
+     ═══════════════════════════════════════════════════════════ */
+  const CSS = `
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg-primary: #06060b;
+      --bg-card: rgba(255,255,255,0.03);
+      --bg-card-hover: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --gold: #d4a853;
+      --gold-light: #f0d78c;
+      --gold-bg: rgba(212,168,83,0.08);
+      --gold-border: rgba(212,168,83,0.2);
+      --green: #34c759;
+      --green-bg: rgba(52,199,89,0.12);
+      --red: #ff2d55;
+      --blue: #007aff;
+      --purple: #af82ff;
+      --orange: #ff9500;
+      --text: #ffffff;
+      --text-secondary: rgba(255,255,255,0.55);
+      --text-tertiary: rgba(255,255,255,0.3);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
     }
-  });
 
-  // ROTINA PAGE — Daily engagement & monetization checklist
-  app.get('/rotina', (req, res) => {
-    const today = new Date();
-    const dayNames = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-    const dayName = dayNames[today.getDay()];
-    const dateStr = today.toLocaleDateString('pt-BR');
-    const isSunday = today.getDay() === 0;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    html { scroll-behavior: smooth; }
 
-    res.send(`<!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FéTok — Rotina Diária</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a0f;color:#fff;min-height:100vh}
-.container{max-width:800px;margin:0 auto;padding:24px}
-h1{font-size:1.5rem;margin-bottom:4px}
-h1 span{background:linear-gradient(135deg,#d4a853,#f0d78c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sub{color:rgba(255,255,255,0.4);font-size:0.8rem;margin-bottom:24px}
-.nav{display:flex;gap:8px;margin-bottom:20px}
-.nav a{padding:6px 14px;background:rgba(255,255,255,0.06);color:#fff;border-radius:8px;font-size:0.75rem;text-decoration:none}
-.nav a:hover{background:rgba(255,255,255,0.1)}
-.section{margin-bottom:28px}
-.section-title{font-size:0.72rem;font-weight:700;color:#d4a853;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px}
-.card.highlight{border-color:rgba(212,168,83,0.3);background:rgba(212,168,83,0.05)}
-.card.live{border-color:rgba(255,45,85,0.3);background:rgba(255,45,85,0.05)}
-.card h3{font-size:0.95rem;margin-bottom:6px}
-.card p{font-size:0.78rem;color:rgba(255,255,255,0.6);line-height:1.5}
-.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all 0.2s}
-.check-item:hover{background:rgba(255,255,255,0.05)}
-.check-item input[type=checkbox]{margin-top:3px;accent-color:#d4a853;width:16px;height:16px;cursor:pointer}
-.check-item.done{opacity:0.4;text-decoration:line-through}
-.check-label{flex:1}
-.check-title{font-size:0.82rem;font-weight:600;margin-bottom:2px}
-.check-desc{font-size:0.7rem;color:rgba(255,255,255,0.4)}
-.time-badge{font-size:0.65rem;padding:2px 8px;border-radius:6px;font-weight:600;white-space:nowrap}
-.time-morning{background:rgba(255,196,0,0.15);color:#ffc400}
-.time-noon{background:rgba(255,149,0,0.15);color:#ff9500}
-.time-night{background:rgba(175,130,255,0.15);color:#af82ff}
-.time-anytime{background:rgba(52,199,89,0.15);color:#34c759}
-.comment-template{font-size:0.75rem;color:rgba(255,255,255,0.6);background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px;margin:4px 0;cursor:pointer;transition:all 0.2s}
-.comment-template:hover{background:rgba(212,168,83,0.1);border-color:rgba(212,168,83,0.2)}
-.comment-template:active::after{content:' ✅'}
-.accounts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.account-card{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;font-size:0.78rem}
-.account-card .handle{color:#d4a853;font-weight:600}
-.account-card .desc{font-size:0.65rem;color:rgba(255,255,255,0.35)}
-.milestone{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;margin-bottom:8px}
-.milestone-num{font-size:1.2rem;font-weight:800;color:#d4a853;min-width:50px}
-.milestone-label{font-size:0.78rem}
-.milestone-reward{font-size:0.65rem;color:rgba(255,255,255,0.4)}
-.progress-bar{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;margin-top:4px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#d4a853,#f0d78c);border-radius:3px;transition:width 0.3s}
-.tip{font-size:0.72rem;color:rgba(212,168,83,0.8);padding:8px 12px;background:rgba(212,168,83,0.06);border-left:3px solid rgba(212,168,83,0.4);border-radius:0 8px 8px 0;margin:8px 0}
-</style></head><body><div class="container">
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
-<div class="nav">
-  <a href="/">📊 Dashboard</a>
-  <a href="/guide">📋 21 Posts</a>
-  <a href="/rotina" style="background:rgba(212,168,83,0.15);color:#d4a853">🔥 Rotina</a>
-</div>
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
-<h1>Fe<span>Tok</span> — Rotina Diária 🔥</h1>
-<p class="sub">${dayName}, ${dateStr} · @luz.da.palavra.oficial</p>
+    /* ── LAYOUT ── */
+    .app { max-width: 1400px; margin: 0 auto; padding: 20px; }
 
-<!-- ═══ CHECKLIST DO DIA ═══ -->
-<div class="section">
-  <div class="section-title">✅ CHECKLIST DO DIA</div>
+    /* ── TOP NAV ── */
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .topnav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .topnav-brand h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .topnav-brand h1 span {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .topnav-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--green-bg);
+      border: 1px solid rgba(52,199,89,0.25);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--green);
+    }
+    .topnav-status::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">☀️ Post da Manhã (06:00)</div>
-      <div class="check-desc">Upload vídeo + legenda + música gospel → agendar 06:00</div>
-    </div><span class="time-badge time-morning">06:00</span>
-  </div>
+    .topnav-handle {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">🔥 Engajar após post da manhã</div>
-      <div class="check-desc">Curtir 10 vídeos em #versiculododia + comentar 5 deles</div>
-    </div><span class="time-badge time-morning">06:30</span>
-  </div>
+    /* ── TAB NAVIGATION ── */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .tab:hover {
+      background: var(--bg-card-hover);
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+    .tab.active {
+      background: var(--gold-bg);
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">🌤️ Post do Almoço (12:00)</div>
-      <div class="check-desc">Upload vídeo motivacional + legenda + música</div>
-    </div><span class="time-badge time-noon">12:00</span>
-  </div>
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+    }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">📱 Seguir 10-15 criadores gospel</div>
-      <div class="check-desc">Buscar #gospel #fé → seguir contas ativas do nicho</div>
-    </div><span class="time-badge time-noon">12:30</span>
-  </div>
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-badge {
+      font-size: 0.65rem;
+      padding: 3px 10px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      color: var(--gold);
+      font-weight: 700;
+    }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">💬 Responder TODOS os comentários</div>
-      <div class="check-desc">Respostas geram notificações = mais engajamento = algoritmo te promove</div>
-    </div><span class="time-badge time-anytime">A qualquer hora</span>
-  </div>
+    /* ── DAY SEPARATOR ── */
+    .day-separator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 16px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, rgba(212,168,83,0.08), rgba(212,168,83,0.02));
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius);
+    }
+    .day-number {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .day-info {
+      flex: 1;
+    }
+    .day-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .day-date {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+    }
+    .day-themes {
+      display: flex;
+      gap: 6px;
+    }
+    .theme-pill {
+      font-size: 0.62rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .theme-proteção { background: rgba(52,199,89,0.12); color: #34c759; }
+    .theme-coragem { background: rgba(255,149,0,0.12); color: #ff9500; }
+    .theme-amor { background: rgba(255,45,85,0.12); color: #ff2d55; }
+    .theme-força { background: rgba(175,130,255,0.12); color: #af82ff; }
+    .theme-fé { background: rgba(0,122,255,0.12); color: #007aff; }
+    .theme-esperança { background: rgba(255,214,10,0.12); color: #ffd60a; }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">🌙 Post da Noite (20:00)</div>
-      <div class="check-desc">Upload vídeo emocional + legenda + música</div>
-    </div><span class="time-badge time-night">20:00</span>
-  </div>
+    /* ── POST CARD ── */
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 14px;
+      transition: all 0.3s ease;
+    }
+    .post-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+    }
+    .post-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .post-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .post-slot-badge {
+      font-size: 0.72rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+    .slot-morning { background: rgba(255,196,0,0.15); color: #ffc400; }
+    .slot-afternoon { background: rgba(255,149,0,0.15); color: #ff9500; }
+    .slot-evening { background: rgba(175,130,255,0.15); color: #af82ff; }
+    
+    .post-verse-ref {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .post-theme-badge {
+      font-size: 0.62rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .post-card-body {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .post-video-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .post-video-wrap video {
+      width: 100%;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      display: block;
+    }
+    .post-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-  <div class="check-item" onclick="this.classList.toggle('done');this.querySelector('input').checked=!this.querySelector('input').checked">
-    <input type="checkbox"><div class="check-label">
-      <div class="check-title">🌟 Comentar em 5 vídeos de criadores GRANDES</div>
-      <div class="check-desc">Isaias Saad, Fernandinho, Gabriela Rocha — seu nome aparece no feed deles</div>
-    </div><span class="time-badge time-night">21:00</span>
-  </div>
+    /* Music badge */
+    .post-music {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .post-music-icon {
+      font-size: 1rem;
+    }
+    .post-music-search {
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
 
-  ${isSunday ? '<div class="check-item" onclick="this.classList.toggle(\'done\');this.querySelector(\'input\').checked=!this.querySelector(\'input\').checked"><input type="checkbox"><div class="check-label"><div class="check-title">🔴 LIVE DE ORAÇÃO (Domingo 20h)</div><div class="check-desc">30-60 min de oração ao vivo — maior acelerador de crescimento!</div></div><span class="time-badge" style="background:rgba(255,45,85,0.2);color:#ff2d55">LIVE</span></div>' : ''}
-</div>
+    /* Caption box */
+    .post-caption-wrap {
+      position: relative;
+    }
+    .post-caption {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.75);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.65;
+      max-height: 220px;
+      overflow-y: auto;
+      transition: max-height 0.3s ease;
+    }
+    .post-caption.expanded {
+      max-height: none;
+    }
+    .expand-btn {
+      display: block;
+      text-align: center;
+      padding: 6px;
+      font-size: 0.7rem;
+      color: var(--gold);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-weight: 600;
+    }
+    .expand-btn:hover { opacity: 0.8; }
 
-<!-- ═══ COMENTÁRIOS PRONTOS ═══ -->
-<div class="section">
-  <div class="section-title">💬 COMENTÁRIOS PRONTOS (clique para copiar)</div>
-  <p style="font-size:0.7rem;color:rgba(255,255,255,0.3);margin-bottom:8px">Use em vídeos de outros criadores gospel para atrair seguidores:</p>
+    /* Action buttons */
+    .post-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #0a0a0f;
+    }
+    .btn-gold:hover { opacity: 0.9; box-shadow: 0 4px 20px rgba(212,168,83,0.3); }
+    .btn-outline {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { background: var(--bg-card-hover); border-color: var(--border-hover); }
+    .btn-green {
+      background: var(--green-bg);
+      border: 1px solid rgba(52,199,89,0.25);
+      color: var(--green);
+    }
+    .btn-green:hover { background: rgba(52,199,89,0.2); }
 
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">🙏 Que palavra poderosa! Isso tocou meu coração. AMÉM!</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">Deus te abençoe por compartilhar isso! Salvei pra reler 🔖❤️</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">Esse versículo mudou meu dia INTEIRO! Glória a Deus 🔥🙏</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">AMÉM! Isso não foi coincidência, Deus me trouxe até aqui ✝️</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">Chorei com esse vídeo 😭🙏 Deus é maravilhoso!</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">Quem precisa ouvir isso HOJE? Marque nos comentários! ❤️</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">Obrigado Senhor por essa palavra! Comenta AMÉM quem recebe 🙏</div>
-  <div class="comment-template" onclick="navigator.clipboard.writeText(this.textContent.replace(' ✅',''))">Isso é pra mim! O Senhor está falando comigo nesse momento 💛✝️</div>
-</div>
+    /* ── MUSIC TABLE ── */
+    .music-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+    }
+    .music-table th {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 8px 14px;
+      text-align: left;
+    }
+    .music-table td {
+      padding: 14px;
+      background: var(--bg-card);
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .music-table tr:hover td {
+      background: var(--bg-card-hover);
+    }
+    .music-table td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .music-table td:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .music-rank {
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--gold);
+      min-width: 30px;
+    }
+    .music-rank.top3 {
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .music-title {
+      font-weight: 700;
+    }
+    .music-artist {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+    .music-videos {
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .music-growth {
+      font-weight: 700;
+      color: var(--green);
+      font-size: 0.75rem;
+    }
+    .music-cat {
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: var(--gold-bg);
+      color: var(--gold);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .music-tip {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      max-width: 250px;
+    }
+    .music-search-btn {
+      padding: 6px 12px;
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .music-search-btn:hover {
+      background: var(--gold-bg);
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
 
-<!-- ═══ CONTAS PARA INTERAGIR ═══ -->
-<div class="section">
-  <div class="section-title">👥 CONTAS PARA INTERAGIR DIARIAMENTE</div>
-  <div class="accounts-grid">
-    <div class="account-card"><div><div class="handle">@isaiassaad</div><div class="desc">Worship · 5M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@fernandinhoficial</div><div class="desc">Gospel · 3M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@gabrielarocha</div><div class="desc">Worship · 4M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@pretononbranco</div><div class="desc">Gospel Duo · 2M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@alinebarros</div><div class="desc">Gospel · 6M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@andersonfreire</div><div class="desc">Gospel · 3M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@tiagobrunet</div><div class="desc">Pregação · 2M+</div></div></div>
-    <div class="account-card"><div><div class="handle">@lucianosubira</div><div class="desc">Teologia · 1M+</div></div></div>
-  </div>
-  <div class="tip">💡 Comente nos vídeos RECENTES deles (últimas 2h) — seu comentário fica no topo e outros seguidores veem</div>
-</div>
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-btn {
+      padding: 7px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--gold-bg);
+      border-color: var(--gold-border);
+      color: var(--gold);
+    }
 
-<!-- ═══ HASHTAGS VIRAIS ═══ -->
-<div class="section">
-  <div class="section-title">🏷️ HASHTAGS PARA BUSCAR E ENGAJAR</div>
-  <div style="display:flex;flex-wrap:wrap;gap:6px">
-    ${['#versiculododia','#gospel','#fe','#jesus','#deus','#biblia','#cristao','#igrejaevcristã','#louvores','#palavradedeus','#devocional','#adoracao','#salvação','#oração','#deusefiel'].map(h => '<span style="padding:4px 10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:0.72rem;color:rgba(255,255,255,0.6)">'+h+'</span>').join('')}
-  </div>
-</div>
+    /* ── NOTIFICATION TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 24px;
+      background: var(--green);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      z-index: 9999;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+      box-shadow: 0 8px 30px rgba(52,199,89,0.4);
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
 
-<!-- ═══ HACKS VIRAIS ═══ -->
-<div class="section">
-  <div class="section-title">🚀 HACKS PARA VIRALIZAR</div>
+    /* ── TAB CONTENT ── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-  <div class="card highlight">
-    <h3>⚡ Primeiros 30 Minutos</h3>
-    <p>Após postar, fique ATIVO por 30 min — curta, comente, responda. O TikTok testa seu vídeo nos primeiros 30 min. Se houver engajamento alto, BOTA NA FYP!</p>
-  </div>
+    /* ── CALENDAR GRID ── */
+    .calendar-week {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .calendar-day {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .calendar-day:hover, .calendar-day.active {
+      border-color: var(--gold-border);
+      background: var(--gold-bg);
+    }
+    .calendar-day-num {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+    .calendar-day-label {
+      font-size: 0.62rem;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+    .calendar-day-posts {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 6px;
+    }
+    .calendar-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+    .dot-morning { background: #ffc400; }
+    .dot-afternoon { background: #ff9500; }
+    .dot-evening { background: #af82ff; }
 
-  <div class="card highlight">
-    <h3>🔁 Duetos com Criadores Grandes</h3>
-    <p>Faça dueto com vídeos de Isaías Saad, Fernandinho etc. — seu rosto aparece ao lado deles. Seguidores DELES descobrem VOCÊ.</p>
-  </div>
+    /* ── QUICK COPY SECTION ── */
+    .quick-copy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px;
+    }
+    .quick-copy-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quick-copy-card:hover {
+      border-color: var(--gold-border);
+      background: var(--bg-card-hover);
+    }
+    .quick-copy-card:active {
+      transform: scale(0.98);
+    }
 
-  <div class="card highlight">
-    <h3>📌 Pin o Melhor Comentário</h3>
-    <p>Fixe comentários tipo "Comenta AMÉM 🙏" — as pessoas respondem e o engajamento EXPLODE.</p>
-  </div>
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .app { padding: 12px; }
+      .topnav { flex-direction: column; align-items: stretch; gap: 8px; }
+      .topnav-brand { justify-content: space-between; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .stat-value { font-size: 1.6rem; }
+      .post-card-body { grid-template-columns: 1fr; }
+      .post-video-wrap { max-width: 300px; margin: 0 auto; }
+      .music-table { font-size: 0.72rem; }
+      .music-table th:nth-child(n+5),
+      .music-table td:nth-child(n+5) { display: none; }
+      .calendar-week { grid-template-columns: repeat(4, 1fr); }
+      .tabs { gap: 4px; }
+      .tab { padding: 8px 14px; font-size: 0.72rem; }
+      .quick-copy-grid { grid-template-columns: 1fr; }
+      .day-separator { flex-direction: column; text-align: center; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .stat-card { padding: 14px; }
+      .post-card { padding: 14px; }
+      .post-actions { flex-direction: column; }
+      .btn { justify-content: center; }
+      .calendar-week { grid-template-columns: repeat(3, 1fr); }
+    }
+  `;
 
-  <div class="card highlight">
-    <h3>🎵 Use Sons Trending</h3>
-    <p>Abra "Sons" no TikTok → filtre por "Gospel" → escolha o som com MAIS vídeos. O algoritmo prioriza sons em alta.</p>
-  </div>
-
-  <div class="card highlight">
-    <h3>⏰ Horários de Ouro (Brasil)</h3>
-    <p>06:00-07:00 · 12:00-13:00 · 18:00-19:00 · 20:00-22:00 — São os horários com MAIS público online no TikTok BR.</p>
-  </div>
-</div>
-
-<!-- ═══ MONETIZAÇÃO ═══ -->
-<div class="section">
-  <div class="section-title">💰 AÇÕES DE MONETIZAÇÃO</div>
-
-  <div class="card">
-    <h3>🛒 Hotmart — Afiliados Gospel</h3>
-    <p>1. Acesse hotmart.com → Mercado → Busque "Bíblia", "Teologia", "Devocional"<br>
-    2. Solicite afiliação nos TOP 5 produtos (comissão 40-60%)<br>
-    3. Coloque o link na bio quando atingir 1K seguidores<br>
-    4. Mencione o produto sutilmente nos vídeos: "Link na bio pra quem quer se aprofundar 📖"</p>
-  </div>
-
-  <div class="card">
-    <h3>📱 Funil de Vendas</h3>
-    <p>TikTok → Link na Bio → fetok-oficial.surge.sh → Produto Afiliado<br>
-    Cada clique no link = potencial comissão de R$15-150!</p>
-  </div>
-
-  <div class="card ${isSunday ? 'live' : ''}">
-    <h3>🔴 Lives de Oração ${isSunday ? '(HOJE!)' : '(Todo Domingo 20h)'}</h3>
-    <p>30-60 min ao vivo rezando + lendo versículos.<br>
-    Seguidores enviam presentes (coins → dinheiro real).<br>
-    Lives são o MAIOR acelerador de crescimento — 3-5x mais rápido.</p>
-  </div>
-
-  <div class="card">
-    <h3>📦 Produto Digital (Mês 5+)</h3>
-    <p>"Devocional FéTok 365" — Ebook com 365 versículos + reflexões diárias.<br>
-    Preço: R$27-47 · Margem: 100% · Venda pelo link na bio.</p>
-  </div>
-</div>
-
-<!-- ═══ MARCOS ═══ -->
-<div class="section">
-  <div class="section-title">🏆 MARCOS DE CRESCIMENTO</div>
-
-  <div class="milestone">
-    <div class="milestone-num">1K</div>
-    <div><div class="milestone-label">Link clicável na bio</div>
-    <div class="milestone-reward">→ Ativa afiliados · Receita começa</div></div>
-  </div>
-  <div class="milestone">
-    <div class="milestone-num">10K</div>
-    <div><div class="milestone-label">Creator Fund + Lives</div>
-    <div class="milestone-reward">→ TikTok te paga por views · Presentes em lives</div></div>
-  </div>
-  <div class="milestone">
-    <div class="milestone-num">50K</div>
-    <div><div class="milestone-label">Marca reconhecida</div>
-    <div class="milestone-reward">→ Parcerias pagas · Produto próprio viável</div></div>
-  </div>
-  <div class="milestone">
-    <div class="milestone-num">100K</div>
-    <div><div class="milestone-label">Influenciador gospel</div>
-    <div class="milestone-reward">→ R$5K-15K/mês · Patrocínios · Palestras</div></div>
-  </div>
-  <div class="milestone">
-    <div class="milestone-num">250K</div>
-    <div><div class="milestone-label">Referência do nicho</div>
-    <div class="milestone-reward">→ R$15K-50K/mês · Marca própria · Multi-plataforma</div></div>
-  </div>
-</div>
-
-<p style="text-align:center;color:rgba(255,255,255,0.15);font-size:0.65rem;margin-top:24px">FéTok v1.0 · Consistência > Perfeição · 3 posts/dia mudam tudo</p>
-</div>
-<script>
-// Save checkbox states
-document.querySelectorAll('.check-item input').forEach((cb,i) => {
-  const key = 'fetok_check_'+new Date().toDateString()+'_'+i;
-  cb.checked = localStorage.getItem(key)==='true';
-  if(cb.checked) cb.closest('.check-item').classList.add('done');
-  cb.addEventListener('change',()=>localStorage.setItem(key,cb.checked));
-});
-</script>
-</body></html>`);
-  });
-
-
-  app.get('/guide', (req, res) => {
-    const posts = [
-      { day:1, slot:'06:00', emoji:'☀️', ref:'Salmos 91:1', video:'verse_salmos_91.mp4', music:'Isaias Saad → Bondade de Deus', caption:'Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso. 🛡️✝️\\nSalmos 91:1\\n\\nVocê está debaixo da proteção de Deus AGORA. 🙏\\nDeixe um ❤️ se você crê nessa promessa!\\nSalve esse vídeo. Você vai precisar dele. 🔖\\n\\n#versiculododia #biblia #fe #jesus #deus #salmos91 #proteção #deuscuida #fetok #fyp #viral #foryou #gospel #cristao #palavradedeus' },
-      { day:1, slot:'12:00', emoji:'🌤️', ref:'Salmos 27:1', video:'verse_salmos_27.mp4', music:'Gabriela Rocha → Lugar Secreto', caption:'O Senhor é a minha luz e a minha salvação; de quem terei medo? 💡✝️\\nSalmos 27:1\\n\\nNINGUÉM pode te derrubar quando Deus está ao seu lado! 🔥\\nComenta AMÉM se você não tem medo porque Deus está contigo! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #salmos #luz #salvação #naotemas #fetok #fyp #viral #gospel #cristao #deusefiel' },
-      { day:1, slot:'20:00', emoji:'🌙', ref:'Salmos 46:1', video:'verse_salmos_46.mp4', music:'Fernandinho → Grandes Coisas', caption:'Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia. 🏰✝️\\nSalmos 46:1\\n\\nSe você está passando por uma tempestade, PARE e leia isso de novo. 🙏\\nDeus é sua FORTALEZA. Nunca esqueça disso. ❤️\\nCompartilhe com alguém que precisa ouvir isso HOJE!\\n\\n#versiculododia #biblia #fe #jesus #deus #refúgio #fortaleza #angustia #fetok #fyp #viral #gospel #cristao #salmos' },
-      { day:2, slot:'06:00', emoji:'☀️', ref:'Salmos 145:18', video:'verse_salmos_145.mp4', music:'Aline Barros → Ressuscita-me', caption:'O Senhor está perto de todos os que o invocam. 🙏✝️\\nSalmos 145:18\\n\\nDeus NUNCA te abandonou. Ele está mais perto do que você imagina. 💛\\nSe você precisa de Deus nesse momento, comenta 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #oração #perto #fetok #fyp #viral #gospel #cristao #devocional' },
-      { day:2, slot:'12:00', emoji:'🌤️', ref:'Isaías 41:10', video:'verse_isaias_41.mp4', music:'Isaias Saad → Me Atraiu', caption:'Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus. 💪✝️\\nIsaías 41:10\\n\\nIsso não foi coincidência. Deus te trouxe até esse vídeo AGORA. ✨\\nVocê NÃO está sozinho nessa luta! 🔥\\nComenta AMÉM e salva esse vídeo! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #naotemas #coragem #isaias #fetok #fyp #viral #gospel #cristao #fortaleza' },
-      { day:2, slot:'20:00', emoji:'🌙', ref:'Josué 1:9', video:'verse_josue_1.mp4', music:'Anderson Freire → Primeira Essência', caption:'Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você. ⚔️✝️\\nJosué 1:9\\n\\nGuerreiro de Deus, LEVANTE A CABEÇA! 👑\\nA batalha é do Senhor e a vitória já é SUA! 🔥\\nMarque alguém que precisa de CORAGEM hoje! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #coragem #guerreiro #josue #fetok #fyp #viral #gospel #cristao #vitoria' },
-      { day:3, slot:'06:00', emoji:'☀️', ref:'Isaías 43:2', video:'verse_isaias_43.mp4', music:'Gabriela Rocha → Eu Navegarei', caption:'Quando passares pelas águas, estarei contigo. 🌊✝️\\nIsaías 43:2\\n\\nNas águas mais profundas, Deus SEGURA sua mão. 🤝\\nVocê pode estar na tempestade, mas NÃO vai se afogar! 🙏\\nDeixe um 💙 se Deus já te salvou!\\n\\n#versiculododia #biblia #fe #jesus #deus #tempestade #águas #isaias #fetok #fyp #viral #gospel #cristao #proteção' },
-      { day:3, slot:'12:00', emoji:'🌤️', ref:'Salmos 46:7', video:'verse_salmos_46_7.mp4', music:'Fernandinho → Eu Vou Abrir o Mar', caption:'O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio. 🏰✝️\\nSalmos 46:7\\n\\nO DEUS DOS EXÉRCITOS luta por VOCÊ! ⚔️\\nNenhum inimigo prevalecerá! 🔥\\nComenta "DEUS É FIEL" se você crê nisso! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #exercitos #refúgio #salmos #fetok #fyp #viral #gospel #cristao #batalha' },
-      { day:3, slot:'20:00', emoji:'🌙', ref:'1 Coríntios 13:4', video:'verse_1cor_13.mp4', music:'Preto no Branco → Ninguém Explica Deus', caption:'O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. 💕✝️\\n1 Coríntios 13:4\\n\\nO verdadeiro amor vem de DEUS. ❤️\\nMarque a pessoa que você AMA! 💛🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #amor #corintios #fetok #fyp #viral #gospel #cristao #amordedeus' },
-      { day:4, slot:'06:00', emoji:'☀️', ref:'Jeremias 29:11', video:'verse_jeremias_29.mp4', music:'Aline Barros → Sonda-me', caption:'Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano. 🌅✝️\\nJeremias 29:11\\n\\nDeus tem um PLANO para sua vida! Confie no processo! ✨\\nComenta "EU CONFIO" se você entrega seus planos a Deus! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #planos #jeremias #fetok #fyp #viral #gospel #cristao' },
-      { day:4, slot:'12:00', emoji:'🌤️', ref:'Romanos 5:8', video:'verse_romanos_5.mp4', music:'Isaias Saad → Bondade de Deus', caption:'Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós. ✝️❤️\\nRomanos 5:8\\n\\nEle MORREU por você. Enquanto você ainda era pecador. 😭\\nNão existe amor MAIOR que esse! 🙏\\nDeixe ❤️ e compartilhe!\\n\\n#versiculododia #biblia #fe #jesus #deus #amor #cruz #romanos #fetok #fyp #viral #gospel #cristao #calvario' },
-      { day:4, slot:'20:00', emoji:'🌙', ref:'Isaías 54:10', video:'verse_isaias_54.mp4', music:'Gabriela Rocha → Deus Provará', caption:'Porque as montanhas se retirarão, mas a minha graça não se apartará de ti. 🏔️✝️\\nIsaías 54:10\\n\\nAs MONTANHAS vão cair. Mas o amor de Deus? JAMAIS. 💛\\nSalve esse vídeo e assista quando precisar de força! 🔖\\n\\n#versiculododia #biblia #fe #jesus #deus #graça #montanhas #isaias #fetok #fyp #viral #gospel #cristao #promessa' },
-      { day:5, slot:'06:00', emoji:'☀️', ref:'Filipenses 4:13', video:'verse_filipenses_4.mp4', music:'Anderson Freire → Raridade', caption:'Tudo posso naquele que me fortalece. 💪✝️\\nFilipenses 4:13\\n\\nTUDO. Não é "algumas coisas". É TUDO! 🔥\\nCom Deus, não existe limite pra você! ⚡\\nComenta AMÉM se você crê! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #tudoposso #força #filipenses #fetok #fyp #viral #gospel #cristao #guerreiro' },
-      { day:5, slot:'12:00', emoji:'🌤️', ref:'Isaías 40:31', video:'verse_isaias_40.mp4', music:'Fernandinho → Faz Chover', caption:'Os que esperam no Senhor renovam as suas forças; sobem com asas como águias. 🦅✝️\\nIsaías 40:31\\n\\nVocê tá cansado? ESPERE no Senhor! 🙏\\nEle vai te fazer VOAR como águia! ⚡\\nMarque alguém que precisa renovar as forças! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #águia #renovar #isaias #fetok #fyp #viral #gospel #cristao' },
-      { day:5, slot:'20:00', emoji:'🌙', ref:'Êxodo 15:2', video:'verse_isaias_54.mp4', music:'Soraya Moraes → Quão Grande É', caption:'O Senhor é a minha força e o meu cântico; ele é a minha salvação. 🎵✝️\\nÊxodo 15:2\\n\\nDeus é sua FORÇA quando você está fraco! 💪\\nComenta 🎵 se Deus é a sua música! 🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #força #salvação #exodo #fetok #fyp #viral #gospel #cristao #louvor' },
-      { day:6, slot:'06:00', emoji:'☀️', ref:'Romanos 8:28', video:'verse_romanos_8.mp4', music:'Aline Barros → Consagração', caption:'Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus. 🌈✝️\\nRomanos 8:28\\n\\nTUDO coopera pro seu bem. Até aquilo que parece ruim AGORA. ✨\\nDeixe ❤️ se você confia que Deus está trabalhando!\\n\\n#versiculododia #biblia #fe #jesus #deus #romanos #propósito #fetok #fyp #viral #gospel #cristao #confiança' },
-      { day:6, slot:'12:00', emoji:'🌤️', ref:'Efésios 6:10', video:'verse_efesios_6.mp4', music:'Anderson Freire → Identidade', caption:'Fortalecei-vos no Senhor e na força do seu poder. ⚔️✝️\\nEfésios 6:10\\n\\nVista a ARMADURA de Deus! 🛡️\\nComenta "SOU GUERREIRO DE DEUS" se você está pronto! ⚔️🙏\\n\\n#versiculododia #biblia #fe #jesus #deus #armadura #guerreiro #efesios #fetok #fyp #viral #gospel #cristao #vitoria' },
-      { day:6, slot:'20:00', emoji:'🌙', ref:'Hebreus 11:1', video:'verse_hebreus_11.mp4', music:'Isaias Saad → Me Atraiu', caption:'Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos. 🙏✝️\\nHebreus 11:1\\n\\nVocê não precisa VER pra CRER. Isso é FÉ! 🔥\\nComenta "EU CREIO" se você anda por fé! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #hebreus #certeza #crer #fetok #fyp #viral #gospel #cristao #confiança' },
-      { day:7, slot:'06:00', emoji:'☀️', ref:'Provérbios 3:5', video:'verse_proverbios_3.mp4', music:'Gabriela Rocha → Deus Provará', caption:'Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. 📖✝️\\nProvérbios 3:5\\n\\nPare de tentar ENTENDER tudo. Apenas CONFIE! 🙏\\nComenta "EU CONFIO" se você entrega tudo a Deus! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #confiança #proverbios #fetok #fyp #viral #gospel #cristao #entrega' },
-      { day:7, slot:'12:00', emoji:'🌤️', ref:'Salmos 37:5', video:'verse_salmos_37.mp4', music:'Preto no Branco → Me Deixa Aqui', caption:'Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará. 🫒✝️\\nSalmos 37:5\\n\\nENTREGUE. CONFIE. E DESCANSE. Deus vai fazer! 🙏\\nCompartilhe com quem está carregando um fardo pesado! ❤️\\n\\n#versiculododia #biblia #fe #jesus #deus #entrega #caminho #salmos #fetok #fyp #viral #gospel #cristao #descanso' },
-      { day:7, slot:'20:00', emoji:'🌙', ref:'2 Coríntios 5:7', video:'verse_2cor_5.mp4', music:'Isaias Saad → Bondade de Deus', caption:'Porque andamos por fé e não por vista. 🌫️✝️\\n2 Coríntios 5:7\\n\\nVocê não precisa ver o CAMINHO inteiro. Só o PRÓXIMO PASSO. 🚶‍♂️\\nComenta "FÉ" se você caminha confiando em Deus! 🙏❤️\\nSIGA para mais versículos diários! 🔔\\n\\n#versiculododia #biblia #fe #jesus #deus #fé #corintios #fetok #fyp #viral #gospel #cristao #jornada' },
-    ];
-
-    const postCards = posts.map((p, i) => `
-      <div class="post-card" id="post-${i}">
-        <div class="post-header">
-          <span class="post-day">Dia ${p.day}</span>
-          <span class="post-time">${p.emoji} ${p.slot}</span>
-        </div>
-        <div class="post-ref">${p.ref}</div>
-        <div class="post-media">
-          <video controls muted playsinline preload="metadata"><source src="/media/${p.video}" type="video/mp4"></video>
-        </div>
-        <div class="post-music">🎵 ${p.music}</div>
-        <pre class="post-caption" id="caption-${i}">${p.caption.replace(/\\n/g, '\n')}</pre>
-        <div class="btn-row">
-          <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('caption-${i}').textContent).then(()=>this.textContent='✅ Copiado!')">📋 Copiar Legenda</button>
-          <a class="download-btn" href="/media/${p.video}" download>⬇️ Baixar Vídeo</a>
-        </div>
-      </div>
-    `).join('');
-
-    res.send(`<!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>FéTok — 21 Posts Guide</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',-apple-system,sans-serif;background:#0a0a0f;color:#fff;min-height:100vh}
-.container{max-width:800px;margin:0 auto;padding:24px}
-h1{font-size:1.6rem;margin-bottom:4px}
-h1 span{background:linear-gradient(135deg,#d4a853,#f0d78c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sub{color:rgba(255,255,255,0.4);font-size:0.8rem;margin-bottom:24px}
-.post-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:16px}
-.post-header{display:flex;justify-content:space-between;margin-bottom:8px}
-.post-day{font-size:0.7rem;font-weight:700;color:#d4a853;text-transform:uppercase;letter-spacing:0.05em}
-.post-time{font-size:0.8rem;font-weight:600}
-.post-ref{font-size:1.1rem;font-weight:800;margin-bottom:8px}
-.post-media{margin-bottom:12px;border-radius:12px;overflow:hidden;max-width:280px}
-.post-media video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:12px;background:#111}
-.post-music{font-size:0.8rem;color:#d4a853;margin-bottom:8px;padding:6px 10px;background:rgba(212,168,83,0.08);border:1px solid rgba(212,168,83,0.2);border-radius:8px;display:inline-block}
-.post-caption{font-family:inherit;font-size:0.78rem;color:rgba(255,255,255,0.7);background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;white-space:pre-wrap;word-wrap:break-word;line-height:1.5;margin-bottom:10px}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap}
-.copy-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;background:#d4a853;color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;transition:all 0.2s}
-.copy-btn:hover{opacity:0.85;transform:scale(1.02)}
-.download-btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;background:rgba(255,255,255,0.08);color:#fff;border-radius:8px;font-weight:600;font-size:0.78rem;text-decoration:none;transition:all 0.2s}
-.download-btn:hover{background:rgba(255,255,255,0.15)}
-.back{display:inline-flex;padding:6px 14px;background:rgba(255,255,255,0.06);color:#fff;border-radius:8px;font-size:0.75rem;text-decoration:none;margin-bottom:16px}
-</style></head><body><div class="container">
-<a href="/" class="back">← Dashboard</a>
-<h1>Fe<span>Tok</span> — 21 Posts Prontos ✝️</h1>
-<p class="sub">Clique "Copiar Legenda" e cole no TikTok Studio • 7 dias × 3 posts/dia</p>
-${postCards}
-<p style="text-align:center;color:rgba(255,255,255,0.2);font-size:0.65rem;margin-top:24px">FéTok Auto-Poster v1.0 · Pasta: fetok-autoposter/output/videos/</p>
-</div></body></html>`);
-  });
-
-  // Dashboard HTML
+  /* ═══════════════════════════════════════════════════════════
+     MAIN DASHBOARD — / route
+     ═══════════════════════════════════════════════════════════ */
   app.get('/', (req, res) => {
     const stats = getStats();
     const historyFile = path.join(OUTPUT_DIR, 'history.json');
@@ -437,115 +1058,515 @@ ${postCards}
       try { history = JSON.parse(fs.readFileSync(historyFile, 'utf8')); } catch(e) {}
     }
 
-    // List available videos
     const videos = fs.existsSync(OUTPUT_DIR) 
       ? fs.readdirSync(OUTPUT_DIR).filter(f => f.endsWith('.mp4')).sort()
       : [];
+
+    // Build post cards HTML
+    let currentDay = 0;
+    let postsHTML = '';
+    const dayNames = ['', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+
+    POSTS_DATA.forEach((p, i) => {
+      // Day separator
+      if (p.day !== currentDay) {
+        currentDay = p.day;
+        const themes = [...new Set(POSTS_DATA.filter(x => x.day === p.day).map(x => x.theme))];
+        postsHTML += `
+          <div class="day-separator" id="day-${p.day}">
+            <div class="day-number">${p.day}</div>
+            <div class="day-info">
+              <div class="day-label">📅 Dia ${p.day} — ${dayNames[p.day] || ''}</div>
+              <div class="day-date">3 posts programados</div>
+            </div>
+            <div class="day-themes">
+              ${themes.map(t => `<span class="theme-pill theme-${t}">${t}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Post card
+      const slotClass = p.slotKey === 'morning' ? 'slot-morning' : p.slotKey === 'afternoon' ? 'slot-afternoon' : 'slot-evening';
+      const themeClass = `theme-${p.theme}`;
+      
+      postsHTML += `
+        <div class="post-card" data-day="${p.day}" data-slot="${p.slotKey}" data-theme="${p.theme}">
+          <div class="post-card-header">
+            <div class="post-card-left">
+              <span class="post-slot-badge ${slotClass}">${p.emoji} ${p.slot}</span>
+              <span class="post-verse-ref">${p.themeEmoji} ${p.verse}</span>
+            </div>
+            <span class="post-theme-badge ${themeClass}">${p.theme}</span>
+          </div>
+          <div class="post-card-body">
+            <div class="post-video-wrap">
+              <video controls muted playsinline preload="metadata" poster="">
+                <source src="/output/${p.videoFile}" type="video/mp4">
+              </video>
+            </div>
+            <div class="post-content">
+              <div class="post-music">
+                <span class="post-music-icon">🎵</span>
+                <div>
+                  <div>${p.music}</div>
+                  <div class="post-music-search">Buscar: "${p.musicSearch}"</div>
+                </div>
+              </div>
+              <div class="post-caption-wrap">
+                <pre class="post-caption" id="caption-${i}">${escapeHtml(p.caption)}</pre>
+                <button class="expand-btn" onclick="toggleCaption(${i})">▼ Expandir legenda</button>
+              </div>
+              <div class="post-actions">
+                <button class="btn btn-gold" onclick="copyCaption(${i})">📋 Copiar Legenda</button>
+                <a class="btn btn-outline" href="/output/${p.videoFile}" download>⬇️ Baixar Vídeo</a>
+                <button class="btn btn-green" onclick="markAsPosted(${i}, '${p.verse}')">✅ Marcar Postado</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    // Build music table HTML
+    const musicHTML = VIRAL_MUSIC.map(m => `
+      <tr>
+        <td><span class="music-rank ${m.rank <= 3 ? 'top3' : ''}">${m.rank <= 3 ? ['🥇','🥈','🥉'][m.rank-1] : '#'+m.rank}</span></td>
+        <td>
+          <div class="music-title">${m.title}</div>
+          <div class="music-artist">${m.artist}</div>
+        </td>
+        <td><span class="music-videos">${m.videos}</span> vídeos</td>
+        <td><span class="music-growth">${m.growth}</span></td>
+        <td><span class="music-cat">${m.category}</span></td>
+        <td><span class="music-tip">${m.tip}</span></td>
+        <td><button class="music-search-btn" onclick="navigator.clipboard.writeText('${m.searchTerm}');showToast('🎵 Termo copiado: ${m.searchTerm}')">📋 Copiar busca</button></td>
+      </tr>
+    `).join('');
+
+    // Calendar HTML
+    const calendarHTML = Array.from({length: 7}, (_, i) => {
+      const d = i + 1;
+      return `
+        <div class="calendar-day" onclick="scrollToDay(${d})">
+          <div class="calendar-day-num">${d}</div>
+          <div class="calendar-day-label">Dia ${d}</div>
+          <div class="calendar-day-posts">
+            <span class="calendar-dot dot-morning"></span>
+            <span class="calendar-dot dot-afternoon"></span>
+            <span class="calendar-dot dot-evening"></span>
+          </div>
+        </div>
+      `;
+    }).join('');
 
     res.send(`<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FéTok Dashboard</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter',-apple-system,sans-serif; background:#0a0a0f; color:#fff; min-height:100vh; }
-    .container { max-width:1200px; margin:0 auto; padding:24px; }
-    h1 { font-size:1.8rem; margin-bottom:8px; }
-    h1 span { background:linear-gradient(135deg,#d4a853,#f0d78c); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .subtitle { color:rgba(255,255,255,0.5); margin-bottom:32px; font-size:0.85rem; }
-    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
-    .stat-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px; text-align:center; }
-    .stat-value { font-size:2rem; font-weight:800; color:#d4a853; }
-    .stat-label { font-size:0.7rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.05em; margin-top:4px; }
-    .section { margin-bottom:32px; }
-    .section-title { font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px; }
-    .schedule-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .time-slot { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px; }
-    .time-slot h3 { font-size:0.9rem; color:#d4a853; margin-bottom:4px; }
-    .time-slot p { font-size:0.75rem; color:rgba(255,255,255,0.5); }
-    .history-item { display:flex; align-items:center; gap:12px; padding:12px 16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; margin-bottom:8px; }
-    .history-dot { width:8px; height:8px; border-radius:50%; background:#34c759; flex-shrink:0; }
-    .history-dot.manual { background:#ff9500; }
-    .history-info { flex:1; }
-    .history-verse { font-size:0.85rem; font-weight:600; }
-    .history-time { font-size:0.7rem; color:rgba(255,255,255,0.4); }
-    .video-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
-    .video-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; }
-    .video-card video { width:100%; aspect-ratio:9/16; object-fit:cover; }
-    .video-card .name { padding:8px 12px; font-size:0.7rem; color:rgba(255,255,255,0.5); }
-    .btn { display:inline-flex; padding:8px 16px; background:#d4a853; color:#000; border:none; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer; text-decoration:none; }
-    .btn:hover { opacity:0.9; }
-    .cron-status { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; background:rgba(52,199,89,0.15); border:1px solid rgba(52,199,89,0.3); border-radius:8px; font-size:0.7rem; color:#34c759; }
-    .cron-status::before { content:''; width:6px; height:6px; border-radius:50%; background:#34c759; animation:pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  </style>
+  <title>FéTok — Content Hub</title>
+  <meta name="description" content="FéTok Content Management Hub — 21 posts prontos para viralizar no TikTok">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✝️</text></svg>">
+  <style>${CSS}</style>
 </head>
 <body>
-  <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <h1>Fe<span>Tok</span> Dashboard ✝️</h1>
-      <span class="cron-status">CRON ATIVO — 3x/dia</span>
-    </div>
-    <p class="subtitle">@luz.da.palavra.oficial · Auto-poster pipeline · ${new Date().toLocaleDateString('pt-BR')}</p>
-
-    <div class="stats">
-      <div class="stat-card"><div class="stat-value">${stats.total}</div><div class="stat-label">Versículos</div></div>
-      <div class="stat-card"><div class="stat-value">${stats.posted}</div><div class="stat-label">Postados</div></div>
-      <div class="stat-card"><div class="stat-value">${stats.remaining}</div><div class="stat-label">Na fila</div></div>
-      <div class="stat-card"><div class="stat-value">${videos.length}</div><div class="stat-label">Vídeos prontos</div></div>
+  <div class="app">
+    <!-- TOP NAV -->
+    <div class="topnav">
+      <div class="topnav-brand">
+        <h1>Fé<span>Tok</span> Content Hub ✝️</h1>
+        <span class="topnav-status">PIPELINE ATIVO</span>
+      </div>
+      <div class="topnav-handle">@luz.da.palavra.oficial · ${new Date().toLocaleDateString('pt-BR')} · ${videos.length} vídeos prontos</div>
     </div>
 
-    <div class="section">
-      <div class="section-title">⏰ Horários de Publicação (BRT)</div>
-      <div class="schedule-grid">
-        <div class="time-slot"><h3>☀️ 06:00</h3><p>Devocional matinal — fé, proteção, gratidão</p></div>
-        <div class="time-slot"><h3>🌤️ 12:00</h3><p>Motivacional — força, coragem, vitória</p></div>
-        <div class="time-slot"><h3>🌙 20:00</h3><p>Emocional — amor, paz, esperança</p></div>
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">21</div>
+        <div class="stat-label">Posts Prontos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${videos.length}</div>
+        <div class="stat-label">Vídeos Gerados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">7</div>
+        <div class="stat-label">Dias Programados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${VIRAL_MUSIC.length}</div>
+        <div class="stat-label">Músicas Virais</div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">📋 Últimos Posts</div>
-      ${history.length === 0 ? '<p style="color:rgba(255,255,255,0.3);font-size:0.8rem;">Nenhum post ainda. O cron vai disparar nos horários programados.</p>' : 
-        history.slice(-10).reverse().map(h => `
-        <div class="history-item">
-          <div class="history-dot ${h.posted ? '' : 'manual'}"></div>
-          <div class="history-info">
-            <div class="history-verse">📖 ${h.verse} — ${h.text?.substring(0,40)}...</div>
-            <div class="history-time">${h.timestamp} · ${h.slot} · ${h.posted ? '✅ Auto' : '⚠️ Manual'}</div>
+    <!-- TAB NAVIGATION -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('posts')">📱 21 Posts</div>
+      <div class="tab" onclick="switchTab('calendar')">📅 Calendário</div>
+      <div class="tab" onclick="switchTab('captions')">📝 Legendas</div>
+      <div class="tab" onclick="switchTab('music')">🎵 Músicas Virais</div>
+      <div class="tab" onclick="switchTab('rotina')">🔥 Rotina</div>
+    </div>
+
+    <!-- ═══ TAB: 21 POSTS ═══ -->
+    <div class="tab-content active" id="tab-posts">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">📱 TODOS OS 21 POSTS — PRONTOS PARA POSTAR</div>
+          <span class="section-badge">7 dias × 3/dia</span>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar">
+          <span style="font-size:0.7rem;color:var(--text-tertiary);margin-right:4px;">Filtrar:</span>
+          <button class="filter-btn active" onclick="filterPosts('all', this)">Todos</button>
+          <button class="filter-btn" onclick="filterPosts('morning', this)">☀️ Manhã</button>
+          <button class="filter-btn" onclick="filterPosts('afternoon', this)">🌤️ Tarde</button>
+          <button class="filter-btn" onclick="filterPosts('evening', this)">🌙 Noite</button>
+          <button class="filter-btn" onclick="filterByTheme('proteção', this)">🛡️ Proteção</button>
+          <button class="filter-btn" onclick="filterByTheme('coragem', this)">💪 Coragem</button>
+          <button class="filter-btn" onclick="filterByTheme('amor', this)">❤️ Amor</button>
+          <button class="filter-btn" onclick="filterByTheme('força', this)">⚡ Força</button>
+          <button class="filter-btn" onclick="filterByTheme('fé', this)">🙏 Fé</button>
+        </div>
+
+        ${postsHTML}
+      </div>
+    </div>
+
+    <!-- ═══ TAB: CALENDÁRIO ═══ -->
+    <div class="tab-content" id="tab-calendar">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">📅 CALENDÁRIO DE POSTAGENS</div>
+          <span class="section-badge">Clique no dia para navegar</span>
+        </div>
+        <div class="calendar-week">${calendarHTML}</div>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
+          <h3 style="font-size:0.9rem;margin-bottom:12px;">📊 Horários de Ouro (Brasil)</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+            <div style="text-align:center;padding:14px;background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.2);border-radius:var(--radius-sm);">
+              <div style="font-size:1.3rem;font-weight:900;color:#ffc400;">06:00</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">☀️ Devocional matinal</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">fé · proteção · gratidão</div>
+            </div>
+            <div style="text-align:center;padding:14px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);border-radius:var(--radius-sm);">
+              <div style="font-size:1.3rem;font-weight:900;color:#ff9500;">12:00</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">🌤️ Motivacional</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">força · coragem · vitória</div>
+            </div>
+            <div style="text-align:center;padding:14px;background:rgba(175,130,255,0.08);border:1px solid rgba(175,130,255,0.2);border-radius:var(--radius-sm);">
+              <div style="font-size:1.3rem;font-weight:900;color:#af82ff;">20:00</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">🌙 Emocional</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">amor · paz · esperança</div>
+            </div>
           </div>
         </div>
-      `).join('')}
-    </div>
-
-    <div class="section">
-      <div class="section-title">🎬 Vídeos Gerados (${videos.length})</div>
-      <div class="video-grid">
-        ${videos.slice(0, 12).map(v => `
-        <div class="video-card">
-          <video controls muted playsinline preload="metadata"><source src="/videos/${v}" type="video/mp4"></video>
-          <div class="name">${v}</div>
-        </div>
-        `).join('')}
       </div>
     </div>
 
-    <div style="margin-top:24px;text-align:center;">
-      <p style="color:rgba(255,255,255,0.3);font-size:0.7rem;">FéTok Auto-Poster v1.0 · Railway · Node.js + FFmpeg + Sharp</p>
+    <!-- ═══ TAB: LEGENDAS (QUICK COPY) ═══ -->
+    <div class="tab-content" id="tab-captions">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">📝 LEGENDAS PRONTAS — CLIQUE PARA COPIAR</div>
+          <span class="section-badge">Toque em qualquer legenda para copiar</span>
+        </div>
+        <div class="quick-copy-grid">
+          ${POSTS_DATA.map((p, i) => `
+            <div class="quick-copy-card" onclick="navigator.clipboard.writeText(${JSON.stringify(p.caption).replace(/'/g, "\\'")}); showToast('📋 Legenda copiada: ${p.verse}'); this.style.borderColor='var(--gold-border)'">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span style="font-weight:800;font-size:0.85rem;">${p.themeEmoji} ${p.verse}</span>
+                <span class="post-slot-badge ${p.slotKey === 'morning' ? 'slot-morning' : p.slotKey === 'afternoon' ? 'slot-afternoon' : 'slot-evening'}" style="font-size:0.65rem;">${p.emoji} Dia ${p.day} · ${p.slot}</span>
+              </div>
+              <div style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;white-space:pre-wrap;max-height:100px;overflow:hidden;">${escapeHtml(p.caption.split('\n').slice(0,4).join('\n'))}</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+                <span style="font-size:0.65rem;color:var(--gold);">🎵 ${p.music}</span>
+                <span style="font-size:0.65rem;color:var(--text-tertiary);">📋 Toque para copiar</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TAB: MÚSICAS VIRAIS ═══ -->
+    <div class="tab-content" id="tab-music">
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">🎵 TOP 20 MÚSICAS VIRAIS GOSPEL — TIKTOK 2026</div>
+          <span class="section-badge">Ranking por engajamento</span>
+        </div>
+        <div style="padding:14px;background:rgba(212,168,83,0.06);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:20px;font-size:0.75rem;color:var(--text-secondary);">
+          💡 <strong style="color:var(--gold);">DICA PRO:</strong> No TikTok, vá em "Sons" → cole o termo de busca → escolha a versão com <strong>MAIS vídeos</strong> = mais viral. O algoritmo prioriza sons em alta!
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="music-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Música</th>
+                <th>Vídeos</th>
+                <th>Crescimento</th>
+                <th>Categoria</th>
+                <th>Dica de Uso</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${musicHTML}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:16px;">⚡ ESTRATÉGIA MUSICAL PARA VIRALIZAÇÃO</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">🔥 Regra #1: Sons em Alta</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">O algoritmo do TikTok prioriza vídeos que usam sons TRENDING. Use os sons do TOP 5 para maximizar alcance.</p>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">🎯 Regra #2: Match com Conteúdo</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÇÃO → musicas suaves. Posts de FORÇA → músicas com energia. Posts EMOCIONAIS → músicas que fazem chorar.</p>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">⏱️ Regra #3: Timing</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Use o mesmo som por 3-5 vídeos SEGUIDOS. O TikTok te associa ao som e mostra seu conteúdo para quem curtiu aquele som.</p>
+          </div>
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">📈 Regra #4: Sons Emergentes</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Sons com < 100K vídeos mas crescendo RÁPIDO são OURO. Menos competição + algoritmo empurra = viralização fácil.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TAB: ROTINA ═══ -->
+    <div class="tab-content" id="tab-rotina">
+      ${getRotinaSectionHTML()}
     </div>
   </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Tab switching
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    // Copy caption
+    function copyCaption(i) {
+      const el = document.getElementById('caption-' + i);
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        showToast('📋 Legenda copiada! Cole no TikTok Studio');
+      });
+    }
+
+    // Toggle caption expand
+    function toggleCaption(i) {
+      const el = document.getElementById('caption-' + i);
+      el.classList.toggle('expanded');
+      const btn = el.nextElementSibling;
+      btn.textContent = el.classList.contains('expanded') ? '▲ Recolher' : '▼ Expandir legenda';
+    }
+
+    // Mark as posted
+    function markAsPosted(i, verse) {
+      const key = 'fetok_posted_' + i;
+      localStorage.setItem(key, 'true');
+      const card = document.querySelectorAll('.post-card')[i];
+      if (card) {
+        card.style.opacity = '0.5';
+        card.style.borderColor = 'rgba(52,199,89,0.3)';
+      }
+      showToast('✅ ' + verse + ' marcado como postado!');
+    }
+
+    // Filter posts
+    function filterPosts(slot, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.post-card').forEach(card => {
+        if (slot === 'all' || card.dataset.slot === slot) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.querySelectorAll('.day-separator').forEach(s => s.style.display = slot === 'all' ? '' : 'none');
+    }
+
+    function filterByTheme(theme, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.post-card').forEach(card => {
+        card.style.display = card.dataset.theme === theme ? '' : 'none';
+      });
+      document.querySelectorAll('.day-separator').forEach(s => s.style.display = 'none');
+    }
+
+    // Calendar navigation
+    function scrollToDay(day) {
+      switchTab('posts');
+      document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('active');
+        if (t.textContent.includes('21 Posts')) t.classList.add('active');
+      });
+      setTimeout(() => {
+        const el = document.getElementById('day-' + day);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+
+    // Toast notification
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Restore posted states
+    document.querySelectorAll('.post-card').forEach((card, i) => {
+      if (localStorage.getItem('fetok_posted_' + i) === 'true') {
+        card.style.opacity = '0.5';
+        card.style.borderColor = 'rgba(52,199,89,0.3)';
+      }
+    });
+
+    // Checkbox persistence (rotina tab)
+    document.querySelectorAll('.rotina-check input').forEach((cb, i) => {
+      const key = 'fetok_rotina_' + new Date().toDateString() + '_' + i;
+      cb.checked = localStorage.getItem(key) === 'true';
+      if (cb.checked) cb.closest('.rotina-check').classList.add('done');
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked);
+        cb.closest('.rotina-check').classList.toggle('done', cb.checked);
+      });
+    });
+  </script>
 </body>
 </html>`);
   });
 
   app.listen(PORT, () => {
-    console.log(`📊 Dashboard running on port ${PORT}`);
+    console.log(`📊 FéTok Content Hub running on port ${PORT}`);
     console.log(`   http://localhost:${PORT}\n`);
   });
 
   return app;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HELPER: Rotina section
+   ═══════════════════════════════════════════════════════════ */
+function getRotinaSectionHTML() {
+  const today = new Date();
+  const dayNames = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const dayName = dayNames[today.getDay()];
+  const dateStr = today.toLocaleDateString('pt-BR');
+  const isSunday = today.getDay() === 0;
+
+  const checkItems = [
+    { title: '☀️ Post da Manhã (06:00)', desc: 'Upload vídeo + legenda + música gospel → postar 06:00', time: '06:00', timeClass: 'slot-morning' },
+    { title: '🔥 Engajar após post da manhã', desc: 'Curtir 10 vídeos em #versiculododia + comentar 5 deles', time: '06:30', timeClass: 'slot-morning' },
+    { title: '🌤️ Post do Almoço (12:00)', desc: 'Upload vídeo motivacional + legenda + música', time: '12:00', timeClass: 'slot-afternoon' },
+    { title: '📱 Seguir 10-15 criadores gospel', desc: 'Buscar #gospel #fé → seguir contas ativas do nicho', time: '12:30', timeClass: 'slot-afternoon' },
+    { title: '💬 Responder TODOS os comentários', desc: 'Respostas geram notificações = mais engajamento = algoritmo te promove', time: 'Qualquer hora', timeClass: '' },
+    { title: '🌙 Post da Noite (20:00)', desc: 'Upload vídeo emocional + legenda + música', time: '20:00', timeClass: 'slot-evening' },
+    { title: '🌟 Comentar em 5 vídeos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha — seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
+  ];
+
+  const comments = [
+    '🙏 Que palavra poderosa! Isso tocou meu coração. AMÉM!',
+    'Deus te abençoe por compartilhar isso! Salvei pra reler 🔖❤️',
+    'Esse versículo mudou meu dia INTEIRO! Glória a Deus 🔥🙏',
+    'AMÉM! Isso não foi coincidência, Deus me trouxe até aqui ✝️',
+    'Chorei com esse vídeo 😭🙏 Deus é maravilhoso!',
+    'Quem precisa ouvir isso HOJE? Marque nos comentários! ❤️',
+    'Obrigado Senhor por essa palavra! Comenta AMÉM quem recebe 🙏',
+    'Isso é pra mim! O Senhor está falando comigo nesse momento 💛✝️',
+  ];
+
+  return `
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">🔥 ROTINA DIÁRIA DE ENGAJAMENTO</div>
+        <span class="section-badge">${dayName}, ${dateStr}</span>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        ${checkItems.map((item, i) => `
+          <div class="rotina-check" style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;transition:all 0.2s;" onclick="this.querySelector('input').click()">
+            <input type="checkbox" style="margin-top:3px;accent-color:var(--gold);width:16px;height:16px;cursor:pointer;" onclick="event.stopPropagation()">
+            <div style="flex:1;">
+              <div style="font-size:0.82rem;font-weight:600;">${item.title}</div>
+              <div style="font-size:0.68rem;color:var(--text-tertiary);">${item.desc}</div>
+            </div>
+            <span class="post-slot-badge ${item.timeClass}" style="font-size:0.62rem;">${item.time}</span>
+          </div>
+        `).join('')}
+        ${isSunday ? `
+          <div class="rotina-check" style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(255,45,85,0.05);border:1px solid rgba(255,45,85,0.2);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;" onclick="this.querySelector('input').click()">
+            <input type="checkbox" style="margin-top:3px;accent-color:var(--red);width:16px;height:16px;cursor:pointer;" onclick="event.stopPropagation()">
+            <div style="flex:1;">
+              <div style="font-size:0.82rem;font-weight:600;">🔴 LIVE DE ORAÇÃO (Domingo 20h)</div>
+              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oração ao vivo — MAIOR acelerador de crescimento!</div>
+            </div>
+            <span style="font-size:0.62rem;padding:4px 10px;background:rgba(255,45,85,0.2);color:var(--red);border-radius:20px;font-weight:600;">LIVE</span>
+          </div>
+        ` : ''}
+      </div>
+
+      <div class="section-title" style="margin-bottom:12px;">💬 COMENTÁRIOS PRONTOS — CLIQUE PARA COPIAR</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px;margin-bottom:28px;">
+        ${comments.map(c => `
+          <div style="padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.75rem;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;" onclick="navigator.clipboard.writeText('${c.replace(/'/g, "\\'")}');showToast('💬 Comentário copiado!');this.style.borderColor='var(--gold-border)'" onmouseenter="this.style.background='var(--bg-card-hover)'" onmouseleave="this.style.background='var(--bg-card)'">${c}</div>
+        `).join('')}
+      </div>
+
+      <div class="section-title" style="margin-bottom:12px;">👥 CONTAS PARA INTERAGIR</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:20px;">
+        ${[
+          {handle:'@isaiassaad', desc:'Worship · 5M+'},
+          {handle:'@fernandinhoficial', desc:'Gospel · 3M+'},
+          {handle:'@gabrielarocha', desc:'Worship · 4M+'},
+          {handle:'@pretononbranco', desc:'Gospel Duo · 2M+'},
+          {handle:'@alinebarros', desc:'Gospel · 6M+'},
+          {handle:'@andersonfreire', desc:'Gospel · 3M+'},
+          {handle:'@tiagobrunet', desc:'Pregação · 2M+'},
+          {handle:'@lucianosubira', desc:'Teologia · 1M+'},
+        ].map(a => `
+          <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);">
+            <div>
+              <div style="font-weight:700;color:var(--gold);font-size:0.78rem;">${a.handle}</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);">${a.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="padding:12px 16px;background:var(--gold-bg);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:0.72rem;color:var(--text-secondary);">
+        💡 <strong style="color:var(--gold);">DICA:</strong> Comente nos vídeos RECENTES deles (últimas 2h) — seu comentário fica no topo e outros seguidores veem o seu perfil!
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HELPER: HTML Escape
+   ═══════════════════════════════════════════════════════════ */
+function escapeHtml(text) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 module.exports = { startDashboard };
