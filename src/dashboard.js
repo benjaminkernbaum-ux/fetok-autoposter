@@ -16,10 +16,10 @@ const PORT = process.env.PORT || 3000;
 function startDashboard() {
   const app = express();
 
-  // Serve generated videos and AI videos
-  app.use('/videos', express.static(OUTPUT_DIR));
-  app.use('/videos/hq', express.static(path.join(OUTPUT_DIR, 'videos')));
-  app.use('/videos/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
+  // Serve generated media files
+  app.use('/media', express.static(path.join(OUTPUT_DIR, 'videos')));
+  app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
+  app.use('/output', express.static(OUTPUT_DIR));
 
   // API: Stats
   app.get('/api/stats', (req, res) => {
@@ -116,13 +116,13 @@ function startDashboard() {
         </div>
         <div class="post-ref">${p.ref}</div>
         <div class="post-media">
-          <video controls muted playsinline preload="metadata" poster="/videos/images/${p.video.replace('.mp4','')}_preview.png"><source src="/videos/hq/${p.video}" type="video/mp4"></video>
+          <video controls muted playsinline preload="metadata"><source src="/media/${p.video}" type="video/mp4"></video>
         </div>
         <div class="post-music">🎵 ${p.music}</div>
         <pre class="post-caption" id="caption-${i}">${p.caption.replace(/\\n/g, '\n')}</pre>
         <div class="btn-row">
           <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('caption-${i}').textContent).then(()=>this.textContent='✅ Copiado!')">📋 Copiar Legenda</button>
-          <a class="download-btn" href="/videos/hq/${p.video}" download>⬇️ Baixar Vídeo</a>
+          <a class="download-btn" href="/media/${p.video}" download>⬇️ Baixar Vídeo</a>
         </div>
       </div>
     `).join('');
