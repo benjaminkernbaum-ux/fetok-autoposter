@@ -6,7 +6,12 @@
   "scripts": {
     "start": "node src/index.js",
     "generate": "node src/batchGenerate.js",
-    "dev": "node src/index.js"
+    "dev": "node src/index.js",
+    "cinematic": "node src/cinematicPipeline.js",
+    "cinematic:pescador": "node src/cinematicPipeline.js pescador",
+    "cinematic:ovelha": "node src/cinematicPipeline.js ovelha",
+    "cinematic:ossos": "node src/cinematicPipeline.js ossos",
+    "cinematic:all": "node src/cinematicPipeline.js all"
   },
   "dependencies": {
     "sharp": "^0.33.2",

@@ -1,0 +1,293 @@
+{
+  "version": "1.0.0",
+  "style_tokens": "cinematic lighting, volumetric god rays, anamorphic lens flare, shallow depth of field, film grain 35mm, teal and orange color grade, biblical epic aesthetic, Roger Deakins cinematography, photoreal hyperdetailed, dramatic chiaroscuro, 8K IMAX",
+  "negative_prompt": "cartoon, anime, 3d render, plastic skin, text, watermark, logo, extra limbs, blurry, low contrast, oversaturated, CGI look",
+  "roteiros": [
+    {
+      "id": "pescador",
+      "nome": "O Milagre do Pescador",
+      "versiculo_ref": "Salmos 126:5",
+      "versiculo_texto": "Os que semeiam com lágrimas, com júbilo ceifarão.",
+      "duracao_total": 42,
+      "hook_texto": "Você já orou até não ter mais lágrimas?",
+      "narracao": "Ele orou por quarenta dias. A rede continuou vazia. Mas Deus não estava ausente. Estava preparando. E na quadragésima primeira noite, Ele disse: lança a rede. Os que semeiam com lágrimas, com júbilo ceifarão.",
+      "legenda": "A rede vazia não é o fim da história.\nÉ o começo do milagre.\nDeus permite o deserto pra te ensinar que a fonte não é a circunstância — é Ele.\nSe você precisa de um sinal hoje, comenta AMÉM 🙏\n───\n📖 \"Os que semeiam com lágrimas, com júbilo ceifarão.\" — Salmos 126:5",
+      "hashtags": "#jesus #fé #deus #biblia #versiculododia #palavradedeus #cristão #evangelho #oração #milagre #testemunho #reels #fyp #gospel #jesuscristo",
+      "cta": "Comenta AMÉM 🙏",
+      "trilha_base": "cinematic_emotional_piano_build",
+      "trilha_drop": "choir_epic_hallelujah_rise",
+      "palette": "teal_orange_golden_hour",
+      "shots": [
+        {
+          "ordem": 1,
+          "duracao": 1.5,
+          "prompt_mj": "Extreme close-up weathered fisherman eye, single tear rolling down sun-burnt cheek, salt crystals on eyelashes, deep wrinkles, piercing blue iris reflecting sunrise, golden hour backlight, 85mm, shallow depth of field, photoreal",
+          "higgsfield_preset": "crash_zoom_in",
+          "higgsfield_mode": "turbo",
+          "motion_strength": 0.85,
+          "overlay_text": "Você já orou até não ter mais lágrimas?"
+        },
+        {
+          "ordem": 2,
+          "duracao": 5,
+          "prompt_mj": "Exhausted biblical fisherman kneeling on empty wooden boat, head in weathered hands, torn fishing nets scattered, sea of Galilee at grey dawn, oppressive overcast sky, muted teal palette, epic wide shot",
+          "higgsfield_preset": "super_dolly_out",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.75
+        },
+        {
+          "ordem": 3,
+          "duracao": 5,
+          "prompt_mj": "Sepia-toned flashback memory, younger fisherman joyfully throwing nets with small son, golden hour, warm laughter, 8mm film grain, nostalgic dreamy soft focus",
+          "higgsfield_preset": "slow_dolly_in",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.6
+        },
+        {
+          "ordem": 4,
+          "duracao": 5,
+          "prompt_mj": "Lonely fisherman silhouette on small wooden boat under massive milky way starfield, bioluminescent dark water, single oil lamp glowing, epic wide astrophotography, deep blue and gold palette",
+          "higgsfield_preset": "fpv_drone",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.8
+        },
+        {
+          "ordem": 5,
+          "duracao": 5,
+          "prompt_mj": "First light of dawn breaking through dark storm clouds over sea, single sunbeam piercing water like sword, ethereal divine glow, volumetric god rays, biblical epic miracle",
+          "higgsfield_preset": "robo_arm",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.85,
+          "narracao_trigger": "E Ele disse: lança a rede."
+        },
+        {
+          "ordem": 6,
+          "duracao": 5,
+          "prompt_mj": "Close-up calloused biblical fisherman hands gripping rough wet fishing net, veins prominent, hands trembling, water droplets, extreme skin texture, 85mm macro, chiaroscuro",
+          "higgsfield_preset": "snorricam",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.7
+        },
+        {
+          "ordem": 7,
+          "duracao": 5,
+          "prompt_mj": "Miraculous explosion of silver fish erupting from dark water in slow motion, massive splash, rainbow light refracting through droplets, awestruck illuminated face, biblical miracle, god rays",
+          "higgsfield_preset": "bullet_time",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.95,
+          "drop_musical": true
+        },
+        {
+          "ordem": 8,
+          "duracao": 5,
+          "prompt_mj": "Biblical fisherman kneeling in overflowing wooden boat full of silver fish, arms raised high to heaven, tears of joy, golden divine light bathing scene, ascending low-angle",
+          "higgsfield_preset": "crane_up",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.8
+        },
+        {
+          "ordem": 9,
+          "duracao": 5.5,
+          "prompt_mj": "Majestic golden sunrise over calm sea of Galilee, soft god rays through scattered clouds, minimalist epic biblical background, warm teal and gold palette",
+          "higgsfield_preset": "slow_dolly_in",
+          "higgsfield_mode": "lite",
+          "motion_strength": 0.5,
+          "overlay_text": "Os que semeiam com lágrimas, com júbilo ceifarão.\n— Salmos 126:5"
+        }
+      ]
+    },
+    {
+      "id": "ovelha",
+      "nome": "A Ovelha Ferida",
+      "versiculo_ref": "Mateus 18:12",
+      "versiculo_texto": "Não deixará ele as noventa e nove no monte, para ir buscar a que se desgarrou?",
+      "duracao_total": 40,
+      "hook_texto": "E se Ele nunca parou de te procurar?",
+      "narracao": "Noventa e nove estavam seguras. Uma estava perdida. E o Pastor deixou todas — por você. As marcas nas mãos d'Ele não são fraqueza. São a prova de que Ele te resgatou.",
+      "legenda": "No abismo, você gritou e achou que ninguém ouviu.\nMas o Pastor ouviu. E já estava a caminho.\nAs marcas nas mãos d'Ele não são fraqueza — são a prova de que Ele te resgatou a um preço que você nunca vai conseguir pagar.\nMarca alguém que precisa lembrar disso hoje 🤍\n───\n📖 \"Não deixará ele as noventa e nove no monte, para ir buscar a que se desgarrou?\" — Mateus 18:12",
+      "hashtags": "#jesus #deus #fé #pastor #ovelhaperdida #amordedeus #biblia #versiculododia #cristão #evangelho #gospelbrasil #reelscristãos #fyp #palavradedeus #jesustesalva",
+      "cta": "Marca alguém que precisa lembrar 🤍",
+      "trilha_base": "emotional_piano_strings_build",
+      "trilha_drop": "cinematic_orchestral_redemption",
+      "palette": "cool_to_warm_rembrandt",
+      "shots": [
+        {
+          "ordem": 1,
+          "duracao": 1.5,
+          "prompt_mj": "Extreme macro close-up wounded lamb eye reflecting distant shepherd silhouette, single tear welling up, wet matted white fur, dramatic rim light, 100mm macro, emotional",
+          "higgsfield_preset": "crash_zoom_in",
+          "higgsfield_mode": "turbo",
+          "motion_strength": 0.85,
+          "overlay_text": "E se Ele nunca parou de te procurar?"
+        },
+        {
+          "ordem": 2,
+          "duracao": 5,
+          "prompt_mj": "Small wounded white lamb alone at bottom of dark rocky ravine, bleeding leg, shivering in stormy night, distant lightning, desaturated cool palette, biblical cinematic",
+          "higgsfield_preset": "gods_eye",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.7
+        },
+        {
+          "ordem": 3,
+          "duracao": 5,
+          "prompt_mj": "Ninety-nine peaceful white sheep grazing in sunlit green valley, golden hour, distant shepherd figure turning away toward dark mountains, epic wide landscape",
+          "higgsfield_preset": "super_dolly_out",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.75
+        },
+        {
+          "ordem": 4,
+          "duracao": 5,
+          "prompt_mj": "Biblical shepherd in rough brown wool cloak walking through thorny dark wilderness at night, burning torch in hand, lantern light on wet stone, determined face, Rembrandt lighting",
+          "higgsfield_preset": "snorricam",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.7
+        },
+        {
+          "ordem": 5,
+          "duracao": 5.5,
+          "prompt_mj": "Extreme close-up biblical shepherd hands with deep scars and wounds, rough calloused skin, gripping bloodied wooden staff, Caravaggio side lighting, 100mm macro",
+          "higgsfield_preset": "slow_push_in",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.6
+        },
+        {
+          "ordem": 6,
+          "duracao": 5.5,
+          "prompt_mj": "Biblical shepherd kneeling in rocky ravine carefully lifting small wounded lamb into his arms, massive sunbeam breaking through storm clouds above, divine god rays",
+          "higgsfield_preset": "low_angle_push_in",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.85,
+          "drop_musical": true
+        },
+        {
+          "ordem": 7,
+          "duracao": 6,
+          "prompt_mj": "Biblical shepherd walking at golden dawn carrying rescued lamb across his shoulders, vast valley glowing behind, silhouette against rising sun, triumphant epic wide",
+          "higgsfield_preset": "crane_up",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.75
+        },
+        {
+          "ordem": 8,
+          "duracao": 6.5,
+          "prompt_mj": "Serene golden dawn over vast green pastoral valley, soft god rays, distant sheep grazing, minimalist biblical background, warm palette",
+          "higgsfield_preset": "slow_dolly_in",
+          "higgsfield_mode": "lite",
+          "motion_strength": 0.5,
+          "overlay_text": "Não deixará as noventa e nove\npara ir buscar a que se desgarrou.\n— Mateus 18:12"
+        }
+      ]
+    },
+    {
+      "id": "ossos",
+      "nome": "O Vale dos Ossos",
+      "versiculo_ref": "Ezequiel 37:4",
+      "versiculo_texto": "Ossos secos, ouvi a palavra do Senhor.",
+      "duracao_total": 45,
+      "hook_texto": "Tem coisa que você enterrou. Deus não.",
+      "narracao": "Casamento morto. Sonho morto. Fé morta. E Deus pergunta: podem estes ossos viver? A resposta não depende da sua força. Depende da Palavra d'Ele sobre a sua vida.",
+      "legenda": "Casamento morto. Sonho morto. Fé morta.\nDeus pergunta: \"Filho, podem estes ossos viver?\"\nA resposta não depende da sua força. Depende da Palavra d'Ele sobre a sua vida.\nComenta VIVE! se você crê que Deus vai ressuscitar o que morreu em você 🔥\n───\n📖 \"Ossos secos, ouvi a palavra do Senhor.\" — Ezequiel 37:4",
+      "hashtags": "#jesus #fé #deus #ressureição #vidanova #biblia #ezequiel #ossossecos #versiculododia #cristão #evangelho #superação #testemunho #gospelbrasil #reels #fyp",
+      "cta": "Comenta VIVE! 🔥",
+      "trilha_base": "dark_cinematic_tension_build",
+      "trilha_drop": "epic_orchestral_choir_resurrection",
+      "palette": "blood_red_to_ethereal_gold",
+      "shots": [
+        {
+          "ordem": 1,
+          "duracao": 1.5,
+          "prompt_mj": "Extreme close-up single weathered human skull half-buried in cracked desert earth, wind blowing dust particles, blood-red sunset light, dramatic low angle",
+          "higgsfield_preset": "crash_zoom_out",
+          "higgsfield_mode": "turbo",
+          "motion_strength": 0.85,
+          "overlay_text": "Tem coisa que você enterrou. Deus não."
+        },
+        {
+          "ordem": 2,
+          "duracao": 5.5,
+          "prompt_mj": "Vast biblical desert valley filled with thousands of scattered human bones and skulls, cracked dry earth, massive blood-red sunset sky, ominous apocalyptic, Zack Snyder grading",
+          "higgsfield_preset": "fpv_drone",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.9
+        },
+        {
+          "ordem": 3,
+          "duracao": 5,
+          "prompt_mj": "Prophet Ezekiel standing alone at edge of bone valley, long wool robe flowing in wind, wooden staff in hand, dramatic silhouette against burning red sky, divine presence",
+          "higgsfield_preset": "low_angle_push_in",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.75
+        },
+        {
+          "ordem": 4,
+          "duracao": 5,
+          "prompt_mj": "Biblical prophet Ezekiel close-up, eyes closed in deep prayer, single tear rolling down weathered cheek, wind moving long beard, golden divine light from above",
+          "higgsfield_preset": "slow_dolly_in",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.55,
+          "narracao_trigger": "Filho do homem… podem estes ossos viver?"
+        },
+        {
+          "ordem": 5,
+          "duracao": 5,
+          "prompt_mj": "Biblical prophet Ezekiel raising arms to dark sky, mouth open speaking prophecy, wind storm swirling around him, bones trembling in foreground, supernatural divine energy",
+          "higgsfield_preset": "robo_arm",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.9
+        },
+        {
+          "ordem": 6,
+          "duracao": 5,
+          "prompt_mj": "Close-up scattered human bones vibrating and trembling on cracked earth, dust rising, bones beginning to roll toward each other, supernatural biblical motion",
+          "higgsfield_preset": "bullet_time",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.85
+        },
+        {
+          "ordem": 7,
+          "duracao": 5,
+          "prompt_mj": "Surreal biblical VFX skeletons reassembling bone by bone, joints snapping together, sinews and tendons forming like growing vines, dramatic low angle",
+          "higgsfield_preset": "whip_pan",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.95,
+          "drop_musical": true
+        },
+        {
+          "ordem": 8,
+          "duracao": 6,
+          "prompt_mj": "Vast army of resurrected biblical warriors standing in formation across entire valley, first rays of dawn breaking, ethereal golden mist, Lord of the Rings scale",
+          "higgsfield_preset": "super_dolly_out",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.8
+        },
+        {
+          "ordem": 9,
+          "duracao": 4,
+          "prompt_mj": "Extreme macro close-up human eye slowly opening for first time, first breath of life returning, reflection of golden dawn light in iris, single tear, 100mm macro",
+          "higgsfield_preset": "slow_push_in",
+          "higgsfield_mode": "standard",
+          "motion_strength": 0.55
+        },
+        {
+          "ordem": 10,
+          "duracao": 3,
+          "prompt_mj": "Peaceful biblical valley at pristine golden dawn, soft god rays, distant resurrected figures silhouetted, minimalist epic background, hopeful warm palette",
+          "higgsfield_preset": "slow_dolly_in",
+          "higgsfield_mode": "lite",
+          "motion_strength": 0.5,
+          "overlay_text": "Ossos secos, ouvi a palavra do Senhor.\n— Ezequiel 37:4"
+        }
+      ]
+    }
+  ],
+  "voices": {
+    "pt_br_masculino_grave": {
+      "provider": "elevenlabs",
+      "voice_id": "pNInz6obpgDQGcFmaJgB",
+      "model_id": "eleven_multilingual_v2",
+      "settings": { "stability": 0.45, "similarity_boost": 0.75, "style": 0.30, "use_speaker_boost": true }
+    }
+  }
+}
