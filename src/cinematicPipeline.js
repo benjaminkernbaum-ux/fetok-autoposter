@@ -22,6 +22,7 @@ const path = require('path');
 const { generateShot } = require('./higgsfieldGenerator');
 const { generateNarration } = require('./narrationGenerator');
 const { concatCinematic } = require('./videoConcat');
+const { publishFinal } = require('./publishFinal');
 
 const DATA_FILE = path.resolve(__dirname, '../data/roteiros.json');
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
@@ -40,7 +41,7 @@ function writeCaption(roteiro, finalPath) {
   console.log(`📝 Caption: ${path.basename(captionPath)}`);
 }
 
-async function runRoteiro(roteiroId) {
+async function runRoteiro(roteiroId, options = {}) {
   const data = loadData();
   const roteiro = data.roteiros.find((r) => r.id === roteiroId);
   if (!roteiro) throw new Error(`Roteiro not found: ${roteiroId}`);
@@ -82,19 +83,29 @@ async function runRoteiro(roteiroId) {
   // 5. Sidecar caption
   writeCaption(roteiro, finalPath);
 
+  // 6. Optional publishing
+  if (options.publish) {
+    const caption = `${roteiro.legenda}\n\n${roteiro.hashtags}`;
+    const report = await publishFinal(finalPath, caption, { roteiro_id: roteiro.id });
+    console.log(`📡 Publish report:`, report.results.map((r) => `${r.platform}:${r.ok ? 'ok' : 'skip'}`).join(' '));
+  }
+
   console.log(`\n✅ Done: ${finalPath}\n`);
   return finalPath;
 }
 
 async function main() {
-  const target = process.argv[2] || 'pescador';
+  const args = process.argv.slice(2);
+  const publish = args.includes('--publish');
+  const target = args.find((a) => !a.startsWith('--')) || 'pescador';
+  const opts = { publish };
 
   try {
     if (target === 'all') {
       const data = loadData();
-      for (const r of data.roteiros) await runRoteiro(r.id);
+      for (const r of data.roteiros) await runRoteiro(r.id, opts);
     } else {
-      await runRoteiro(target);
+      await runRoteiro(target, opts);
     }
   } catch (err) {
     console.error(`\n❌ Pipeline failed: ${err.message}`);

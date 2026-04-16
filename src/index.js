@@ -20,6 +20,7 @@ const { generateImage } = require('./imageGenerator');
 const { generateVideo } = require('./videoGenerator');
 const { buildCaption } = require('./captionBuilder');
 const { startDashboard } = require('./dashboard');
+const { startCinematicScheduler } = require('./cinematicScheduler');
 
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 const HISTORY_FILE = path.join(OUTPUT_DIR, 'history.json');
@@ -172,3 +173,6 @@ module.exports = { createPost, history, getStats };
 // Start everything
 startDashboard();
 startScheduler();
+if (process.env.CINEMATIC_ENABLED === 'true') {
+  startCinematicScheduler();
+}
