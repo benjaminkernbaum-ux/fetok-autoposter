@@ -1,0 +1,48 @@
+{
+  "version": "1.0.0",
+  "description": "Character registry for cross-shot consistency. Populated by src/bootstrapSoulIds.js on first run (or manually). All ref URLs must be publicly reachable so Midjourney and Higgsfield can fetch them.",
+  "defaults": {
+    "mj_cw": 100,
+    "mj_sw": 250,
+    "replicate_face_model": "cjwbw/face-similarity:ab8c4ef1f3a3abf7ff6f61c5b2e62f7dec2f86c77e71f3dc73e63d5e05cf2e0f",
+    "similarity_threshold": 0.72
+  },
+  "characters": {
+    "pescador_protagonist": {
+      "name": "Pedro — O Pescador",
+      "description": "Weathered Middle Eastern fisherman, early 50s, deep sun-carved wrinkles around piercing blue eyes, grey-streaked black beard reaching mid-chest, sun-burnt olive skin, rough calloused hands, simple brown wool tunic tied with rope",
+      "style_tokens": "ancient biblical period accurate wardrobe, Galilean fisherman, 1st century AD",
+      "mj_cref_url": "",
+      "mj_sref_url": "",
+      "mj_cw": 100,
+      "mj_sw": 250,
+      "higgsfield_soul_id": "",
+      "reference_keyframes": ["pescador_shot_02.png", "pescador_shot_06.png", "pescador_shot_08.png"],
+      "roteiros": ["pescador"]
+    },
+    "shepherd_protagonist": {
+      "name": "O Pastor",
+      "description": "Weathered Middle Eastern shepherd, mid 40s, kind but determined eyes, long dark curly hair, thick neatly-trimmed beard, sun-darkened skin, scarred hands, rough brown wool cloak with rope belt, carved wooden staff",
+      "style_tokens": "ancient biblical period accurate wardrobe, good shepherd archetype, Judean hills",
+      "mj_cref_url": "",
+      "mj_sref_url": "",
+      "mj_cw": 100,
+      "mj_sw": 250,
+      "higgsfield_soul_id": "",
+      "reference_keyframes": ["ovelha_shot_04.png", "ovelha_shot_06.png", "ovelha_shot_07.png"],
+      "roteiros": ["ovelha"]
+    },
+    "ezekiel_prophet": {
+      "name": "Ezequiel",
+      "description": "Biblical prophet Ezekiel, late 40s, intense piercing dark eyes, long untamed grey-streaked black beard and long hair, weathered sun-carved skin, lean powerful frame, rough woven wool robe in muted earth tones, leather sandals, tall carved wooden staff",
+      "style_tokens": "ancient biblical prophet, Old Testament visionary, wind-blown fabric, 6th century BC",
+      "mj_cref_url": "",
+      "mj_sref_url": "",
+      "mj_cw": 100,
+      "mj_sw": 300,
+      "higgsfield_soul_id": "",
+      "reference_keyframes": ["ossos_shot_03.png", "ossos_shot_04.png", "ossos_shot_05.png"],
+      "roteiros": ["ossos"]
+    }
+  }
+}

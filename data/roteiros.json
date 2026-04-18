@@ -20,6 +20,7 @@
       "shots": [
         {
           "ordem": 1,
+          "character_id": "pescador_protagonist",
           "duracao": 1.5,
           "prompt_mj": "Extreme close-up weathered fisherman eye, single tear rolling down sun-burnt cheek, salt crystals on eyelashes, deep wrinkles, piercing blue iris reflecting sunrise, golden hour backlight, 85mm, shallow depth of field, photoreal",
           "higgsfield_preset": "crash_zoom_in",
@@ -29,6 +30,7 @@
         },
         {
           "ordem": 2,
+          "character_id": "pescador_protagonist",
           "duracao": 5,
           "prompt_mj": "Exhausted biblical fisherman kneeling on empty wooden boat, head in weathered hands, torn fishing nets scattered, sea of Galilee at grey dawn, oppressive overcast sky, muted teal palette, epic wide shot",
           "higgsfield_preset": "super_dolly_out",
@@ -37,6 +39,7 @@
         },
         {
           "ordem": 3,
+          "character_id": "pescador_protagonist",
           "duracao": 5,
           "prompt_mj": "Sepia-toned flashback memory, younger fisherman joyfully throwing nets with small son, golden hour, warm laughter, 8mm film grain, nostalgic dreamy soft focus",
           "higgsfield_preset": "slow_dolly_in",
@@ -45,6 +48,7 @@
         },
         {
           "ordem": 4,
+          "character_id": "pescador_protagonist",
           "duracao": 5,
           "prompt_mj": "Lonely fisherman silhouette on small wooden boat under massive milky way starfield, bioluminescent dark water, single oil lamp glowing, epic wide astrophotography, deep blue and gold palette",
           "higgsfield_preset": "fpv_drone",
@@ -62,6 +66,7 @@
         },
         {
           "ordem": 6,
+          "character_id": "pescador_protagonist",
           "duracao": 5,
           "prompt_mj": "Close-up calloused biblical fisherman hands gripping rough wet fishing net, veins prominent, hands trembling, water droplets, extreme skin texture, 85mm macro, chiaroscuro",
           "higgsfield_preset": "snorricam",
@@ -70,6 +75,7 @@
         },
         {
           "ordem": 7,
+          "character_id": "pescador_protagonist",
           "duracao": 5,
           "prompt_mj": "Miraculous explosion of silver fish erupting from dark water in slow motion, massive splash, rainbow light refracting through droplets, awestruck illuminated face, biblical miracle, god rays",
           "higgsfield_preset": "bullet_time",
@@ -79,6 +85,7 @@
         },
         {
           "ordem": 8,
+          "character_id": "pescador_protagonist",
           "duracao": 5,
           "prompt_mj": "Biblical fisherman kneeling in overflowing wooden boat full of silver fish, arms raised high to heaven, tears of joy, golden divine light bathing scene, ascending low-angle",
           "higgsfield_preset": "crane_up",
@@ -138,6 +145,7 @@
         },
         {
           "ordem": 4,
+          "character_id": "shepherd_protagonist",
           "duracao": 5,
           "prompt_mj": "Biblical shepherd in rough brown wool cloak walking through thorny dark wilderness at night, burning torch in hand, lantern light on wet stone, determined face, Rembrandt lighting",
           "higgsfield_preset": "snorricam",
@@ -146,6 +154,7 @@
         },
         {
           "ordem": 5,
+          "character_id": "shepherd_protagonist",
           "duracao": 5.5,
           "prompt_mj": "Extreme close-up biblical shepherd hands with deep scars and wounds, rough calloused skin, gripping bloodied wooden staff, Caravaggio side lighting, 100mm macro",
           "higgsfield_preset": "slow_push_in",
@@ -154,6 +163,7 @@
         },
         {
           "ordem": 6,
+          "character_id": "shepherd_protagonist",
           "duracao": 5.5,
           "prompt_mj": "Biblical shepherd kneeling in rocky ravine carefully lifting small wounded lamb into his arms, massive sunbeam breaking through storm clouds above, divine god rays",
           "higgsfield_preset": "low_angle_push_in",
@@ -163,6 +173,7 @@
         },
         {
           "ordem": 7,
+          "character_id": "shepherd_protagonist",
           "duracao": 6,
           "prompt_mj": "Biblical shepherd walking at golden dawn carrying rescued lamb across his shoulders, vast valley glowing behind, silhouette against rising sun, triumphant epic wide",
           "higgsfield_preset": "crane_up",
@@ -214,6 +225,7 @@
         },
         {
           "ordem": 3,
+          "character_id": "ezekiel_prophet",
           "duracao": 5,
           "prompt_mj": "Prophet Ezekiel standing alone at edge of bone valley, long wool robe flowing in wind, wooden staff in hand, dramatic silhouette against burning red sky, divine presence",
           "higgsfield_preset": "low_angle_push_in",
@@ -222,6 +234,7 @@
         },
         {
           "ordem": 4,
+          "character_id": "ezekiel_prophet",
           "duracao": 5,
           "prompt_mj": "Biblical prophet Ezekiel close-up, eyes closed in deep prayer, single tear rolling down weathered cheek, wind moving long beard, golden divine light from above",
           "higgsfield_preset": "slow_dolly_in",
@@ -231,6 +244,7 @@
         },
         {
           "ordem": 5,
+          "character_id": "ezekiel_prophet",
           "duracao": 5,
           "prompt_mj": "Biblical prophet Ezekiel raising arms to dark sky, mouth open speaking prophecy, wind storm swirling around him, bones trembling in foreground, supernatural divine energy",
           "higgsfield_preset": "robo_arm",
@@ -287,7 +301,12 @@
       "provider": "elevenlabs",
       "voice_id": "pNInz6obpgDQGcFmaJgB",
       "model_id": "eleven_multilingual_v2",
-      "settings": { "stability": 0.45, "similarity_boost": 0.75, "style": 0.30, "use_speaker_boost": true }
+      "settings": {
+        "stability": 0.45,
+        "similarity_boost": 0.75,
+        "style": 0.3,
+        "use_speaker_boost": true
+      }
     }
   }
 }

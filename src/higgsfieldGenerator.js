@@ -18,6 +18,10 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
+const { buildMjPrompt } = require('./mjStyleRef');
+const { getSoulId } = require('./higgsfieldSoulId');
+const { validateFace } = require('./soulIdValidator');
+
 const HIGGSFIELD_API = process.env.HIGGSFIELD_ENDPOINT || 'https://api.higgsfield.ai/v1';
 const MJ_API = process.env.MIDJOURNEY_ENDPOINT || 'https://api.imagineapi.dev/items/images/';
 
@@ -33,8 +37,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 /**
  * Generate a keyframe via Midjourney API (ImagineAPI wrapper)
  * Returns the local path to the downloaded PNG.
+ *
+ * @param {string} prompt       - Base scene description (shot.prompt_mj).
+ * @param {string} styleTokens  - Global style tokens from roteiros.json.
+ * @param {string} filename     - Output filename under output/keyframes/.
+ * @param {string} [characterId] - Soul ID key; injects --cref/--sref.
  */
-async function generateKeyframe(prompt, styleTokens, filename) {
+async function generateKeyframe(prompt, styleTokens, filename, characterId) {
   const mjKey = process.env.MIDJOURNEY_API_KEY;
   if (!mjKey) throw new Error('MIDJOURNEY_API_KEY not set');
 
@@ -44,8 +53,8 @@ async function generateKeyframe(prompt, styleTokens, filename) {
     return outputPath;
   }
 
-  const fullPrompt = `${prompt}, ${styleTokens} --ar 9:16 --v 7 --style raw --s 250 --q 2`;
-  console.log(`🎨 MJ → ${filename}`);
+  const fullPrompt = buildMjPrompt({ prompt, characterId, globalStyle: styleTokens });
+  console.log(`🎨 MJ → ${filename}${characterId ? ` [soul:${characterId}]` : ''}`);
 
   const { data: submit } = await axios.post(
     MJ_API,
@@ -88,25 +97,27 @@ async function animateShot(imagePath, shot, filename) {
     return outputPath;
   }
 
-  console.log(`🎬 HF → ${filename} [${shot.higgsfield_preset} / ${shot.higgsfield_mode}]`);
+  const soulId = shot.character_id ? getSoulId(shot.character_id) : null;
+  console.log(
+    `🎬 HF → ${filename} [${shot.higgsfield_preset} / ${shot.higgsfield_mode}${soulId ? ` / soul:${shot.character_id}` : ''}]`
+  );
 
   const imageBase64 = fs.readFileSync(imagePath).toString('base64');
 
-  const { data: submit } = await axios.post(
-    `${HIGGSFIELD_API}/dop/generate`,
-    {
-      image_base64: imageBase64,
-      motion_preset: shot.higgsfield_preset,
-      mode: shot.higgsfield_mode || 'standard',
-      duration: 5,
-      aspect_ratio: '9:16',
-      motion_strength: shot.motion_strength ?? 0.75,
-    },
-    {
-      headers: { Authorization: `Bearer ${hfKey}`, 'Content-Type': 'application/json' },
-      timeout: 60000,
-    }
-  );
+  const body = {
+    image_base64: imageBase64,
+    motion_preset: shot.higgsfield_preset,
+    mode: shot.higgsfield_mode || 'standard',
+    duration: 5,
+    aspect_ratio: '9:16',
+    motion_strength: shot.motion_strength ?? 0.75,
+  };
+  if (soulId) body.soul_id = soulId;
+
+  const { data: submit } = await axios.post(`${HIGGSFIELD_API}/dop/generate`, body, {
+    headers: { Authorization: `Bearer ${hfKey}`, 'Content-Type': 'application/json' },
+    timeout: 60000,
+  });
 
   const jobId = submit.job_id || submit.id;
   if (!jobId) throw new Error(`HF submit failed: ${JSON.stringify(submit)}`);
@@ -128,17 +139,26 @@ async function animateShot(imagePath, shot, filename) {
 }
 
 /**
- * Full pipeline for one shot: keyframe → animate.
+ * Full pipeline for one shot: keyframe → validate → animate.
+ * Passes character_id through so Soul ID is honored at both steps.
  */
 async function generateShot(roteiro, shot, styleTokens) {
   const baseName = `${roteiro.id}_shot_${String(shot.ordem).padStart(2, '0')}`;
   const keyframePath = await generateKeyframe(
     shot.prompt_mj,
     styleTokens,
-    `${baseName}.png`
+    `${baseName}.png`,
+    shot.character_id
   );
+
+  // Optional face-similarity check (no-op without REPLICATE_API_TOKEN).
+  let validation = null;
+  if (shot.character_id) {
+    validation = await validateFace(keyframePath, shot.character_id);
+  }
+
   const shotPath = await animateShot(keyframePath, shot, `${baseName}.mp4`);
-  return { keyframePath, shotPath, duracao: shot.duracao };
+  return { keyframePath, shotPath, duracao: shot.duracao, validation };
 }
 
 module.exports = { generateKeyframe, animateShot, generateShot };

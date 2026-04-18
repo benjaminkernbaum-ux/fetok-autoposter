@@ -14,7 +14,8 @@
     "cinematic:all": "node src/cinematicPipeline.js all",
     "cinematic:publish": "node src/cinematicPipeline.js pescador --publish",
     "cinematic:scheduler": "node src/cinematicScheduler.js",
-    "cinematic:now": "node src/cinematicScheduler.js --now"
+    "cinematic:now": "node src/cinematicScheduler.js --now",
+    "soulid:bootstrap": "node src/bootstrapSoulIds.js"
   },
   "dependencies": {
     "sharp": "^0.33.2",
