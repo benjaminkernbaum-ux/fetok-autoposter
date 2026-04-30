@@ -175,6 +175,13 @@ startScheduler();
 
 // Auto-generate all cinematic videos on startup (3s delay)
 setTimeout(() => {
+  // Rebuild font cache first (for SVG text rendering)
+  try {
+    const { execSync } = require('child_process');
+    execSync('fc-cache -f 2>/dev/null || true', { stdio: 'pipe' });
+    console.log('✅ Font cache rebuilt');
+  } catch(e) { console.log('⚠️ fc-cache not available (OK on Windows)'); }
+
   console.log('\n🎬 Auto-generating cinematic Serie 3 videos...');
   const { spawn } = require('child_process');
   const child = spawn('node', [path.join(__dirname, 'batchSerie3.js'), '--force'], { cwd: __dirname });
