@@ -64,12 +64,22 @@ function startDashboard() {
 
   // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
   const VIDEOS_DIR = path.join(OUTPUT_DIR, 'videos');
-  // Helper: find video in output root or videos subdir
+  // Helper: find video in output root, videos subdir, or fuzzy match (accent-insensitive)
   function resolveVideoPath(filename) {
     const inRoot = path.join(OUTPUT_DIR, filename);
     if (fs.existsSync(inRoot)) return inRoot;
     const inSub = path.join(VIDEOS_DIR, filename);
     if (fs.existsSync(inSub)) return inSub;
+    // Fuzzy: scan output dir for accent-stripped match
+    const stripped = filename.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    try {
+      const files = fs.readdirSync(OUTPUT_DIR);
+      const match = files.find(f => f.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === stripped);
+      if (match) return path.join(OUTPUT_DIR, match);
+      const vFiles = fs.existsSync(VIDEOS_DIR) ? fs.readdirSync(VIDEOS_DIR) : [];
+      const vMatch = vFiles.find(f => f.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === stripped);
+      if (vMatch) return path.join(VIDEOS_DIR, vMatch);
+    } catch(e) {}
     return null;
   }
   app.get('/download/:filename', (req, res) => {
@@ -134,14 +144,15 @@ function startDashboard() {
     const videoDir = path.join(OUTPUT_DIR, 'videos');
     const videoFiles = fs.existsSync(videoDir) ? fs.readdirSync(videoDir).filter(f => f.endsWith('.mp4')) : [];
     
-    // Check which POSTS_DATA videos exist
+    // Check which POSTS_DATA videos exist (with fuzzy accent-insensitive matching)
     const postVideoStatus = POSTS_DATA.map(p => ({
       day: p.day,
       slot: p.slot,
       verse: p.verse,
       videoFile: p.videoFile,
-      existsInOutput: fs.existsSync(path.join(OUTPUT_DIR, p.videoFile)),
+      existsInOutput: !!resolveVideoPath(p.videoFile),
       existsInVideos: fs.existsSync(path.join(videoDir, p.videoFile)),
+      resolvedPath: resolveVideoPath(p.videoFile) || null,
     }));
     
     res.json({
