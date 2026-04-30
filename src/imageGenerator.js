@@ -106,7 +106,7 @@ async function generateImage(verse) {
   const width = 1080;
   const height = 1080;
 
-  const filename = `verse_${verse.ref.replace(/[\s:]/g, '_').toLowerCase()}.png`;
+  const filename = `verse_${verse.ref.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s:]/g, '_').toLowerCase()}.png`;
   const outputPath = path.join(OUTPUT_DIR, filename);
 
   // Skip if already exists

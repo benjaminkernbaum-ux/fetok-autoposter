@@ -20,7 +20,7 @@ const OUTPUT_DIR = path.resolve(__dirname, '../output');
  */
 function generateVideo(imagePath, verse) {
   return new Promise((resolve, reject) => {
-    const filename = `video_${verse.ref.replace(/[\s:]/g, '_').toLowerCase()}.mp4`;
+    const filename = `video_${verse.ref.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s:]/g, '_').toLowerCase()}.mp4`;
     const outputPath = path.join(OUTPUT_DIR, filename);
 
     // Skip if video already exists
