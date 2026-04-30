@@ -1,7 +1,7 @@
 /**
- * FéTok Image Generator v3.0 — VIVID CINEMATIC BACKGROUNDS
- * Creates stunning verse images with bright gradient backgrounds
- * No external images needed — fully self-contained SVG rendering
+ * FéTok Image Generator v4.0 — PORTRAIT 1080×1920
+ * Generates images DIRECTLY at 9:16 so video doesn't need to crop/zoom
+ * Result: large readable text, vivid gradients, full-screen content
  */
 
 const sharp = require('sharp');
@@ -10,9 +10,6 @@ const fs = require('fs');
 
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 
-/* ═══════════════════════════════════════════════════════════
-   VIVID THEME PALETTES — bright, eye-catching colors
-   ═══════════════════════════════════════════════════════════ */
 const THEME_PALETTES = {
   'proteção': {
     bg1: '#0b1a3d', bg2: '#1a3a7a', bg3: '#2563eb', bg4: '#60a5fa',
@@ -77,197 +74,142 @@ function escapeXml(str) {
 }
 
 /**
- * Create a full cinematic SVG with VIVID gradient background + text
+ * Create a full 1080×1920 portrait SVG — text fills the screen
  */
-function createCinematicSVG(verse, width, height) {
+function createPortraitSVG(verse, width, height) {
   const palette = THEME_PALETTES[verse.theme] || THEME_PALETTES['default'];
   const { bg1, bg2, bg3, bg4, accent, glow1, glow2 } = palette;
 
-  // Text sizing — make it BIG and readable
+  // Large text — optimized for 1080×1920 full-screen reading
   const len = verse.text.length;
-  const fontSize = len > 120 ? 42 : len > 90 ? 48 : len > 70 ? 54 : len > 50 ? 60 : 68;
-  const maxChars = len > 120 ? 30 : len > 90 ? 26 : len > 70 ? 22 : len > 50 ? 20 : 16;
+  const fontSize = len > 120 ? 52 : len > 90 ? 58 : len > 70 ? 64 : len > 50 ? 72 : 84;
+  const maxChars = len > 120 ? 22 : len > 90 ? 20 : len > 70 ? 18 : len > 50 ? 16 : 14;
   const lines = wrapText(verse.text, maxChars);
-  const lineHeight = fontSize * 1.55;
+  const lineHeight = fontSize * 1.5;
   const totalTextHeight = lines.length * lineHeight;
-  const startY = (height / 2) - (totalTextHeight / 2) + 50;
+  const startY = (height / 2) - (totalTextHeight / 2) + 30;
 
   const textLines = lines.map((line, i) => {
     const y = startY + (i * lineHeight);
-    return `<text x="${width / 2}" y="${y}" 
-      font-family="Georgia, 'Times New Roman', serif" 
-      font-size="${fontSize}" font-weight="bold" font-style="italic" 
-      fill="white" text-anchor="middle" 
-      filter="url(#textShadow)">${escapeXml(line)}</text>`;
+    return `<text x="${width / 2}" y="${y}" font-family="Georgia, 'Times New Roman', serif" font-size="${fontSize}" font-weight="bold" font-style="italic" fill="white" text-anchor="middle" filter="url(#textShadow)">${escapeXml(line)}</text>`;
   }).join('\n    ');
 
-  const refY = startY + totalTextHeight + 55;
-  const crossY = startY - 100;
-  const watermarkY = height - 55;
+  const refY = startY + totalTextHeight + 70;
+  const crossY = startY - 120;
+  const watermarkY = height - 80;
 
   return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- MAIN BACKGROUND: radial gradient from bright center to dark edges -->
     <radialGradient id="bgMain" cx="50%" cy="42%" r="75%" fx="50%" fy="42%">
       <stop offset="0%" stop-color="${bg3}"/>
       <stop offset="35%" stop-color="${bg2}"/>
       <stop offset="70%" stop-color="${bg1}"/>
       <stop offset="100%" stop-color="#000000"/>
     </radialGradient>
-
-    <!-- BRIGHT CENTER GLOW -->
     <radialGradient id="centerGlow" cx="50%" cy="40%" r="40%">
-      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.6"/>
-      <stop offset="50%" stop-color="${bg3}" stop-opacity="0.25"/>
+      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="${bg3}" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- TOP DIVINE LIGHT BEAM -->
-    <radialGradient id="topBeam" cx="50%" cy="-10%" r="60%">
-      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.45"/>
-      <stop offset="40%" stop-color="${glow1}" stop-opacity="0.15"/>
+    <radialGradient id="topBeam" cx="50%" cy="0%" r="55%">
+      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.4"/>
+      <stop offset="40%" stop-color="${glow1}" stop-opacity="0.12"/>
       <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- SECONDARY GLOW (lower) -->
-    <radialGradient id="lowerGlow" cx="50%" cy="80%" r="45%">
-      <stop offset="0%" stop-color="${glow2}" stop-opacity="0.3"/>
+    <radialGradient id="lowerGlow" cx="50%" cy="85%" r="40%">
+      <stop offset="0%" stop-color="${glow2}" stop-opacity="0.25"/>
       <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
-
-    <!-- LEFT ACCENT -->
-    <radialGradient id="leftAccent" cx="10%" cy="50%" r="40%">
-      <stop offset="0%" stop-color="${glow1}" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- RIGHT ACCENT -->
-    <radialGradient id="rightAccent" cx="90%" cy="50%" r="40%">
-      <stop offset="0%" stop-color="${glow2}" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
-    </radialGradient>
-
-    <!-- TEXT SHADOW — strong contrast -->
     <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="rgba(0,0,0,0.95)"/>
-      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(0,0,0,0.8)"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="14" flood-color="rgba(0,0,0,0.95)"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.8)"/>
     </filter>
-
-    <!-- GLOW for accent text -->
     <filter id="accentGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="${glow1}80"/>
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.8)"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="${glow1}90"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.7)"/>
     </filter>
-
-    <!-- BLUR for bokeh particles -->
     <filter id="bokeh" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="6"/>
+      <feGaussianBlur stdDeviation="8"/>
     </filter>
-
-    <!-- SMALL sparkle -->
     <filter id="sparkle" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="2"/>
+      <feGaussianBlur stdDeviation="3"/>
     </filter>
   </defs>
 
-  <!-- ═══ BACKGROUND LAYERS ═══ -->
-  <!-- Base: solid black -->
+  <!-- BACKGROUND -->
   <rect width="${width}" height="${height}" fill="#000"/>
-  
-  <!-- Layer 1: main radial gradient -->
   <rect width="${width}" height="${height}" fill="url(#bgMain)"/>
-  
-  <!-- Layer 2: bright center glow -->
   <rect width="${width}" height="${height}" fill="url(#centerGlow)"/>
-  
-  <!-- Layer 3: top divine light beam -->
   <rect width="${width}" height="${height}" fill="url(#topBeam)"/>
-  
-  <!-- Layer 4: bottom glow -->
   <rect width="${width}" height="${height}" fill="url(#lowerGlow)"/>
 
-  <!-- Layer 5: side accents -->
-  <rect width="${width}" height="${height}" fill="url(#leftAccent)"/>
-  <rect width="${width}" height="${height}" fill="url(#rightAccent)"/>
+  <!-- BOKEH PARTICLES -->
+  <circle cx="120" cy="250" r="30" fill="${bg4}" opacity="0.18" filter="url(#bokeh)"/>
+  <circle cx="950" cy="400" r="22" fill="${glow1}" opacity="0.15" filter="url(#bokeh)"/>
+  <circle cx="180" cy="1500" r="28" fill="${accent}" opacity="0.12" filter="url(#bokeh)"/>
+  <circle cx="900" cy="1350" r="24" fill="${bg4}" opacity="0.1" filter="url(#bokeh)"/>
+  <circle cx="540" cy="200" r="35" fill="${bg4}" opacity="0.12" filter="url(#bokeh)"/>
+  <circle cx="700" cy="1700" r="18" fill="${glow1}" opacity="0.08" filter="url(#bokeh)"/>
+  <circle cx="300" cy="1100" r="20" fill="${glow2}" opacity="0.1" filter="url(#bokeh)"/>
 
-  <!-- ═══ BOKEH PARTICLES ═══ -->
-  <circle cx="150" cy="180" r="25" fill="${bg4}" opacity="0.2" filter="url(#bokeh)"/>
-  <circle cx="920" cy="280" r="18" fill="${glow1}" opacity="0.18" filter="url(#bokeh)"/>
-  <circle cx="200" cy="850" r="22" fill="${accent}" opacity="0.15" filter="url(#bokeh)"/>
-  <circle cx="880" cy="780" r="20" fill="${bg4}" opacity="0.12" filter="url(#bokeh)"/>
-  <circle cx="540" cy="100" r="30" fill="${bg4}" opacity="0.15" filter="url(#bokeh)"/>
-  <circle cx="700" cy="950" r="15" fill="${glow1}" opacity="0.1" filter="url(#bokeh)"/>
+  <!-- SPARKLE STARS -->
+  <circle cx="250" cy="180" r="3" fill="white" opacity="0.6" filter="url(#sparkle)"/>
+  <circle cx="820" cy="320" r="2.5" fill="white" opacity="0.5" filter="url(#sparkle)"/>
+  <circle cx="100" cy="800" r="2" fill="white" opacity="0.45" filter="url(#sparkle)"/>
+  <circle cx="970" cy="900" r="2.5" fill="white" opacity="0.5" filter="url(#sparkle)"/>
+  <circle cx="400" cy="1600" r="2" fill="white" opacity="0.4" filter="url(#sparkle)"/>
+  <circle cx="750" cy="180" r="1.5" fill="white" opacity="0.35" filter="url(#sparkle)"/>
+  <circle cx="200" cy="1300" r="2" fill="white" opacity="0.3" filter="url(#sparkle)"/>
+  <circle cx="880" cy="700" r="1.5" fill="white" opacity="0.35" filter="url(#sparkle)"/>
+  <circle cx="500" cy="1800" r="2" fill="white" opacity="0.25" filter="url(#sparkle)"/>
 
-  <!-- Small sparkle stars -->
-  <circle cx="300" cy="150" r="3" fill="white" opacity="0.7" filter="url(#sparkle)"/>
-  <circle cx="800" cy="220" r="2.5" fill="white" opacity="0.6" filter="url(#sparkle)"/>
-  <circle cx="120" cy="500" r="2" fill="white" opacity="0.5" filter="url(#sparkle)"/>
-  <circle cx="960" cy="600" r="2.5" fill="white" opacity="0.55" filter="url(#sparkle)"/>
-  <circle cx="400" cy="920" r="2" fill="white" opacity="0.45" filter="url(#sparkle)"/>
-  <circle cx="700" cy="130" r="1.5" fill="white" opacity="0.4" filter="url(#sparkle)"/>
-  <circle cx="250" cy="700" r="2" fill="white" opacity="0.35" filter="url(#sparkle)"/>
-  <circle cx="850" cy="450" r="1.5" fill="white" opacity="0.4" filter="url(#sparkle)"/>
-
-  <!-- ═══ DECORATIVE CROSS ═══ -->
+  <!-- DECORATIVE CROSS -->
   <g transform="translate(${width/2}, ${crossY})" opacity="0.7">
-    <line x1="0" y1="-28" x2="0" y2="28" stroke="${accent}" stroke-width="3" stroke-linecap="round"/>
-    <line x1="-18" y1="-8" x2="18" y2="-8" stroke="${accent}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="0" y1="-35" x2="0" y2="35" stroke="${accent}" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="-22" y1="-10" x2="22" y2="-10" stroke="${accent}" stroke-width="3.5" stroke-linecap="round"/>
   </g>
 
-  <!-- Decorative horizontal rules -->
-  <line x1="${width * 0.25}" y1="${crossY + 50}" x2="${width * 0.75}" y2="${crossY + 50}" stroke="${accent}" stroke-width="0.8" opacity="0.35"/>
+  <!-- TOP DECORATIVE LINE -->
+  <line x1="${width * 0.2}" y1="${crossY + 60}" x2="${width * 0.8}" y2="${crossY + 60}" stroke="${accent}" stroke-width="0.8" opacity="0.3"/>
 
-  <!-- ═══ OPENING QUOTE ═══ -->
-  <text x="${width * 0.08}" y="${startY - 5}" font-family="Georgia, serif" font-size="140" fill="${accent}" opacity="0.12" filter="url(#textShadow)">\u201C</text>
+  <!-- OPENING QUOTE -->
+  <text x="${width * 0.06}" y="${startY}" font-family="Georgia, serif" font-size="160" fill="${accent}" opacity="0.1">\u201C</text>
 
-  <!-- ═══ VERSE TEXT ═══ -->
+  <!-- VERSE TEXT -->
   ${textLines}
 
-  <!-- ═══ CLOSING QUOTE ═══ -->
-  <text x="${width * 0.85}" y="${startY + totalTextHeight + 15}" font-family="Georgia, serif" font-size="140" fill="${accent}" opacity="0.12" filter="url(#textShadow)">\u201D</text>
+  <!-- CLOSING QUOTE -->
+  <text x="${width * 0.87}" y="${startY + totalTextHeight + 20}" font-family="Georgia, serif" font-size="160" fill="${accent}" opacity="0.1">\u201D</text>
 
-  <!-- ═══ REFERENCE ═══ -->
-  <text x="${width / 2}" y="${refY}" 
-    font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" 
-    fill="${accent}" text-anchor="middle" 
-    filter="url(#accentGlow)" letter-spacing="3">${escapeXml(verse.ref.toUpperCase())}</text>
+  <!-- REFERENCE -->
+  <text x="${width / 2}" y="${refY}" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="${accent}" text-anchor="middle" filter="url(#accentGlow)" letter-spacing="4">${escapeXml(verse.ref.toUpperCase())}</text>
 
-  <!-- Bottom decorative line -->
-  <line x1="${width * 0.3}" y1="${refY + 25}" x2="${width * 0.7}" y2="${refY + 25}" stroke="${accent}" stroke-width="0.8" opacity="0.3"/>
+  <!-- BOTTOM LINE -->
+  <line x1="${width * 0.3}" y1="${refY + 30}" x2="${width * 0.7}" y2="${refY + 30}" stroke="${accent}" stroke-width="0.8" opacity="0.3"/>
 
-  <!-- ═══ WATERMARK ═══ -->
-  <text x="${width / 2}" y="${watermarkY}" 
-    font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="500" 
-    fill="rgba(255,255,255,0.4)" text-anchor="middle" letter-spacing="2">✝  @luz.da.palavra.oficial</text>
+  <!-- WATERMARK -->
+  <text x="${width / 2}" y="${watermarkY}" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="500" fill="rgba(255,255,255,0.35)" text-anchor="middle" letter-spacing="2">\u2720  @luz.da.palavra.oficial</text>
 </svg>`;
 }
 
-/**
- * Generate a verse image (1080x1080)
- */
 async function generateImage(verse) {
   const width = 1080;
-  const height = 1080;
+  const height = 1920;
 
   const filename = `verse_${verse.ref.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s:]/g, '_').toLowerCase()}.png`;
   const outputPath = path.join(OUTPUT_DIR, filename);
 
-  // Skip if already exists
   if (fs.existsSync(outputPath)) {
     console.log(`🎨 Image exists: ${filename}`);
     return outputPath;
   }
 
-  console.log(`🎨 Generating vivid image: ${filename}...`);
+  console.log(`🎨 Generating 1080x1920 portrait: ${filename}...`);
 
-  const svg = createCinematicSVG(verse, width, height);
-  const svgBuffer = Buffer.from(svg);
+  const svg = createPortraitSVG(verse, width, height);
+  await sharp(Buffer.from(svg)).png({ quality: 95 }).toFile(outputPath);
 
-  await sharp(svgBuffer)
-    .png({ quality: 95 })
-    .toFile(outputPath);
-
-  console.log(`🎨 ✅ Image generated: ${filename}`);
+  console.log(`🎨 ✅ ${filename}`);
   return outputPath;
 }
 

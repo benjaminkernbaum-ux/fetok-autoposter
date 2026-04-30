@@ -1,7 +1,7 @@
 /**
- * FéTok Video Generator v2.0
- * Converts verse images into TikTok-ready 9:16 videos using FFmpeg
- * Optimized for cinematic gradient images — no black bars
+ * FéTok Video Generator v3.0
+ * Input: 1080×1920 PNG (already 9:16 portrait)
+ * Output: 1080×1920 MP4, 10s, gentle zoom + fade
  */
 
 const ffmpeg = require('fluent-ffmpeg');
@@ -13,25 +13,13 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 
-/**
- * Generate a TikTok video from a verse image
- * - Input: 1080x1080 PNG (cinematic gradient + text)
- * - Output: 1080x1920 MP4 (9:16), 10 seconds
- * - Effects: Slow zoom starting CENTERED on the text, fade in/out
- * 
- * Strategy: Use zoompan to fill the 9:16 canvas by zooming into
- * the center of the 1080x1080 image, starting at ~1.78x zoom
- * (1920/1080) and slowly pushing in further. This eliminates
- * black bars and keeps text visible.
- */
 function generateVideo(imagePath, verse) {
   return new Promise((resolve, reject) => {
     const filename = `video_${verse.ref.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s:]/g, '_').toLowerCase()}.mp4`;
     const outputPath = path.join(OUTPUT_DIR, filename);
 
-    // Skip if video already exists
     if (fs.existsSync(outputPath)) {
-      console.log(`🎬 Video already exists: ${filename}`);
+      console.log(`🎬 Video exists: ${filename}`);
       return resolve(outputPath);
     }
 
@@ -41,9 +29,8 @@ function generateVideo(imagePath, verse) {
       .input(imagePath)
       .inputOptions(['-loop', '1'])
       .videoFilters([
-        // zoompan: start zoomed at 1.78x (fills 9:16), slowly zoom to 1.95x
-        // x/y centered on the image center, output 1080x1920
-        "zoompan=z='1.78+on*0.00006':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=300:s=1080x1920:fps=30",
+        // Image is already 1080x1920. Gentle zoom from 1.0 to 1.08 centered.
+        "zoompan=z='1.0+on*0.00003':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=300:s=1080x1920:fps=30",
         // Fade in/out
         'fade=t=in:st=0:d=1.5',
         'fade=t=out:st=8.5:d=1.5',
