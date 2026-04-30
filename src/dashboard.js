@@ -212,7 +212,7 @@ function startDashboard() {
   // ── BATCH GENERATE ALL 21 VIDEOS ──
   app.post('/api/generate-all', (req, res) => {
     const { spawn } = require('child_process');
-    const batchScript = path.join(__dirname, 'batchGenerate.js');
+    const batchScript = path.join(__dirname, 'batchSerie3.js');
     console.log('🚀 Batch generation started via API...');
     const child = spawn('node', [batchScript, '21'], { cwd: path.resolve(__dirname, '..') });
     let output = '';
