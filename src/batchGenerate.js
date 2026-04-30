@@ -23,7 +23,7 @@ const scheduleThemes = {
 };
 
 async function batchGenerate(count = 21) {
-  console.log(`\n🚀 FéTok Batch Generator`);
+  console.log(`\n🚀 FéTok Batch Generator — Série 3`);
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
   console.log(`📦 Generating ${count} videos...\n`);
 
@@ -31,6 +31,18 @@ async function batchGenerate(count = 21) {
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
+
+  // Clean old output files to prevent stale cache from previous series
+  console.log('🧹 Cleaning old output files...');
+  try {
+    const oldFiles = fs.readdirSync(OUTPUT_DIR).filter(f => 
+      f.endsWith('.mp4') || f.endsWith('.png') || f.endsWith('_caption.txt')
+    );
+    oldFiles.forEach(f => {
+      fs.unlinkSync(path.join(OUTPUT_DIR, f));
+    });
+    console.log(`   Removed ${oldFiles.length} old files.`);
+  } catch(e) { console.log('   (no old files to clean)'); }
 
   const schedule = [];
   const slots = ['morning', 'afternoon', 'evening'];
