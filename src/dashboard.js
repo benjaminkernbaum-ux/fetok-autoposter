@@ -64,13 +64,21 @@ function startDashboard() {
 
   // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
   const VIDEOS_DIR = path.join(OUTPUT_DIR, 'videos');
+  // Helper: find video in output root or videos subdir
+  function resolveVideoPath(filename) {
+    const inRoot = path.join(OUTPUT_DIR, filename);
+    if (fs.existsSync(inRoot)) return inRoot;
+    const inSub = path.join(VIDEOS_DIR, filename);
+    if (fs.existsSync(inSub)) return inSub;
+    return null;
+  }
   app.get('/download/:filename', (req, res) => {
     const filename = decodeURIComponent(req.params.filename);
-    const filePath = path.join(VIDEOS_DIR, filename);
+    const filePath = resolveVideoPath(filename);
     
-    if (!fs.existsSync(filePath)) {
-      console.log(`❌ Download 404: ${filename} not found at ${filePath}`);
-      return res.status(404).json({ error: 'File not found', requested: filename, path: filePath });
+    if (!filePath) {
+      console.log(`❌ Download 404: ${filename}`);
+      return res.status(404).json({ error: 'File not found', requested: filename });
     }
     
     const stat = fs.statSync(filePath);
@@ -86,9 +94,9 @@ function startDashboard() {
   // ── DEDICATED VIDEO STREAM ROUTE — for reliable playback ──
   app.get('/video/:filename', (req, res) => {
     const filename = decodeURIComponent(req.params.filename);
-    const filePath = path.join(VIDEOS_DIR, filename);
+    const filePath = resolveVideoPath(filename);
     
-    if (!fs.existsSync(filePath)) {
+    if (!filePath) {
       return res.status(404).json({ error: 'Video not found', requested: filename });
     }
     
