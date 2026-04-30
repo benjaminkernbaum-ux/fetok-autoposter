@@ -1,7 +1,7 @@
 /**
- * FéTok Image Generator v2.0
- * Creates CINEMATIC verse images using Sharp + SVG
- * Beautiful gradient backgrounds — no external images needed
+ * FéTok Image Generator v3.0 — VIVID CINEMATIC BACKGROUNDS
+ * Creates stunning verse images with bright gradient backgrounds
+ * No external images needed — fully self-contained SVG rendering
  */
 
 const sharp = require('sharp');
@@ -11,70 +11,48 @@ const fs = require('fs');
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 
 /* ═══════════════════════════════════════════════════════════
-   CINEMATIC GRADIENT PALETTES — one per theme
-   Each has a rich multi-stop gradient + accent glow
+   VIVID THEME PALETTES — bright, eye-catching colors
    ═══════════════════════════════════════════════════════════ */
 const THEME_PALETTES = {
-  proteção: {
-    stops: ['#0a1628', '#0d2847', '#0f3460', '#1a1a5e', '#0a1628'],
-    accent: '#4a90d9',
-    glow: 'rgba(74,144,217,0.3)',
-    icon: '🛡️',
+  'proteção': {
+    bg1: '#0b1a3d', bg2: '#1a3a7a', bg3: '#2563eb', bg4: '#60a5fa',
+    accent: '#93c5fd', glow1: '#3b82f6', glow2: '#1d4ed8',
   },
-  coragem: {
-    stops: ['#1a0a00', '#3d1c00', '#6b3000', '#8b4513', '#3d1c00'],
-    accent: '#ff8c42',
-    glow: 'rgba(255,140,66,0.25)',
-    icon: '⚔️',
+  'coragem': {
+    bg1: '#2d1300', bg2: '#7c2d12', bg3: '#c2410c', bg4: '#fb923c',
+    accent: '#fdba74', glow1: '#ea580c', glow2: '#9a3412',
   },
-  amor: {
-    stops: ['#1a0010', '#3d0024', '#6b0037', '#8b1a4a', '#3d0024'],
-    accent: '#ff4081',
-    glow: 'rgba(255,64,129,0.25)',
-    icon: '❤️',
+  'amor': {
+    bg1: '#3b0015', bg2: '#881337', bg3: '#be123c', bg4: '#fb7185',
+    accent: '#fda4af', glow1: '#e11d48', glow2: '#9f1239',
   },
-  força: {
-    stops: ['#0a0020', '#1a0040', '#2d1070', '#4a1a8a', '#1a0040'],
-    accent: '#b388ff',
-    glow: 'rgba(179,136,255,0.3)',
-    icon: '💪',
+  'força': {
+    bg1: '#1e0a3e', bg2: '#4c1d95', bg3: '#7c3aed', bg4: '#a78bfa',
+    accent: '#c4b5fd', glow1: '#8b5cf6', glow2: '#6d28d9',
   },
-  fé: {
-    stops: ['#0a1a10', '#0d3320', '#1a5c3a', '#0d3320', '#0a1a10'],
-    accent: '#69f0ae',
-    glow: 'rgba(105,240,174,0.25)',
-    icon: '✝️',
+  'fé': {
+    bg1: '#052e16', bg2: '#14532d', bg3: '#16a34a', bg4: '#4ade80',
+    accent: '#86efac', glow1: '#22c55e', glow2: '#15803d',
   },
-  esperança: {
-    stops: ['#1a1000', '#3d2800', '#6b4500', '#d4a853', '#6b4500'],
-    accent: '#ffd54f',
-    glow: 'rgba(255,213,79,0.3)',
-    icon: '🌅',
+  'esperança': {
+    bg1: '#2d1a00', bg2: '#78350f', bg3: '#d97706', bg4: '#fbbf24',
+    accent: '#fde68a', glow1: '#f59e0b', glow2: '#b45309',
   },
-  gratidão: {
-    stops: ['#0a1a1a', '#0d3333', '#1a5c5c', '#0d3333', '#0a1a1a'],
-    accent: '#4dd0e1',
-    glow: 'rgba(77,208,225,0.25)',
-    icon: '🙌',
+  'gratidão': {
+    bg1: '#042f2e', bg2: '#134e4a', bg3: '#0d9488', bg4: '#2dd4bf',
+    accent: '#5eead4', glow1: '#14b8a6', glow2: '#0f766e',
   },
-  vitória: {
-    stops: ['#1a0a00', '#4a1500', '#7a2000', '#b03000', '#4a1500'],
-    accent: '#ff6e40',
-    glow: 'rgba(255,110,64,0.3)',
-    icon: '👑',
+  'vitória': {
+    bg1: '#450a0a', bg2: '#7f1d1d', bg3: '#dc2626', bg4: '#f87171',
+    accent: '#fca5a5', glow1: '#ef4444', glow2: '#b91c1c',
   },
-  paz: {
-    stops: ['#05101a', '#0a2040', '#0f3060', '#1a4080', '#0a2040'],
-    accent: '#80cbc4',
-    glow: 'rgba(128,203,196,0.25)',
-    icon: '🕊️',
+  'paz': {
+    bg1: '#0c1445', bg2: '#1e3a8a', bg3: '#3b82f6', bg4: '#7dd3fc',
+    accent: '#bae6fd', glow1: '#0ea5e9', glow2: '#0369a1',
   },
-  // Fallback
-  default: {
-    stops: ['#06060b', '#0d1117', '#161b22', '#0d1117', '#06060b'],
-    accent: '#d4a853',
-    glow: 'rgba(212,168,83,0.3)',
-    icon: '✝️',
+  'default': {
+    bg1: '#1a0f00', bg2: '#44290a', bg3: '#a16207', bg4: '#d4a853',
+    accent: '#fde68a', glow1: '#ca8a04', glow2: '#854d0e',
   },
 };
 
@@ -99,142 +77,173 @@ function escapeXml(str) {
 }
 
 /**
- * Create a full cinematic SVG image (background + text)
- * This is rendered entirely in SVG — no external images needed
+ * Create a full cinematic SVG with VIVID gradient background + text
  */
 function createCinematicSVG(verse, width, height) {
-  const palette = THEME_PALETTES[verse.theme] || THEME_PALETTES.default;
-  const [c1, c2, c3, c4, c5] = palette.stops;
+  const palette = THEME_PALETTES[verse.theme] || THEME_PALETTES['default'];
+  const { bg1, bg2, bg3, bg4, accent, glow1, glow2 } = palette;
 
-  // Text sizing
+  // Text sizing — make it BIG and readable
   const len = verse.text.length;
-  const fontSize = len > 100 ? 38 : len > 80 ? 44 : len > 60 ? 50 : len > 40 ? 56 : 64;
-  const maxChars = len > 100 ? 32 : len > 80 ? 28 : len > 60 ? 24 : len > 40 ? 22 : 18;
+  const fontSize = len > 120 ? 42 : len > 90 ? 48 : len > 70 ? 54 : len > 50 ? 60 : 68;
+  const maxChars = len > 120 ? 30 : len > 90 ? 26 : len > 70 ? 22 : len > 50 ? 20 : 16;
   const lines = wrapText(verse.text, maxChars);
-  const lineHeight = fontSize * 1.5;
+  const lineHeight = fontSize * 1.55;
   const totalTextHeight = lines.length * lineHeight;
-  const startY = (height / 2) - (totalTextHeight / 2) + 40;
+  const startY = (height / 2) - (totalTextHeight / 2) + 50;
 
   const textLines = lines.map((line, i) => {
     const y = startY + (i * lineHeight);
-    return `<text x="${width / 2}" y="${y}" font-family="Georgia, 'Times New Roman', serif" font-size="${fontSize}" font-weight="bold" font-style="italic" fill="white" text-anchor="middle" filter="url(#textGlow)">${escapeXml(line)}</text>`;
+    return `<text x="${width / 2}" y="${y}" 
+      font-family="Georgia, 'Times New Roman', serif" 
+      font-size="${fontSize}" font-weight="bold" font-style="italic" 
+      fill="white" text-anchor="middle" 
+      filter="url(#textShadow)">${escapeXml(line)}</text>`;
   }).join('\n    ');
 
-  const refY = startY + totalTextHeight + 50;
-  const watermarkY = height - 50;
-
-  // Decorative cross position
-  const crossY = startY - 80;
+  const refY = startY + totalTextHeight + 55;
+  const crossY = startY - 100;
+  const watermarkY = height - 55;
 
   return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Main gradient background -->
-    <radialGradient id="bgGrad" cx="50%" cy="45%" r="70%">
-      <stop offset="0%" stop-color="${c3}"/>
-      <stop offset="40%" stop-color="${c2}"/>
-      <stop offset="100%" stop-color="${c1}"/>
+    <!-- MAIN BACKGROUND: radial gradient from bright center to dark edges -->
+    <radialGradient id="bgMain" cx="50%" cy="42%" r="75%" fx="50%" fy="42%">
+      <stop offset="0%" stop-color="${bg3}"/>
+      <stop offset="35%" stop-color="${bg2}"/>
+      <stop offset="70%" stop-color="${bg1}"/>
+      <stop offset="100%" stop-color="#000000"/>
     </radialGradient>
 
-    <!-- Accent glow -->
-    <radialGradient id="accentGlow" cx="50%" cy="40%" r="50%">
-      <stop offset="0%" stop-color="${palette.glow}"/>
-      <stop offset="60%" stop-color="transparent"/>
+    <!-- BRIGHT CENTER GLOW -->
+    <radialGradient id="centerGlow" cx="50%" cy="40%" r="40%">
+      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="${bg3}" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Top light rays -->
-    <radialGradient id="topLight" cx="50%" cy="0%" r="60%">
-      <stop offset="0%" stop-color="${palette.glow}"/>
-      <stop offset="100%" stop-color="transparent"/>
+    <!-- TOP DIVINE LIGHT BEAM -->
+    <radialGradient id="topBeam" cx="50%" cy="-10%" r="60%">
+      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="${glow1}" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Bottom vignette -->
-    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
-      <stop offset="50%" stop-color="transparent"/>
-      <stop offset="100%" stop-color="rgba(0,0,0,0.6)"/>
+    <!-- SECONDARY GLOW (lower) -->
+    <radialGradient id="lowerGlow" cx="50%" cy="80%" r="45%">
+      <stop offset="0%" stop-color="${glow2}" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Text glow filter -->
-    <filter id="textGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="rgba(0,0,0,0.9)"/>
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.7)"/>
+    <!-- LEFT ACCENT -->
+    <radialGradient id="leftAccent" cx="10%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="${glow1}" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- RIGHT ACCENT -->
+    <radialGradient id="rightAccent" cx="90%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="${glow2}" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- TEXT SHADOW — strong contrast -->
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="15" flood-color="rgba(0,0,0,0.95)"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(0,0,0,0.8)"/>
     </filter>
 
-    <!-- Soft glow for decorative elements -->
-    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="20" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <!-- GLOW for accent text -->
+    <filter id="accentGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="${glow1}80"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.8)"/>
     </filter>
 
-    <!-- Star sparkle -->
+    <!-- BLUR for bokeh particles -->
+    <filter id="bokeh" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+
+    <!-- SMALL sparkle -->
     <filter id="sparkle" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur stdDeviation="3"/>
+      <feGaussianBlur stdDeviation="2"/>
     </filter>
   </defs>
 
-  <!-- === BACKGROUND LAYERS === -->
-  <!-- Base gradient -->
-  <rect width="${width}" height="${height}" fill="url(#bgGrad)"/>
+  <!-- ═══ BACKGROUND LAYERS ═══ -->
+  <!-- Base: solid black -->
+  <rect width="${width}" height="${height}" fill="#000"/>
+  
+  <!-- Layer 1: main radial gradient -->
+  <rect width="${width}" height="${height}" fill="url(#bgMain)"/>
+  
+  <!-- Layer 2: bright center glow -->
+  <rect width="${width}" height="${height}" fill="url(#centerGlow)"/>
+  
+  <!-- Layer 3: top divine light beam -->
+  <rect width="${width}" height="${height}" fill="url(#topBeam)"/>
+  
+  <!-- Layer 4: bottom glow -->
+  <rect width="${width}" height="${height}" fill="url(#lowerGlow)"/>
 
-  <!-- Accent glow center -->
-  <rect width="${width}" height="${height}" fill="url(#accentGlow)"/>
+  <!-- Layer 5: side accents -->
+  <rect width="${width}" height="${height}" fill="url(#leftAccent)"/>
+  <rect width="${width}" height="${height}" fill="url(#rightAccent)"/>
 
-  <!-- Top divine light -->
-  <rect width="${width}" height="${height}" fill="url(#topLight)" opacity="0.5"/>
+  <!-- ═══ BOKEH PARTICLES ═══ -->
+  <circle cx="150" cy="180" r="25" fill="${bg4}" opacity="0.2" filter="url(#bokeh)"/>
+  <circle cx="920" cy="280" r="18" fill="${glow1}" opacity="0.18" filter="url(#bokeh)"/>
+  <circle cx="200" cy="850" r="22" fill="${accent}" opacity="0.15" filter="url(#bokeh)"/>
+  <circle cx="880" cy="780" r="20" fill="${bg4}" opacity="0.12" filter="url(#bokeh)"/>
+  <circle cx="540" cy="100" r="30" fill="${bg4}" opacity="0.15" filter="url(#bokeh)"/>
+  <circle cx="700" cy="950" r="15" fill="${glow1}" opacity="0.1" filter="url(#bokeh)"/>
 
-  <!-- Vignette edges -->
-  <rect width="${width}" height="${height}" fill="url(#vignette)"/>
+  <!-- Small sparkle stars -->
+  <circle cx="300" cy="150" r="3" fill="white" opacity="0.7" filter="url(#sparkle)"/>
+  <circle cx="800" cy="220" r="2.5" fill="white" opacity="0.6" filter="url(#sparkle)"/>
+  <circle cx="120" cy="500" r="2" fill="white" opacity="0.5" filter="url(#sparkle)"/>
+  <circle cx="960" cy="600" r="2.5" fill="white" opacity="0.55" filter="url(#sparkle)"/>
+  <circle cx="400" cy="920" r="2" fill="white" opacity="0.45" filter="url(#sparkle)"/>
+  <circle cx="700" cy="130" r="1.5" fill="white" opacity="0.4" filter="url(#sparkle)"/>
+  <circle cx="250" cy="700" r="2" fill="white" opacity="0.35" filter="url(#sparkle)"/>
+  <circle cx="850" cy="450" r="1.5" fill="white" opacity="0.4" filter="url(#sparkle)"/>
 
-  <!-- === DECORATIVE ELEMENTS === -->
-  <!-- Large soft glow orb -->
-  <circle cx="${width/2}" cy="${height * 0.38}" r="200" fill="${palette.glow}" filter="url(#softGlow)" opacity="0.4"/>
-
-  <!-- Small accent orbs -->
-  <circle cx="${width * 0.2}" cy="${height * 0.25}" r="80" fill="${palette.glow}" filter="url(#softGlow)" opacity="0.15"/>
-  <circle cx="${width * 0.8}" cy="${height * 0.7}" r="60" fill="${palette.glow}" filter="url(#softGlow)" opacity="0.12"/>
-
-  <!-- Subtle stars -->
-  <circle cx="180" cy="120" r="2" fill="white" opacity="0.6" filter="url(#sparkle)"/>
-  <circle cx="900" cy="200" r="1.5" fill="white" opacity="0.5" filter="url(#sparkle)"/>
-  <circle cx="350" cy="900" r="2" fill="white" opacity="0.4" filter="url(#sparkle)"/>
-  <circle cx="780" cy="850" r="1.5" fill="white" opacity="0.5" filter="url(#sparkle)"/>
-  <circle cx="100" cy="600" r="1" fill="white" opacity="0.3" filter="url(#sparkle)"/>
-  <circle cx="950" cy="500" r="1.5" fill="white" opacity="0.35" filter="url(#sparkle)"/>
-
-  <!-- Decorative cross -->
-  <g transform="translate(${width/2}, ${crossY})" opacity="0.6">
-    <line x1="0" y1="-20" x2="0" y2="20" stroke="${palette.accent}" stroke-width="2.5" opacity="0.8"/>
-    <line x1="-12" y1="-6" x2="12" y2="-6" stroke="${palette.accent}" stroke-width="2.5" opacity="0.8"/>
+  <!-- ═══ DECORATIVE CROSS ═══ -->
+  <g transform="translate(${width/2}, ${crossY})" opacity="0.7">
+    <line x1="0" y1="-28" x2="0" y2="28" stroke="${accent}" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-18" y1="-8" x2="18" y2="-8" stroke="${accent}" stroke-width="3" stroke-linecap="round"/>
   </g>
 
-  <!-- Top decorative line -->
-  <line x1="${width * 0.3}" y1="${crossY + 40}" x2="${width * 0.7}" y2="${crossY + 40}" stroke="${palette.accent}" stroke-width="0.5" opacity="0.3"/>
+  <!-- Decorative horizontal rules -->
+  <line x1="${width * 0.25}" y1="${crossY + 50}" x2="${width * 0.75}" y2="${crossY + 50}" stroke="${accent}" stroke-width="0.8" opacity="0.35"/>
 
-  <!-- === TEXT CONTENT === -->
-  <!-- Opening quote mark -->
-  <text x="${width * 0.12}" y="${startY - 10}" font-family="Georgia, serif" font-size="120" fill="${palette.accent}" opacity="0.15">"</text>
+  <!-- ═══ OPENING QUOTE ═══ -->
+  <text x="${width * 0.08}" y="${startY - 5}" font-family="Georgia, serif" font-size="140" fill="${accent}" opacity="0.12" filter="url(#textShadow)">\u201C</text>
 
-  <!-- Verse text -->
+  <!-- ═══ VERSE TEXT ═══ -->
   ${textLines}
 
-  <!-- Closing quote mark -->
-  <text x="${width * 0.82}" y="${startY + totalTextHeight + 10}" font-family="Georgia, serif" font-size="120" fill="${palette.accent}" opacity="0.15">"</text>
+  <!-- ═══ CLOSING QUOTE ═══ -->
+  <text x="${width * 0.85}" y="${startY + totalTextHeight + 15}" font-family="Georgia, serif" font-size="140" fill="${accent}" opacity="0.12" filter="url(#textShadow)">\u201D</text>
 
-  <!-- Reference -->
-  <text x="${width / 2}" y="${refY}" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="${palette.accent}" text-anchor="middle" filter="url(#textGlow)" letter-spacing="2">${escapeXml(verse.ref)}</text>
+  <!-- ═══ REFERENCE ═══ -->
+  <text x="${width / 2}" y="${refY}" 
+    font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" 
+    fill="${accent}" text-anchor="middle" 
+    filter="url(#accentGlow)" letter-spacing="3">${escapeXml(verse.ref.toUpperCase())}</text>
 
   <!-- Bottom decorative line -->
-  <line x1="${width * 0.35}" y1="${refY + 20}" x2="${width * 0.65}" y2="${refY + 20}" stroke="${palette.accent}" stroke-width="0.5" opacity="0.4"/>
+  <line x1="${width * 0.3}" y1="${refY + 25}" x2="${width * 0.7}" y2="${refY + 25}" stroke="${accent}" stroke-width="0.8" opacity="0.3"/>
 
-  <!-- Watermark -->
-  <text x="${width / 2}" y="${watermarkY}" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="500" fill="rgba(255,255,255,0.35)" text-anchor="middle" letter-spacing="1">✝  @luz.da.palavra.oficial</text>
+  <!-- ═══ WATERMARK ═══ -->
+  <text x="${width / 2}" y="${watermarkY}" 
+    font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="500" 
+    fill="rgba(255,255,255,0.4)" text-anchor="middle" letter-spacing="2">✝  @luz.da.palavra.oficial</text>
 </svg>`;
 }
 
 /**
- * Generate a verse image (1080x1080) with cinematic SVG background
+ * Generate a verse image (1080x1080)
  */
 async function generateImage(verse) {
   const width = 1080;
@@ -249,18 +258,16 @@ async function generateImage(verse) {
     return outputPath;
   }
 
-  console.log(`🎨 Generating cinematic image: ${filename}...`);
+  console.log(`🎨 Generating vivid image: ${filename}...`);
 
-  // Create full cinematic SVG (background + text in one)
   const svg = createCinematicSVG(verse, width, height);
   const svgBuffer = Buffer.from(svg);
 
-  // Render SVG to PNG
   await sharp(svgBuffer)
     .png({ quality: 95 })
     .toFile(outputPath);
 
-  console.log(`🎨 Image generated: ${filename}`);
+  console.log(`🎨 ✅ Image generated: ${filename}`);
   return outputPath;
 }
 
