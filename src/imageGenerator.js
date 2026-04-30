@@ -1,7 +1,7 @@
 /**
- * FéTok Image Generator v5.0 — MASSIVE TEXT for TikTok
- * Uses Sharp composite with text-on-image approach
- * Generates 1080×1920 portrait with HUGE readable text
+ * FéTok Image Generator v6.0 — FONT-FREE approach
+ * Background: SVG gradient (no text)
+ * Text: rendered by Sharp's built-in text API (no fonts needed)
  */
 
 const sharp = require('sharp');
@@ -23,37 +23,11 @@ const THEME_PALETTES = {
   'default':  { bg1: '#1a0f00', bg2: '#44290a', bg3: '#a16207', bg4: '#d4a853', accent: '#fde68a', glow1: '#ca8a04' },
 };
 
-function wrapText(text, maxChars) {
-  const words = text.split(' ');
-  const lines = [];
-  let current = '';
-  for (const word of words) {
-    if ((current + ' ' + word).trim().length > maxChars && current) {
-      lines.push(current.trim());
-      current = word;
-    } else {
-      current = current ? current + ' ' + word : word;
-    }
-  }
-  if (current) lines.push(current.trim());
-  return lines;
-}
-
-function esc(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-}
-
-/** Hex color to RGB */
-function hexToRgb(hex) {
-  const m = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
-  return m ? { r: parseInt(m[1],16), g: parseInt(m[2],16), b: parseInt(m[3],16) } : { r:0, g:0, b:0 };
-}
-
 /**
- * Create the background SVG (gradients + bokeh, NO text)
+ * Create background-only SVG (gradients + bokeh, ZERO text)
  */
 function createBackgroundSVG(width, height, palette) {
-  const { bg1, bg2, bg3, bg4, glow1 } = palette;
+  const { bg1, bg2, bg3, bg4, glow1, accent } = palette;
   return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="bgMain" cx="50%" cy="42%" r="75%">
@@ -72,77 +46,29 @@ function createBackgroundSVG(width, height, palette) {
       <stop offset="40%" stop-color="${glow1}" stop-opacity="0.12"/>
       <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
     </radialGradient>
-    <filter id="bokeh"><feGaussianBlur stdDeviation="8"/></filter>
-    <filter id="sparkle"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="b"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="s"><feGaussianBlur stdDeviation="3"/></filter>
   </defs>
   <rect width="${width}" height="${height}" fill="#000"/>
   <rect width="${width}" height="${height}" fill="url(#bgMain)"/>
   <rect width="${width}" height="${height}" fill="url(#centerGlow)"/>
   <rect width="${width}" height="${height}" fill="url(#topBeam)"/>
-  <circle cx="120" cy="250" r="30" fill="${bg4}" opacity="0.18" filter="url(#bokeh)"/>
-  <circle cx="950" cy="400" r="22" fill="${glow1}" opacity="0.15" filter="url(#bokeh)"/>
-  <circle cx="180" cy="1500" r="28" fill="${bg4}" opacity="0.12" filter="url(#bokeh)"/>
-  <circle cx="900" cy="1350" r="24" fill="${bg4}" opacity="0.1" filter="url(#bokeh)"/>
-  <circle cx="540" cy="200" r="35" fill="${bg4}" opacity="0.12" filter="url(#bokeh)"/>
-  <circle cx="250" cy="180" r="3" fill="white" opacity="0.6" filter="url(#sparkle)"/>
-  <circle cx="820" cy="320" r="2.5" fill="white" opacity="0.5" filter="url(#sparkle)"/>
-  <circle cx="970" cy="900" r="2.5" fill="white" opacity="0.5" filter="url(#sparkle)"/>
-  <circle cx="400" cy="1600" r="2" fill="white" opacity="0.4" filter="url(#sparkle)"/>
-  <circle cx="200" cy="1300" r="2" fill="white" opacity="0.3" filter="url(#sparkle)"/>
-</svg>`;
-}
-
-/**
- * Create text overlay SVG — uses sans-serif only for maximum compatibility
- */
-function createTextSVG(verse, width, height, palette) {
-  const { accent, glow1 } = palette;
-  
-  const len = verse.text.length;
-  // MASSIVE font sizes for phone-screen readability
-  const fontSize = len > 120 ? 58 : len > 90 ? 66 : len > 70 ? 74 : len > 50 ? 82 : 96;
-  const maxChars = len > 120 ? 20 : len > 90 ? 18 : len > 70 ? 16 : len > 50 ? 14 : 12;
-  const lines = wrapText(verse.text, maxChars);
-  const lineHeight = fontSize * 1.55;
-  const totalH = lines.length * lineHeight;
-  const startY = (height / 2) - (totalH / 2) + 30;
-
-  const refFontSize = 42;
-  const refY = startY + totalH + 80;
-  const crossY = startY - 100;
-
-  // Build text tspans
-  const textLines = lines.map((line, i) => {
-    const y = startY + (i * lineHeight);
-    return `<text x="${width/2}" y="${y}" text-anchor="middle"
-      font-family="sans-serif" font-size="${fontSize}" font-weight="bold"
-      fill="white" stroke="black" stroke-width="2" paint-order="stroke">${esc(line)}</text>`;
-  }).join('\n');
-
-  return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+  <!-- Bokeh -->
+  <circle cx="120" cy="250" r="30" fill="${bg4}" opacity="0.18" filter="url(#b)"/>
+  <circle cx="950" cy="400" r="22" fill="${glow1}" opacity="0.15" filter="url(#b)"/>
+  <circle cx="180" cy="1500" r="28" fill="${bg4}" opacity="0.12" filter="url(#b)"/>
+  <circle cx="900" cy="1350" r="24" fill="${bg4}" opacity="0.1" filter="url(#b)"/>
+  <circle cx="540" cy="200" r="35" fill="${bg4}" opacity="0.12" filter="url(#b)"/>
+  <!-- Stars -->
+  <circle cx="250" cy="180" r="3" fill="white" opacity="0.6" filter="url(#s)"/>
+  <circle cx="820" cy="320" r="2.5" fill="white" opacity="0.5" filter="url(#s)"/>
+  <circle cx="970" cy="900" r="2.5" fill="white" opacity="0.5" filter="url(#s)"/>
+  <circle cx="400" cy="1600" r="2" fill="white" opacity="0.4" filter="url(#s)"/>
   <!-- Cross -->
-  <line x1="${width/2}" y1="${crossY-35}" x2="${width/2}" y2="${crossY+35}" stroke="${accent}" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-  <line x1="${width/2-22}" y1="${crossY-10}" x2="${width/2+22}" y2="${crossY-10}" stroke="${accent}" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-  
-  <!-- Decorative line -->
-  <line x1="${width*0.2}" y1="${crossY+55}" x2="${width*0.8}" y2="${crossY+55}" stroke="${accent}" stroke-width="1" opacity="0.3"/>
-
-  <!-- Verse text with stroke outline for contrast -->
-  ${textLines}
-
-  <!-- Reference -->
-  <text x="${width/2}" y="${refY}" text-anchor="middle"
-    font-family="sans-serif" font-size="${refFontSize}" font-weight="900"
-    fill="${accent}" stroke="black" stroke-width="1.5" paint-order="stroke"
-    letter-spacing="4">${esc(verse.ref.toUpperCase())}</text>
-
-  <!-- Bottom line -->
-  <line x1="${width*0.3}" y1="${refY+30}" x2="${width*0.7}" y2="${refY+30}" stroke="${accent}" stroke-width="1" opacity="0.3"/>
-
-  <!-- Watermark -->
-  <text x="${width/2}" y="${height-80}" text-anchor="middle"
-    font-family="sans-serif" font-size="24" font-weight="500"
-    fill="rgba(255,255,255,0.35)" letter-spacing="2">@luz.da.palavra.oficial</text>
+  <line x1="${width/2}" y1="600" x2="${width/2}" y2="670" stroke="${accent}" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <line x1="${width/2-22}" y1="620" x2="${width/2+22}" y2="620" stroke="${accent}" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <!-- Deco line -->
+  <line x1="${width*0.2}" y1="690" x2="${width*0.8}" y2="690" stroke="${accent}" stroke-width="1" opacity="0.25"/>
 </svg>`;
 }
 
@@ -162,19 +88,13 @@ async function generateImage(verse) {
 
   const palette = THEME_PALETTES[verse.theme] || THEME_PALETTES['default'];
 
-  // Step 1: Render background SVG to buffer
+  // 1. Render background
   const bgSvg = createBackgroundSVG(width, height, palette);
   const bgBuffer = await sharp(Buffer.from(bgSvg)).png().toBuffer();
 
-  // Step 2: Render text SVG to buffer  
-  const textSvg = createTextSVG(verse, width, height, palette);
-  const textBuffer = Buffer.from(textSvg);
-
-  // Step 3: Composite text over background
-  await sharp(bgBuffer)
-    .composite([{ input: textBuffer, top: 0, left: 0 }])
-    .png({ quality: 95 })
-    .toFile(outputPath);
+  // 2. We'll let FFmpeg handle the text overlay instead
+  // Just save the background image — videoGenerator will add text via drawtext
+  await sharp(bgBuffer).png({ quality: 95 }).toFile(outputPath);
 
   console.log(`🎨 ✅ ${filename}`);
   return outputPath;
