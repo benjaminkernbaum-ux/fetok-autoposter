@@ -172,3 +172,13 @@ module.exports = { createPost, history, getStats };
 // Start everything
 startDashboard();
 startScheduler();
+
+// Auto-generate all cinematic videos on startup (3s delay)
+setTimeout(() => {
+  console.log('\n🎬 Auto-generating cinematic Serie 3 videos...');
+  const { spawn } = require('child_process');
+  const child = spawn('node', [path.join(__dirname, 'batchSerie3.js'), '--force'], { cwd: __dirname });
+  child.stdout.on('data', d => process.stdout.write(d));
+  child.stderr.on('data', d => process.stderr.write(d));
+  child.on('close', c => console.log(`\n🏁 Video generation finished (exit: ${c})`));
+}, 3000);

@@ -1,7 +1,7 @@
 /**
- * FéTok Serie 3 — Generate ALL 21 missing videos
- * Uses imageGenerator + videoGenerator to create verse videos
- * Outputs directly to /output/ with correct filenames
+ * FéTok Serie 3 — Generate ALL 21 videos with cinematic backgrounds
+ * Usage: node src/batchSerie3.js [--force]
+ *   --force: delete existing files and regenerate everything
  */
 
 const { generateImage } = require('./imageGenerator');
@@ -11,32 +11,28 @@ const fs = require('fs');
 const path = require('path');
 
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
-
-// Map themes to background styles
-const themeBgMap = {
-  'proteção': 'golden_rays',
-  'coragem': 'mountain',
-  'amor': 'cross_light',
-  'força': 'shepherd',
-  'fé': 'divine_light',
-  'esperança': 'sunrise',
-  'gratidão': 'golden_rays',
-  'vitória': 'mountain',
-  'paz': 'dove',
-};
+const FORCE = process.argv.includes('--force');
 
 async function generateAll() {
-  console.log('\n🚀 FéTok Serie 3 — Batch Video Generator');
+  console.log('\n🚀 FéTok Serie 3 — Cinematic Video Generator');
   console.log('━'.repeat(50));
+  if (FORCE) console.log('⚠️  FORCE mode — regenerating ALL files\n');
 
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+
+  // In force mode, clear all old PNGs and MP4s
+  if (FORCE) {
+    const old = fs.readdirSync(OUTPUT_DIR).filter(f => f.endsWith('.png') || f.endsWith('.mp4'));
+    old.forEach(f => { fs.unlinkSync(path.join(OUTPUT_DIR, f)); });
+    console.log(`🗑️  Cleared ${old.length} old files\n`);
+  }
 
   let ok = 0, skip = 0, fail = 0;
 
   for (const post of POSTS_DATA) {
     const targetPath = path.join(OUTPUT_DIR, post.videoFile);
     
-    if (fs.existsSync(targetPath)) {
+    if (!FORCE && fs.existsSync(targetPath)) {
       console.log(`⏭️  ${post.videoFile} — already exists`);
       skip++;
       continue;
@@ -45,21 +41,20 @@ async function generateAll() {
     console.log(`\n🎬 [Day ${post.day} ${post.slot}] ${post.verse} → ${post.videoFile}`);
 
     try {
-      const bg = themeBgMap[post.theme] || 'divine_light';
-      const verse = { ref: post.verse, text: post.text, bg: bg, theme: post.theme };
+      const verse = { ref: post.verse, text: post.text, theme: post.theme };
       
-      // Generate image
+      // Generate cinematic image
       const imagePath = await generateImage(verse);
       console.log(`   🎨 Image: ✅`);
 
-      // Generate video — outputs to /output/ with auto name
+      // Generate video from image
       const videoPath = await generateVideo(imagePath, verse);
-      console.log(`   🎬 Video generated: ${path.basename(videoPath)}`);
+      console.log(`   🎬 Video: ${path.basename(videoPath)}`);
 
       // Copy to expected filename if different
       if (path.basename(videoPath) !== post.videoFile) {
         fs.copyFileSync(videoPath, targetPath);
-        console.log(`   📁 Copied → ${post.videoFile}`);
+        console.log(`   📁 Renamed → ${post.videoFile}`);
       }
 
       ok++;
@@ -71,11 +66,8 @@ async function generateAll() {
 
   console.log('\n' + '━'.repeat(50));
   console.log(`✅ Complete! ${ok} generated, ${skip} skipped, ${fail} failed`);
-  console.log(`📁 Output: ${OUTPUT_DIR}`);
-  
-  // List all mp4s
   const mp4s = fs.readdirSync(OUTPUT_DIR).filter(f => f.endsWith('.mp4'));
-  console.log(`📊 Total MP4s in output: ${mp4s.length}`);
+  console.log(`📊 Total MP4s: ${mp4s.length}`);
 }
 
 generateAll().catch(console.error);

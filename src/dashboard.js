@@ -214,7 +214,7 @@ function startDashboard() {
     const { spawn } = require('child_process');
     const batchScript = path.join(__dirname, 'batchSerie3.js');
     console.log('🚀 Batch generation started via API...');
-    const child = spawn('node', [batchScript, '21'], { cwd: path.resolve(__dirname, '..') });
+    const child = spawn('node', [batchScript, '--force'], { cwd: path.resolve(__dirname, '..') });
     let output = '';
     child.stdout.on('data', d => { output += d.toString(); console.log(d.toString()); });
     child.stderr.on('data', d => { output += d.toString(); console.error(d.toString()); });
@@ -238,7 +238,7 @@ function startDashboard() {
     const { spawn } = require('child_process');
     const batchScript = path.join(__dirname, 'batchGenerate.js');
     console.log('🚀 Batch generation started via browser GET...');
-    const child = spawn('node', [batchScript, '21'], { cwd: path.resolve(__dirname, '..') });
+    const child = spawn('node', [batchScript, '--force'], { cwd: path.resolve(__dirname, '..') });
     child.stdout.on('data', d => console.log(d.toString()));
     child.stderr.on('data', d => console.error(d.toString()));
     child.on('close', code => console.log(`🏁 Batch done (code ${code})`));
