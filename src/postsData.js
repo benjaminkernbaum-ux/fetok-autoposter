@@ -66,7 +66,7 @@ Comenta "PROTEGIDO" se você crê nessa promessa! ❤️
   },
   { day:2, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'2 Timóteo 1:7', theme:'coragem', themeEmoji:'⚔️',
     text:'Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.',
-    videoFile:'video_2timoteo_1_7.mp4',
+    videoFile:'video_2_timoteo_1_7.mp4',
     music:'Anderson Freire → Primeira Essência',
     musicSearch:'anderson freire primeira essencia',
     caption:`Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio. ⚔️✝️
@@ -80,7 +80,7 @@ Comenta AMÉM se você recebe esse poder AGORA! 🙏
   },
   { day:2, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'1 João 4:19', theme:'amor', themeEmoji:'❤️',
     text:'Nós amamos porque ele nos amou primeiro.',
-    videoFile:'video_1joao_4_19.mp4',
+    videoFile:'video_1_joao_4_19.mp4',
     music:'Isaias Saad → Me Atraiu',
     musicSearch:'isaias saad me atraiu',
     caption:`Nós amamos porque ele nos amou primeiro. ❤️✝️
@@ -154,7 +154,7 @@ Comenta "EU CREIO" se sua fé move montanhas! 🙏
   },
   { day:4, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'2 Coríntios 12:10', theme:'força', themeEmoji:'💪',
     text:'Quando sou fraco, então é que sou forte.',
-    videoFile:'video_2corintios_12_10.mp4',
+    videoFile:'video_2_corintios_12_10.mp4',
     music:'Anderson Freire → Raridade',
     musicSearch:'anderson freire raridade',
     caption:`Quando sou fraco, então é que sou forte. 💪✝️
@@ -286,7 +286,7 @@ Comenta "EU CLAMO" se você quer ver o impossível! 🙏
   },
   { day:7, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'2 Timóteo 4:7', theme:'vitória', themeEmoji:'🏆',
     text:'Combati o bom combate, terminei a corrida, guardei a fé.',
-    videoFile:'video_2timoteo_4_7.mp4',
+    videoFile:'video_2_timoteo_4_7.mp4',
     music:'Preto no Branco → Me Deixa Aqui',
     musicSearch:'preto no branco me deixa aqui',
     caption:`Combati o bom combate, terminei a corrida, guardei a fé. 🏆✝️
