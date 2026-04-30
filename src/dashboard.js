@@ -1,4 +1,4 @@
-﻿/**
+/**
  * FéTok Dashboard v3.0 — Série 3 Content Management Hub
  * All 21 videos + captions + viral music + mobile-responsive
  */
@@ -188,6 +188,42 @@ function startDashboard() {
       const result = await createPost(slot);
       res.json({ success: true, result });
     } catch (err) { res.status(500).json({ error: err.message }); }
+  });
+
+  // ── BATCH GENERATE ALL 21 VIDEOS ──
+  app.post('/api/generate-all', (req, res) => {
+    const { spawn } = require('child_process');
+    const batchScript = path.join(__dirname, 'batchGenerate.js');
+    console.log('🚀 Batch generation started via API...');
+    const child = spawn('node', [batchScript, '21'], { cwd: path.resolve(__dirname, '..') });
+    let output = '';
+    child.stdout.on('data', d => { output += d.toString(); console.log(d.toString()); });
+    child.stderr.on('data', d => { output += d.toString(); console.error(d.toString()); });
+    child.on('close', code => {
+      console.log(`🏁 Batch generation finished with code ${code}`);
+    });
+    res.json({ success: true, message: 'Batch generation started (21 videos). Check /api/diagnostic for progress.' });
+  });
+
+  // GET handler so opening in browser shows a helpful message
+  app.get('/api/generate-all', (req, res) => {
+    res.json({ 
+      error: 'Use POST to trigger generation', 
+      hint: 'Run: curl -X POST ' + req.protocol + '://' + req.get('host') + '/api/generate-all',
+      alternative: 'Or visit /api/generate-all/go to trigger via GET'
+    });
+  });
+
+  // Convenience GET trigger (so you can open it in a browser)
+  app.get('/api/generate-all/go', (req, res) => {
+    const { spawn } = require('child_process');
+    const batchScript = path.join(__dirname, 'batchGenerate.js');
+    console.log('🚀 Batch generation started via browser GET...');
+    const child = spawn('node', [batchScript, '21'], { cwd: path.resolve(__dirname, '..') });
+    child.stdout.on('data', d => console.log(d.toString()));
+    child.stderr.on('data', d => console.error(d.toString()));
+    child.on('close', code => console.log(`🏁 Batch done (code ${code})`));
+    res.send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;padding:40px;text-align:center"><h1 style="color:#d4a853">🚀 Generating 21 Videos...</h1><p>This runs in the background on Railway.</p><p>Check progress at <a href="/api/diagnostic" style="color:#d4a853">/api/diagnostic</a></p><p>Then refresh the <a href="/" style="color:#d4a853">dashboard</a> to see your videos.</p></body></html>');
   });
 
   app.get('/api/guide', (req, res) => {
