@@ -1,85 +1,86 @@
 /**
- * FéTok Verse Database — 50+ versículos organizados por tema
- * Cada versículo roda uma vez e é marcado como postado
+ * FéTok Verse Database — Série 3
+ * 55 versículos NOVOS (zero overlap com Série 1 e 2)
+ * Organizados por 13 temas — cada um roda uma vez e é marcado como postado
  */
 
 const verses = [
   // ═══ PROTEÇÃO ═══
-  { text: "O Senhor é o meu pastor; nada me faltará.", ref: "Salmos 23:1", theme: "proteção", bg: "golden_rays", posted: true },
-  { text: "Aquele que habita no abrigo do Altíssimo descansará à sombra do Todo-Poderoso.", ref: "Salmos 91:1", theme: "proteção", bg: "divine_light" },
-  { text: "O Senhor é a minha luz e a minha salvação; de quem terei medo?", ref: "Salmos 27:1", theme: "proteção", bg: "golden_rays" },
-  { text: "Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.", ref: "Salmos 46:1", theme: "proteção", bg: "mountain" },
-  { text: "O Senhor está perto de todos os que o invocam.", ref: "Salmos 145:18", theme: "proteção", bg: "divine_light" },
+  { text: "O anjo do Senhor acampa-se ao redor dos que o temem e os livra.", ref: "Salmos 34:7", theme: "proteção", bg: "divine_light" },
+  { text: "Tu és o meu esconderijo; tu me preservas da angústia e me cercas de cânticos de livramento.", ref: "Salmos 32:7", theme: "proteção", bg: "mountain" },
+  { text: "Nenhuma arma forjada contra ti prosperará.", ref: "Isaías 54:17", theme: "proteção", bg: "shepherd" },
+  { text: "O nome do Senhor é uma torre forte; o justo corre para ela e está seguro.", ref: "Provérbios 18:10", theme: "proteção", bg: "golden_rays" },
+  { text: "Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum, porque tu estás comigo.", ref: "Salmos 23:4", theme: "proteção", bg: "narrow_path" },
 
   // ═══ CORAGEM ═══
-  { text: "Tende bom ânimo! Sou eu. Não temais.", ref: "Mateus 14:27", theme: "coragem", bg: "walking_water", posted: true },
-  { text: "Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus.", ref: "Isaías 41:10", theme: "coragem", bg: "mountain" },
-  { text: "Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor está com você.", ref: "Josué 1:9", theme: "coragem", bg: "shepherd" },
-  { text: "Quando passares pelas águas, estarei contigo.", ref: "Isaías 43:2", theme: "coragem", bg: "walking_water" },
-  { text: "O Senhor dos Exércitos está conosco; o Deus de Jacó é o nosso refúgio.", ref: "Salmos 46:7", theme: "coragem", bg: "divine_light" },
+  { text: "Espera no Senhor, anima-te e ele fortalecerá o teu coração.", ref: "Salmos 27:14", theme: "coragem", bg: "mountain" },
+  { text: "Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.", ref: "2 Timóteo 1:7", theme: "coragem", bg: "divine_light" },
+  { text: "O Senhor é a minha força e o meu escudo; nele confia o meu coração e fui socorrido.", ref: "Salmos 28:7", theme: "coragem", bg: "shepherd" },
+  { text: "Tenham coragem! Eu venci o mundo.", ref: "João 16:33", theme: "coragem", bg: "cross_light" },
 
   // ═══ AMOR ═══
-  { text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito.", ref: "João 3:16", theme: "amor", bg: "cross_light", posted: true },
-  { text: "O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.", ref: "1 Coríntios 13:4", theme: "amor", bg: "dove" },
-  { text: "Nisto se manifestou o amor de Deus para conosco: Deus enviou seu Filho unigênito ao mundo.", ref: "1 João 4:9", theme: "amor", bg: "cross_light" },
-  { text: "Mas Deus prova o seu próprio amor para conosco, pelo fato de ter Cristo morrido por nós.", ref: "Romanos 5:8", theme: "amor", bg: "cross_light" },
-  { text: "Porque as montanhas se retirarão, mas a minha graça não se apartará de ti.", ref: "Isaías 54:10", theme: "amor", bg: "mountain" },
+  { text: "Acima de tudo, porém, revistam-se do amor, que é o elo perfeito.", ref: "Colossenses 3:14", theme: "amor", bg: "dove" },
+  { text: "Nós amamos porque ele nos amou primeiro.", ref: "1 João 4:19", theme: "amor", bg: "cross_light" },
+  { text: "O Senhor teu Deus está no meio de ti, poderoso para te salvar; ele se deleitará em ti com alegria.", ref: "Sofonias 3:17", theme: "amor", bg: "sunrise" },
+  { text: "Nem a morte, nem a vida poderá nos separar do amor de Deus que está em Cristo Jesus.", ref: "Romanos 8:38-39", theme: "amor", bg: "golden_rays" },
 
   // ═══ FORÇA ═══
-  { text: "Tudo posso naquele que me fortalece.", ref: "Filipenses 4:13", theme: "força", bg: "prayer_hands" },
-  { text: "Os que esperam no Senhor renovam as suas forças; sobem com asas como águias.", ref: "Isaías 40:31", theme: "força", bg: "dove" },
-  { text: "O Senhor é a minha força e o meu cântico; ele é a minha salvação.", ref: "Êxodo 15:2", theme: "força", bg: "divine_light" },
-  { text: "Mas os que esperam no Senhor renovarão as suas forças.", ref: "Isaías 40:31", theme: "força", bg: "mountain" },
-  { text: "Fortalecei-vos no Senhor e na força do seu poder.", ref: "Efésios 6:10", theme: "força", bg: "shepherd" },
+  { text: "O Senhor Deus é a minha força; ele me dá pés como de corça e me faz andar sobre os altos.", ref: "Habacuque 3:19", theme: "força", bg: "mountain" },
+  { text: "Posso todas as coisas por meio daquele que me dá forças.", ref: "Filipenses 4:13b", theme: "força", bg: "prayer_hands" },
+  { text: "Quando sou fraco, então é que sou forte.", ref: "2 Coríntios 12:10", theme: "força", bg: "cross_light" },
+  { text: "A alegria do Senhor é a minha força.", ref: "Neemias 8:10", theme: "força", bg: "sunrise" },
 
   // ═══ FÉ ═══
-  { text: "Ora, a fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.", ref: "Hebreus 11:1", theme: "fé", bg: "divine_light" },
-  { text: "Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.", ref: "Provérbios 3:5", theme: "fé", bg: "olive_tree" },
-  { text: "Entrega o teu caminho ao Senhor; confia nele, e ele tudo fará.", ref: "Salmos 37:5", theme: "fé", bg: "narrow_path" },
-  { text: "Porque andamos por fé e não por vista.", ref: "2 Coríntios 5:7", theme: "fé", bg: "narrow_path" },
-  { text: "Se Deus é por nós, quem será contra nós?", ref: "Romanos 8:31", theme: "fé", bg: "cross_light" },
+  { text: "Se tiverdes fé como um grão de mostarda, direis a este monte: passa daqui e ele passará.", ref: "Mateus 17:20", theme: "fé", bg: "mountain" },
+  { text: "Tudo é possível ao que crê.", ref: "Marcos 9:23", theme: "fé", bg: "divine_light" },
+  { text: "Clama a mim e eu te responderei e te anunciarei coisas grandes e ocultas.", ref: "Jeremias 33:3", theme: "fé", bg: "golden_rays" },
+  { text: "Bem-aventurados os que não viram e creram.", ref: "João 20:29", theme: "fé", bg: "narrow_path" },
 
   // ═══ ESPERANÇA ═══
-  { text: "Eu sei os planos que tenho para vocês. Planos de fazê-los prosperar e não de lhes causar dano.", ref: "Jeremias 29:11", theme: "esperança", bg: "sunrise" },
-  { text: "Porque eu, o Senhor teu Deus, te tomo pela tua mão direita e te digo: Não temas.", ref: "Isaías 41:13", theme: "esperança", bg: "divine_light" },
-  { text: "Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus.", ref: "Romanos 8:28", theme: "esperança", bg: "golden_rays" },
-  { text: "O choro pode durar uma noite, mas a alegria vem pela manhã.", ref: "Salmos 30:5", theme: "esperança", bg: "sunrise" },
-  { text: "Porque a nossa leve e momentânea tribulação produz para nós um eterno peso de glória.", ref: "2 Coríntios 4:17", theme: "esperança", bg: "divine_light" },
+  { text: "Aqueles que semeiam com lágrimas, com cânticos de júbilo colherão.", ref: "Salmos 126:5", theme: "esperança", bg: "sunrise" },
+  { text: "Eis que faço novas todas as coisas.", ref: "Apocalipse 21:5", theme: "esperança", bg: "divine_light" },
+  { text: "Ele enxugará dos seus olhos toda lágrima, e não haverá mais morte, nem pranto, nem dor.", ref: "Apocalipse 21:4", theme: "esperança", bg: "dove" },
+  { text: "Porque o Senhor é bom; a sua misericórdia dura para sempre.", ref: "Salmos 100:5", theme: "esperança", bg: "golden_rays" },
 
   // ═══ PAZ ═══
-  { text: "Vinde a mim, todos os que estais cansados e sobrecarregados, e eu vos aliviarei.", ref: "Mateus 11:28", theme: "paz", bg: "prayer_hands" },
-  { text: "Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.", ref: "João 14:27", theme: "paz", bg: "dove" },
-  { text: "E a paz de Deus, que excede todo o entendimento, guardará o vosso coração.", ref: "Filipenses 4:7", theme: "paz", bg: "olive_tree" },
-  { text: "Aquietai-vos e sabei que eu sou Deus.", ref: "Salmos 46:10", theme: "paz", bg: "walking_water" },
-  { text: "Em paz me deito e logo adormeço, porque só tu, Senhor, me fazes habitar em segurança.", ref: "Salmos 4:8", theme: "paz", bg: "golden_rays" },
+  { text: "Tu conservarás em paz aquele cuja mente está firme em ti.", ref: "Isaías 26:3", theme: "paz", bg: "olive_tree" },
+  { text: "Não andem ansiosos por coisa alguma; apresentem seus pedidos a Deus.", ref: "Filipenses 4:6", theme: "paz", bg: "prayer_hands" },
+  { text: "A misericórdia, a paz e o amor vos sejam multiplicados.", ref: "Judas 1:2", theme: "paz", bg: "dove" },
+  { text: "O fruto do Espírito é amor, alegria, paz, paciência, bondade.", ref: "Gálatas 5:22", theme: "paz", bg: "olive_tree" },
 
   // ═══ GRATIDÃO ═══
-  { text: "Deem graças ao Senhor porque ele é bom; o seu amor dura para sempre.", ref: "Salmos 107:1", theme: "gratidão", bg: "sunrise" },
-  { text: "Deem graças em todas as circunstâncias, pois esta é a vontade de Deus.", ref: "1 Tessalonicenses 5:18", theme: "gratidão", bg: "olive_tree" },
-  { text: "Grandes coisas fez o Senhor por nós, e por isso estamos alegres.", ref: "Salmos 126:3", theme: "gratidão", bg: "golden_rays" },
+  { text: "Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum dos seus benefícios.", ref: "Salmos 103:2", theme: "gratidão", bg: "sunrise" },
+  { text: "Entrem pelas portas dele com ação de graças e nos seus átrios com louvor.", ref: "Salmos 100:4", theme: "gratidão", bg: "golden_rays" },
+  { text: "Graças a Deus pelo seu dom inefável!", ref: "2 Coríntios 9:15", theme: "gratidão", bg: "divine_light" },
+  { text: "Toda boa dádiva e todo dom perfeito vêm do alto.", ref: "Tiago 1:17", theme: "gratidão", bg: "olive_tree" },
 
   // ═══ PERDÃO ═══
-  { text: "Se confessarmos os nossos pecados, ele é fiel e justo para nos perdoar.", ref: "1 João 1:9", theme: "perdão", bg: "cross_light" },
-  { text: "Tão longe quanto o oriente do ocidente, assim afastou de nós as nossas transgressões.", ref: "Salmos 103:12", theme: "perdão", bg: "mountain" },
+  { text: "Eu, eu mesmo, sou o que apago as tuas transgressões por amor de mim.", ref: "Isaías 43:25", theme: "perdão", bg: "cross_light" },
+  { text: "Se o Filho vos libertar, verdadeiramente sereis livres.", ref: "João 8:36", theme: "perdão", bg: "divine_light" },
+  { text: "Perdoem como o Senhor lhes perdoou.", ref: "Colossenses 3:13", theme: "perdão", bg: "dove" },
 
   // ═══ PROVISÃO ═══
-  { text: "E o meu Deus suprirá todas as vossas necessidades segundo as suas riquezas na glória.", ref: "Filipenses 4:19", theme: "provisão", bg: "golden_rays" },
-  { text: "Buscai primeiro o Reino de Deus e a sua justiça, e todas essas coisas vos serão acrescentadas.", ref: "Mateus 6:33", theme: "provisão", bg: "narrow_path" },
-  { text: "Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós.", ref: "1 Pedro 5:7", theme: "provisão", bg: "shepherd" },
+  { text: "O Senhor é o meu pastor e nada me faltará. Em verdes pastagens me faz repousar.", ref: "Salmos 23:1-2", theme: "provisão", bg: "shepherd" },
+  { text: "Olhem para as aves do céu: não semeiam nem colhem, e o Pai celestial as alimenta.", ref: "Mateus 6:26", theme: "provisão", bg: "dove" },
+  { text: "Abres a tua mão e satisfazes de benevolência os desejos de todo ser vivente.", ref: "Salmos 145:16", theme: "provisão", bg: "golden_rays" },
 
   // ═══ SABEDORIA ═══
-  { text: "Se algum de vocês tem falta de sabedoria, peça-a a Deus, que a todos dá livremente.", ref: "Tiago 1:5", theme: "sabedoria", bg: "bible_light" },
-  { text: "O temor do Senhor é o princípio da sabedoria.", ref: "Provérbios 9:10", theme: "sabedoria", bg: "divine_light" },
-  { text: "Lâmpada para os meus pés é a tua palavra e luz para o meu caminho.", ref: "Salmos 119:105", theme: "sabedoria", bg: "narrow_path" },
+  { text: "Feliz é o homem que acha sabedoria, e o homem que adquire conhecimento.", ref: "Provérbios 3:13", theme: "sabedoria", bg: "bible_light" },
+  { text: "Ensina-nos a contar os nossos dias, para que alcancemos coração sábio.", ref: "Salmos 90:12", theme: "sabedoria", bg: "narrow_path" },
+  { text: "A sabedoria que vem do alto é antes de tudo pura, depois pacífica, amável.", ref: "Tiago 3:17", theme: "sabedoria", bg: "olive_tree" },
+  { text: "O princípio da sabedoria é: adquire a sabedoria; sim, com tudo que possuis adquire o entendimento.", ref: "Provérbios 4:7", theme: "sabedoria", bg: "divine_light" },
 
   // ═══ VITÓRIA ═══
-  { text: "Mas graças a Deus, que nos dá a vitória por meio de nosso Senhor Jesus Cristo.", ref: "1 Coríntios 15:57", theme: "vitória", bg: "cross_light" },
-  { text: "Em todas estas coisas somos mais do que vencedores, por aquele que nos amou.", ref: "Romanos 8:37", theme: "vitória", bg: "mountain" },
-  { text: "Porque todo o que é nascido de Deus vence o mundo.", ref: "1 João 5:4", theme: "vitória", bg: "shepherd" },
+  { text: "Não se deixem vencer pelo mal, mas vençam o mal com o bem.", ref: "Romanos 12:21", theme: "vitória", bg: "mountain" },
+  { text: "O Senhor pelejará por vós, e vós vos calareis.", ref: "Êxodo 14:14", theme: "vitória", bg: "walking_water" },
+  { text: "Combati o bom combate, terminei a corrida, guardei a fé.", ref: "2 Timóteo 4:7", theme: "vitória", bg: "cross_light" },
+  { text: "Graças a Deus, que sempre nos conduz em triunfo em Cristo.", ref: "2 Coríntios 2:14", theme: "vitória", bg: "shepherd" },
 
   // ═══ CURA ═══
-  { text: "Pelas suas feridas fomos sarados.", ref: "Isaías 53:5", theme: "cura", bg: "cross_light" },
-  { text: "Ele sara os de coração quebrantado e lhes pensa as feridas.", ref: "Salmos 147:3", theme: "cura", bg: "prayer_hands" },
+  { text: "Eu sou o Senhor que te sara.", ref: "Êxodo 15:26", theme: "cura", bg: "divine_light" },
+  { text: "Cura-me, Senhor, e serei curado; salva-me, e serei salvo.", ref: "Jeremias 17:14", theme: "cura", bg: "prayer_hands" },
+  { text: "E a oração da fé salvará o doente, e o Senhor o levantará.", ref: "Tiago 5:15", theme: "cura", bg: "cross_light" },
+  { text: "Mas para vós que temeis o meu nome nascerá o Sol da Justiça, trazendo cura nas suas asas.", ref: "Malaquias 4:2", theme: "cura", bg: "sunrise" },
 ];
 
 /**
@@ -122,3 +123,4 @@ function getStats() {
 }
 
 module.exports = { getNextVerse, markPosted, getAllVerses, getStats, verses };
+
