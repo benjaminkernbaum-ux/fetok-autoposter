@@ -1,27 +1,40 @@
 /**
- * FéTok Image Generator v7.0 — With fonts installed via nixpacks
- * Uses DejaVu Sans (guaranteed by apt package) for SVG text
- * Generates 1080×1920 portrait with text overlay
+ * FéTok Image Generator v8.0 — PURE JS TEXT RENDERING
+ * Uses pureimage (pure JavaScript canvas) with bundled DejaVu fonts
+ * No system font dependency — works EVERYWHERE
  */
 
-const sharp = require('sharp');
-const path = require('path');
+const PImage = require('pureimage');
 const fs = require('fs');
+const path = require('path');
 
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
+const FONT_DIR = path.resolve(__dirname, '../fonts');
+
+// Register & load fonts synchronously
+const fontBold = PImage.registerFont(path.join(FONT_DIR, 'DejaVuSans-Bold.ttf'), 'DejaVuBold');
+fontBold.loadSync();
+const fontRegular = PImage.registerFont(path.join(FONT_DIR, 'DejaVuSans.ttf'), 'DejaVuRegular');
+fontRegular.loadSync();
+console.log('✅ Fonts loaded: DejaVu Sans Bold + Regular');
 
 const THEME_PALETTES = {
-  'proteção': { bg1: '#0b1a3d', bg2: '#1a3a7a', bg3: '#2563eb', bg4: '#60a5fa', accent: '#93c5fd', glow1: '#3b82f6' },
-  'coragem':  { bg1: '#2d1300', bg2: '#7c2d12', bg3: '#c2410c', bg4: '#fb923c', accent: '#fdba74', glow1: '#ea580c' },
-  'amor':     { bg1: '#3b0015', bg2: '#881337', bg3: '#be123c', bg4: '#fb7185', accent: '#fda4af', glow1: '#e11d48' },
-  'força':    { bg1: '#1e0a3e', bg2: '#4c1d95', bg3: '#7c3aed', bg4: '#a78bfa', accent: '#c4b5fd', glow1: '#8b5cf6' },
-  'fé':       { bg1: '#052e16', bg2: '#14532d', bg3: '#16a34a', bg4: '#4ade80', accent: '#86efac', glow1: '#22c55e' },
-  'esperança':{ bg1: '#2d1a00', bg2: '#78350f', bg3: '#d97706', bg4: '#fbbf24', accent: '#fde68a', glow1: '#f59e0b' },
-  'gratidão': { bg1: '#042f2e', bg2: '#134e4a', bg3: '#0d9488', bg4: '#2dd4bf', accent: '#5eead4', glow1: '#14b8a6' },
-  'vitória':  { bg1: '#450a0a', bg2: '#7f1d1d', bg3: '#dc2626', bg4: '#f87171', accent: '#fca5a5', glow1: '#ef4444' },
-  'paz':      { bg1: '#0c1445', bg2: '#1e3a8a', bg3: '#3b82f6', bg4: '#7dd3fc', accent: '#bae6fd', glow1: '#0ea5e9' },
-  'default':  { bg1: '#1a0f00', bg2: '#44290a', bg3: '#a16207', bg4: '#d4a853', accent: '#fde68a', glow1: '#ca8a04' },
+  'proteção': { colors: ['#000000','#0b1a3d','#1a3a7a','#2563eb','#60a5fa'], accent: [147,197,253] },
+  'coragem':  { colors: ['#000000','#2d1300','#7c2d12','#c2410c','#fb923c'], accent: [253,186,116] },
+  'amor':     { colors: ['#000000','#3b0015','#881337','#be123c','#fb7185'], accent: [253,164,175] },
+  'força':    { colors: ['#000000','#1e0a3e','#4c1d95','#7c3aed','#a78bfa'], accent: [196,181,253] },
+  'fé':       { colors: ['#000000','#052e16','#14532d','#16a34a','#4ade80'], accent: [134,239,172] },
+  'esperança':{ colors: ['#000000','#2d1a00','#78350f','#d97706','#fbbf24'], accent: [253,230,138] },
+  'gratidão': { colors: ['#000000','#042f2e','#134e4a','#0d9488','#2dd4bf'], accent: [94,234,212] },
+  'vitória':  { colors: ['#000000','#450a0a','#7f1d1d','#dc2626','#f87171'], accent: [252,165,165] },
+  'paz':      { colors: ['#000000','#0c1445','#1e3a8a','#3b82f6','#7dd3fc'], accent: [186,230,253] },
+  'default':  { colors: ['#000000','#1a0f00','#44290a','#a16207','#d4a853'], accent: [253,230,138] },
 };
+
+function hexToRGB(hex) {
+  const m = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  return m ? [parseInt(m[1],16), parseInt(m[2],16), parseInt(m[3],16)] : [0,0,0];
+}
 
 function wrapText(text, maxChars) {
   const words = text.split(' ');
@@ -39,96 +52,6 @@ function wrapText(text, maxChars) {
   return lines;
 }
 
-function esc(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
-}
-
-function createFullSVG(verse, width, height) {
-  const palette = THEME_PALETTES[verse.theme] || THEME_PALETTES['default'];
-  const { bg1, bg2, bg3, bg4, accent, glow1 } = palette;
-
-  const len = verse.text.length;
-  const fontSize = len > 120 ? 52 : len > 90 ? 60 : len > 70 ? 68 : len > 50 ? 76 : 88;
-  const maxChars = len > 120 ? 22 : len > 90 ? 20 : len > 70 ? 17 : len > 50 ? 15 : 13;
-  const lines = wrapText(verse.text, maxChars);
-  const lineHeight = fontSize * 1.55;
-  const totalH = lines.length * lineHeight;
-  const startY = (height / 2) - (totalH / 2) + 30;
-  const refY = startY + totalH + 70;
-  const crossY = startY - 110;
-
-  // Use DejaVu Sans (installed via nixpacks) and Liberation Serif as fallbacks
-  const mainFont = "DejaVu Sans, Liberation Sans, FreeSans, Arial, Helvetica, sans-serif";
-  const refFont = "DejaVu Sans, Liberation Sans, FreeSans, Arial, Helvetica, sans-serif";
-
-  const textLines = lines.map((line, i) => {
-    const y = startY + (i * lineHeight);
-    return `<text x="${width/2}" y="${y}" text-anchor="middle" font-family="${mainFont}" font-size="${fontSize}" font-weight="bold" fill="white" stroke="black" stroke-width="3" paint-order="stroke fill">${esc(line)}</text>`;
-  }).join('\n    ');
-
-  return `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="bgMain" cx="50%" cy="42%" r="75%">
-      <stop offset="0%" stop-color="${bg3}"/>
-      <stop offset="35%" stop-color="${bg2}"/>
-      <stop offset="70%" stop-color="${bg1}"/>
-      <stop offset="100%" stop-color="#000"/>
-    </radialGradient>
-    <radialGradient id="cg" cx="50%" cy="40%" r="40%">
-      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.55"/>
-      <stop offset="50%" stop-color="${bg3}" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="tb" cx="50%" cy="0%" r="55%">
-      <stop offset="0%" stop-color="${bg4}" stop-opacity="0.4"/>
-      <stop offset="40%" stop-color="${glow1}" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="bk"><feGaussianBlur stdDeviation="8"/></filter>
-    <filter id="sp"><feGaussianBlur stdDeviation="3"/></filter>
-  </defs>
-
-  <!-- Background -->
-  <rect width="${width}" height="${height}" fill="#000"/>
-  <rect width="${width}" height="${height}" fill="url(#bgMain)"/>
-  <rect width="${width}" height="${height}" fill="url(#cg)"/>
-  <rect width="${width}" height="${height}" fill="url(#tb)"/>
-
-  <!-- Bokeh -->
-  <circle cx="120" cy="250" r="30" fill="${bg4}" opacity="0.18" filter="url(#bk)"/>
-  <circle cx="950" cy="400" r="22" fill="${glow1}" opacity="0.15" filter="url(#bk)"/>
-  <circle cx="180" cy="1500" r="28" fill="${bg4}" opacity="0.12" filter="url(#bk)"/>
-  <circle cx="900" cy="1350" r="24" fill="${bg4}" opacity="0.1" filter="url(#bk)"/>
-  <circle cx="540" cy="200" r="35" fill="${bg4}" opacity="0.12" filter="url(#bk)"/>
-
-  <!-- Stars -->
-  <circle cx="250" cy="180" r="3" fill="white" opacity="0.6" filter="url(#sp)"/>
-  <circle cx="820" cy="320" r="2.5" fill="white" opacity="0.5" filter="url(#sp)"/>
-  <circle cx="970" cy="900" r="2.5" fill="white" opacity="0.5" filter="url(#sp)"/>
-  <circle cx="400" cy="1600" r="2" fill="white" opacity="0.4" filter="url(#sp)"/>
-  <circle cx="200" cy="1300" r="2" fill="white" opacity="0.3" filter="url(#sp)"/>
-
-  <!-- Cross -->
-  <line x1="${width/2}" y1="${crossY-35}" x2="${width/2}" y2="${crossY+35}" stroke="${accent}" stroke-width="4" stroke-linecap="round" opacity="0.65"/>
-  <line x1="${width/2-22}" y1="${crossY-10}" x2="${width/2+22}" y2="${crossY-10}" stroke="${accent}" stroke-width="4" stroke-linecap="round" opacity="0.65"/>
-
-  <!-- Deco line -->
-  <line x1="${width*0.2}" y1="${crossY+55}" x2="${width*0.8}" y2="${crossY+55}" stroke="${accent}" stroke-width="1" opacity="0.25"/>
-
-  <!-- VERSE TEXT -->
-  ${textLines}
-
-  <!-- Reference -->
-  <text x="${width/2}" y="${refY}" text-anchor="middle" font-family="${refFont}" font-size="40" font-weight="900" fill="${accent}" stroke="black" stroke-width="2" paint-order="stroke fill" letter-spacing="4">${esc(verse.ref.toUpperCase())}</text>
-
-  <!-- Bottom line -->
-  <line x1="${width*0.3}" y1="${refY+28}" x2="${width*0.7}" y2="${refY+28}" stroke="${accent}" stroke-width="1" opacity="0.25"/>
-
-  <!-- Watermark -->
-  <text x="${width/2}" y="${height-80}" text-anchor="middle" font-family="${refFont}" font-size="22" fill="rgba(255,255,255,0.35)" letter-spacing="2">@luz.da.palavra.oficial</text>
-</svg>`;
-}
-
 async function generateImage(verse) {
   const width = 1080;
   const height = 1920;
@@ -137,16 +60,147 @@ async function generateImage(verse) {
   const outputPath = path.join(OUTPUT_DIR, filename);
 
   if (fs.existsSync(outputPath)) {
-    console.log(`🎨 Image exists: ${filename}`);
+    console.log(`   🎨 exists: ${filename}`);
     return outputPath;
   }
 
-  console.log(`🎨 Generating: ${filename}...`);
+  const palette = THEME_PALETTES[verse.theme] || THEME_PALETTES['default'];
+  const { colors, accent } = palette;
 
-  const svg = createFullSVG(verse, width, height);
-  await sharp(Buffer.from(svg)).png({ quality: 95 }).toFile(outputPath);
+  const img = PImage.make(width, height);
+  const ctx = img.getContext('2d');
 
-  console.log(`🎨 ✅ ${filename}`);
+  // === BACKGROUND: layered colored circles for gradient effect ===
+  ctx.fillStyle = colors[0];
+  ctx.fillRect(0, 0, width, height);
+
+  const gradientLayers = [
+    { cx: width/2, cy: height*0.42, r: 950, color: colors[1], alpha: 0.7 },
+    { cx: width/2, cy: height*0.42, r: 700, color: colors[2], alpha: 0.65 },
+    { cx: width/2, cy: height*0.42, r: 450, color: colors[3], alpha: 0.6 },
+    { cx: width/2, cy: height*0.42, r: 220, color: colors[4], alpha: 0.45 },
+  ];
+
+  for (const layer of gradientLayers) {
+    ctx.globalAlpha = layer.alpha;
+    ctx.fillStyle = layer.color;
+    ctx.beginPath();
+    ctx.arc(layer.cx, layer.cy, layer.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1.0;
+
+  // === BOKEH PARTICLES ===
+  const bokeh = [
+    { x: 120, y: 250, r: 35, a: 0.12 },
+    { x: 950, y: 400, r: 25, a: 0.1 },
+    { x: 180, y: 1500, r: 30, a: 0.08 },
+    { x: 900, y: 1350, r: 28, a: 0.07 },
+    { x: 540, y: 200, r: 40, a: 0.1 },
+    { x: 300, y: 1100, r: 22, a: 0.06 },
+    { x: 750, y: 1700, r: 20, a: 0.05 },
+  ];
+  for (const b of bokeh) {
+    ctx.globalAlpha = b.a;
+    ctx.fillStyle = colors[4];
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Stars
+  const stars = [
+    { x: 250, y: 180, r: 3, a: 0.6 },
+    { x: 820, y: 320, r: 2.5, a: 0.5 },
+    { x: 970, y: 900, r: 2.5, a: 0.5 },
+    { x: 400, y: 1600, r: 2, a: 0.4 },
+    { x: 200, y: 1300, r: 2, a: 0.3 },
+    { x: 700, y: 170, r: 1.8, a: 0.35 },
+    { x: 100, y: 750, r: 2, a: 0.3 },
+  ];
+  for (const s of stars) {
+    ctx.globalAlpha = s.a;
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1.0;
+
+  // === CROSS ===
+  const crossY = 640;
+  ctx.globalAlpha = 0.6;
+  ctx.strokeStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
+  ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.moveTo(width/2, crossY-35); ctx.lineTo(width/2, crossY+35); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(width/2-22, crossY-10); ctx.lineTo(width/2+22, crossY-10); ctx.stroke();
+  ctx.globalAlpha = 1.0;
+
+  // === DECORATIVE LINE ===
+  ctx.globalAlpha = 0.25;
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(width*0.2, crossY+55); ctx.lineTo(width*0.8, crossY+55); ctx.stroke();
+  ctx.globalAlpha = 1.0;
+
+  // === VERSE TEXT ===
+  const len = verse.text.length;
+  const fontSize = len > 120 ? 44 : len > 90 ? 50 : len > 70 ? 58 : len > 50 ? 66 : 78;
+  const maxChars = len > 120 ? 24 : len > 90 ? 22 : len > 70 ? 18 : len > 50 ? 15 : 13;
+  const lines = wrapText(verse.text, maxChars);
+  const lineHeight = fontSize * 1.6;
+  const totalH = lines.length * lineHeight;
+  const startY = (height / 2) - (totalH / 2) + 60;
+
+  ctx.font = `${fontSize}pt DejaVuBold`;
+  ctx.textAlign = 'center';
+
+  for (let i = 0; i < lines.length; i++) {
+    const y = startY + (i * lineHeight);
+    // Black outline
+    ctx.fillStyle = 'rgba(0,0,0,0.9)';
+    for (let ox = -3; ox <= 3; ox++) {
+      for (let oy = -3; oy <= 3; oy++) {
+        if (Math.abs(ox) + Math.abs(oy) < 2) continue;
+        ctx.fillText(lines[i], width/2 + ox, y + oy);
+      }
+    }
+    // White text
+    ctx.fillStyle = 'white';
+    ctx.fillText(lines[i], width/2, y);
+  }
+
+  // === REFERENCE ===
+  const refY = startY + totalH + 80;
+  const refSize = Math.round(fontSize * 0.5);
+  ctx.font = `${refSize}pt DejaVuBold`;
+  // Outline
+  ctx.fillStyle = 'rgba(0,0,0,0.9)';
+  for (let ox = -2; ox <= 2; ox++) {
+    for (let oy = -2; oy <= 2; oy++) {
+      if (ox === 0 && oy === 0) continue;
+      ctx.fillText(verse.ref.toUpperCase(), width/2 + ox, refY + oy);
+    }
+  }
+  ctx.fillStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
+  ctx.fillText(verse.ref.toUpperCase(), width/2, refY);
+
+  // === BOTTOM LINE ===
+  ctx.globalAlpha = 0.25;
+  ctx.strokeStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(width*0.3, refY+28); ctx.lineTo(width*0.7, refY+28); ctx.stroke();
+  ctx.globalAlpha = 1.0;
+
+  // === WATERMARK ===
+  ctx.font = '18pt DejaVuRegular';
+  ctx.globalAlpha = 0.35;
+  ctx.fillStyle = 'white';
+  ctx.fillText('@luz.da.palavra.oficial', width/2, height-80);
+  ctx.globalAlpha = 1.0;
+
+  // === SAVE ===
+  await PImage.encodePNGToStream(img, fs.createWriteStream(outputPath));
+  console.log(`   🎨 ✅ ${filename}`);
   return outputPath;
 }
 
