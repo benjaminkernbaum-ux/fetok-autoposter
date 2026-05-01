@@ -1,8 +1,7 @@
 /**
- * FéTok Image Generator v10 — CINEMATIC HERO BACKGROUNDS
- * Uses REAL cinematic images as backgrounds (like the originals on TikTok)
- * Text overlay via pureimage (pure JS) with bundled DejaVu fonts
- * Zero system font dependency — identical on Windows + Railway Linux
+ * FéTok Image Generator v10.1 — CINEMATIC HERO BACKGROUNDS
+ * Real cinematic images + pureimage text overlay (pure JS)
+ * Optimized JPG heroes (~250KB each) to avoid OOM on Railway
  */
 
 const PImage = require('pureimage');
@@ -21,38 +20,36 @@ const fontRegular = PImage.registerFont(path.join(FONT_DIR, 'DejaVuSans.ttf'), '
 fontRegular.loadSync();
 const fontSerif = PImage.registerFont(path.join(FONT_DIR, 'DejaVuSerif-Bold.ttf'), 'DejaVuSerif');
 fontSerif.loadSync();
-console.log('✅ Fonts loaded (Bold + Regular + Serif)');
+console.log('✅ Fonts loaded');
 
-// Map themes to cinematic hero backgrounds
+// Map themes to cinematic hero backgrounds (JPG)
 const THEME_HEROES = {
-  'proteção': ['hero_fire_warrior.png', 'hero_divine_cross.png', 'hero_lion_judah.png'],
-  'coragem':  ['hero_eagle_soaring.png', 'hero_shepherd.png', 'hero_fire_warrior.png'],
-  'amor':     ['hero_prayer_hands.png', 'hero_dove_sky.png', 'hero_sunrise_cross.png'],
-  'força':    ['hero_fire_warrior.png', 'hero_lion_judah.png', 'hero_eagle_soaring.png'],
-  'fé':       ['hero_bible_light.png', 'hero_narrow_path.png', 'hero_olive_tree.png'],
-  'esperança':['hero_dove_sky.png', 'hero_sunrise_cross.png', 'hero_shepherd.png'],
-  'gratidão': ['hero_olive_tree.png', 'hero_prayer_hands.png', 'hero_bible_light.png'],
-  'vitória':  ['hero_lion_judah.png', 'hero_fire_warrior.png', 'hero_eagle_soaring.png'],
-  'paz':      ['hero_walking_water.png', 'hero_shepherd.png', 'hero_dove_sky.png'],
-  'default':  ['hero_divine_cross.png', 'hero_bible_light.png', 'hero_sunrise_cross.png'],
+  'proteção': ['hero_fire_warrior.jpg', 'hero_divine_cross.jpg', 'hero_lion_judah.jpg'],
+  'coragem':  ['hero_eagle_soaring.jpg', 'hero_shepherd.jpg', 'hero_fire_warrior.jpg'],
+  'amor':     ['hero_prayer_hands.jpg', 'hero_dove_sky.jpg', 'hero_sunrise_cross.jpg'],
+  'força':    ['hero_fire_warrior.jpg', 'hero_lion_judah.jpg', 'hero_eagle_soaring.jpg'],
+  'fé':       ['hero_bible_light.jpg', 'hero_narrow_path.jpg', 'hero_olive_tree.jpg'],
+  'esperança':['hero_dove_sky.jpg', 'hero_sunrise_cross.jpg', 'hero_shepherd.jpg'],
+  'gratidão': ['hero_olive_tree.jpg', 'hero_prayer_hands.jpg', 'hero_bible_light.jpg'],
+  'vitória':  ['hero_lion_judah.jpg', 'hero_fire_warrior.jpg', 'hero_eagle_soaring.jpg'],
+  'paz':      ['hero_walking_water.jpg', 'hero_shepherd.jpg', 'hero_dove_sky.jpg'],
+  'default':  ['hero_divine_cross.jpg', 'hero_bible_light.jpg', 'hero_sunrise_cross.jpg'],
 };
 
 const THEME_ACCENT = {
-  'proteção': [212, 168, 83],  // gold
-  'coragem':  [253, 186, 116], // orange
-  'amor':     [255, 180, 190], // pink
-  'força':    [196, 181, 253], // purple
-  'fé':       [212, 168, 83],  // gold
-  'esperança':[253, 230, 138], // yellow
-  'gratidão': [94, 234, 212],  // teal
-  'vitória':  [252, 165, 165], // red
-  'paz':      [186, 230, 253], // light blue
-  'default':  [212, 168, 83],  // gold
+  'proteção': [212, 168, 83],
+  'coragem':  [253, 186, 116],
+  'amor':     [255, 180, 190],
+  'força':    [196, 181, 253],
+  'fé':       [212, 168, 83],
+  'esperança':[253, 230, 138],
+  'gratidão': [94, 234, 212],
+  'vitória':  [252, 165, 165],
+  'paz':      [186, 230, 253],
+  'default':  [212, 168, 83],
 };
 
-// Track which hero was last used per theme to rotate
 const heroIndex = {};
-
 function getHeroForTheme(theme) {
   const heroes = THEME_HEROES[theme] || THEME_HEROES['default'];
   if (!heroIndex[theme]) heroIndex[theme] = 0;
@@ -93,38 +90,31 @@ async function generateImage(verse) {
   const heroPath = path.join(HEROES_DIR, heroFile);
   const accent = THEME_ACCENT[verse.theme] || THEME_ACCENT['default'];
 
-  // Step 1: Resize hero image to 1080x1920 using Sharp
+  // Step 1: Load hero as PNG buffer (sharp handles JPG→PNG conversion)
   let bgBuffer;
   if (fs.existsSync(heroPath)) {
-    bgBuffer = await sharp(heroPath)
-      .resize(width, height, { fit: 'cover', position: 'centre' })
-      .png()
-      .toBuffer();
+    bgBuffer = await sharp(heroPath).resize(width, height, { fit: 'cover' }).png().toBuffer();
   } else {
-    // Fallback: solid dark
-    bgBuffer = await sharp({
-      create: { width, height, channels: 4, background: { r: 10, g: 8, b: 18, alpha: 1 } }
-    }).png().toBuffer();
-    console.log(`   ⚠️ Hero not found: ${heroFile}, using dark fallback`);
+    bgBuffer = await sharp({ create: { width, height, channels: 4, background: { r: 10, g: 8, b: 18, alpha: 1 } } }).png().toBuffer();
+    console.log(`   ⚠️ Hero not found: ${heroFile}`);
   }
 
-  // Step 2: Load into pureimage for text overlay
-  const bgStream = require('stream');
-  const readable = new bgStream.PassThrough();
+  // Step 2: Load into pureimage
+  const { PassThrough } = require('stream');
+  const readable = new PassThrough();
   readable.end(bgBuffer);
   const bgImg = await PImage.decodePNGFromStream(readable);
-  
+  bgBuffer = null; // free memory
+
   const img = PImage.make(width, height);
   const ctx = img.getContext('2d');
-  
-  // Draw background
   ctx.drawImage(bgImg, 0, 0, width, height, 0, 0, width, height);
 
-  // Step 3: Dark overlay for text readability
-  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  // Step 3: Dark overlay
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
   ctx.fillRect(0, 0, width, height);
-  
-  // Extra dark band in text area
+
+  // Text layout
   const len = verse.text.length;
   const fontSize = len > 120 ? 44 : len > 90 ? 50 : len > 70 ? 58 : len > 50 ? 66 : 78;
   const maxChars = len > 120 ? 24 : len > 90 ? 22 : len > 70 ? 18 : len > 50 ? 15 : 13;
@@ -133,34 +123,33 @@ async function generateImage(verse) {
   const totalH = lines.length * lineHeight;
   const startY = (height / 2) - (totalH / 2) + 30;
 
-  // Subtle darker gradient behind text
-  for (let row = 0; row < totalH + 200; row++) {
-    const y = startY - 100 + row;
+  // Extra dark band behind text
+  for (let row = 0; row < totalH + 160; row++) {
+    const y = startY - 80 + row;
     if (y < 0 || y >= height) continue;
-    const distFromCenter = Math.abs(row - (totalH + 200) / 2) / ((totalH + 200) / 2);
-    const alpha = 0.35 * (1 - distFromCenter * distFromCenter);
-    ctx.globalAlpha = alpha;
+    const dist = Math.abs(row - (totalH + 160) / 2) / ((totalH + 160) / 2);
+    ctx.globalAlpha = 0.4 * (1 - dist * dist);
     ctx.fillStyle = 'black';
     ctx.fillRect(0, y, width, 1);
   }
   ctx.globalAlpha = 1.0;
 
-  // Step 4: Cross icon
-  const crossY = startY - 60;
+  // Cross icon
+  const crossY = startY - 50;
   ctx.globalAlpha = 0.7;
   ctx.strokeStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
   ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.moveTo(width/2, crossY-28); ctx.lineTo(width/2, crossY+28); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(width/2-18, crossY-5); ctx.lineTo(width/2+18, crossY-5); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(width/2, crossY-25); ctx.lineTo(width/2, crossY+25); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(width/2-16, crossY-5); ctx.lineTo(width/2+16, crossY-5); ctx.stroke();
   ctx.globalAlpha = 1.0;
 
-  // Step 5: Verse text (italic serif for biblical feel)
+  // Verse text
   ctx.font = `${fontSize}pt DejaVuSerif`;
   ctx.textAlign = 'center';
 
   for (let i = 0; i < lines.length; i++) {
     const y = startY + (i * lineHeight);
-    // Heavy shadow for contrast on photos
+    // Shadow outline
     ctx.fillStyle = 'rgba(0,0,0,0.9)';
     for (let ox = -4; ox <= 4; ox++) {
       for (let oy = -4; oy <= 4; oy++) {
@@ -172,7 +161,7 @@ async function generateImage(verse) {
     ctx.fillText(lines[i], width/2, y);
   }
 
-  // Step 6: Reference
+  // Reference
   const refY = startY + totalH + 50;
   const refSize = Math.round(fontSize * 0.45);
   ctx.font = `${refSize}pt DejaVuBold`;
@@ -186,16 +175,16 @@ async function generateImage(verse) {
   ctx.fillStyle = `rgb(${accent[0]},${accent[1]},${accent[2]})`;
   ctx.fillText(verse.ref, width/2, refY);
 
-  // Step 7: Watermark
+  // Watermark
   ctx.font = '16pt DejaVuRegular';
   ctx.globalAlpha = 0.4;
   ctx.fillStyle = 'white';
-  ctx.fillText('✝  @luz.da.palavra.oficial', width/2, height - 70);
+  ctx.fillText('@luz.da.palavra.oficial', width/2, height - 70);
   ctx.globalAlpha = 1.0;
 
-  // Step 8: Save
+  // Save
   await PImage.encodePNGToStream(img, fs.createWriteStream(outputPath));
-  console.log(`   🎨 ✅ ${filename} (hero: ${heroFile})`);
+  console.log(`   🎨 ✅ ${filename} (${heroFile})`);
   return outputPath;
 }
 

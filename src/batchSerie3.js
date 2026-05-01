@@ -58,6 +58,9 @@ async function generateAll() {
       }
 
       ok++;
+      // Free memory between generations
+      if (global.gc) global.gc();
+      await new Promise(r => setTimeout(r, 500));
     } catch (err) {
       console.error(`   ❌ FAILED: ${err.message}`);
       fail++;
