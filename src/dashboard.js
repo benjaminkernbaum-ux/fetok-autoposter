@@ -1043,6 +1043,10 @@ function startDashboard() {
       `;
     }).join('');
 
+    // Build monetization tab HTML
+    const { buildMonetizationTabHTML } = require('./monetizationBuilder');
+    const monetizeHTML = buildMonetizationTabHTML();
+
     res.send(`<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1240,196 +1244,11 @@ function startDashboard() {
 
     <!-- ═══ TAB: MONETIZAÇÃO ═══ -->
     <div class="tab-content" id="tab-monetize">
-      <!-- STATUS BANNER -->
-      <div style="background:linear-gradient(135deg,rgba(52,199,89,0.1),rgba(212,168,83,0.1));border:1px solid rgba(52,199,89,0.3);border-radius:var(--radius);padding:20px;margin-bottom:24px;">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-          <span style="font-size:2rem;">🔴</span>
-          <div>
-            <div style="font-size:1.1rem;font-weight:900;color:#34c759;">LIVE JÁ DESBLOQUEADA!</div>
-            <div style="font-size:0.75rem;color:var(--text-secondary);">Você pode começar a monetizar AGORA via LIVE no celular. Presentes = Diamantes = Dinheiro real.</div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-          <div style="text-align:center;padding:10px;background:var(--bg-card);border-radius:var(--radius-sm);">
-            <div style="font-size:1.3rem;font-weight:900;color:var(--gold);">94</div>
-            <div style="font-size:0.62rem;color:var(--text-tertiary);">Seguidores</div>
-          </div>
-          <div style="text-align:center;padding:10px;background:var(--bg-card);border-radius:var(--radius-sm);">
-            <div style="font-size:1.3rem;font-weight:900;color:#34c759;">1.1K</div>
-            <div style="font-size:0.62rem;color:var(--text-tertiary);">Views 30d</div>
-          </div>
-          <div style="text-align:center;padding:10px;background:var(--bg-card);border-radius:var(--radius-sm);">
-            <div style="font-size:1.3rem;font-weight:900;color:#fe2c55;">🔴</div>
-            <div style="font-size:0.62rem;color:var(--text-tertiary);">LIVE Ativa</div>
-          </div>
-          <div style="text-align:center;padding:10px;background:var(--bg-card);border-radius:var(--radius-sm);">
-            <div style="font-size:1.3rem;font-weight:900;color:#af82ff;">5</div>
-            <div style="font-size:0.62rem;color:var(--text-tertiary);">Pilares de Receita</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5 PILARES DE RECEITA -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">💰 5 PILARES DE MONETIZAÇÃO</div>
-          <span class="section-badge">Roadmap completo</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
-          ${MONETIZATION_PILLARS.map(p => {
-            const isActive = p.status === 'active';
-            const borderColor = isActive ? 'rgba(52,199,89,0.4)' : 'var(--border)';
-            const bgColor = isActive ? 'rgba(52,199,89,0.06)' : 'var(--bg-card)';
-            const statusBadge = isActive 
-              ? '<span style="font-size:0.6rem;padding:2px 8px;background:rgba(52,199,89,0.15);color:#34c759;border-radius:10px;font-weight:700;">ATIVO</span>'
-              : '<span style="font-size:0.6rem;padding:2px 8px;background:rgba(255,149,0,0.15);color:#ff9500;border-radius:10px;font-weight:700;">🔒 ' + p.unlockAt.toLocaleString() + ' seg.</span>';
-            return \`
-            <div style="background:\${bgColor};border:1px solid \${borderColor};border-radius:var(--radius);padding:16px;transition:all 0.2s;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-                <span style="font-size:1.5rem;">\${p.icon}</span>
-                \${statusBadge}
-              </div>
-              <div style="font-size:0.85rem;font-weight:800;margin-bottom:4px;">\${p.name}</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);line-height:1.4;margin-bottom:10px;">\${p.description}</div>
-              <div style="font-size:0.7rem;color:var(--gold);font-weight:700;">R\$ \${p.revenueRange.min.toLocaleString()} — R\$ \${p.revenueRange.max.toLocaleString()}/mês</div>
-            </div>\`;
-          }).join('')}
-        </div>
-      </div>
-
-      <!-- MILESTONE PROGRESS -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">🏆 MARCOS DE CRESCIMENTO</div>
-          <span class="section-badge">94 → 100K seguidores</span>
-        </div>
-        <div style="position:relative;padding:10px 0;">
-          <div style="position:absolute;top:50%;left:0;right:0;height:3px;background:var(--border);transform:translateY(-50%);border-radius:2px;"></div>
-          <div style="position:absolute;top:50%;left:0;width:${Math.min((94/100000)*100, 1)}%;height:3px;background:linear-gradient(90deg,#34c759,var(--gold));transform:translateY(-50%);border-radius:2px;"></div>
-          <div style="display:flex;justify-content:space-between;position:relative;">
-            ${MILESTONES.map(m => \`
-              <div style="text-align:center;flex:1;">
-                <div style="width:28px;height:28px;border-radius:50%;background:\${m.achieved ? 'linear-gradient(135deg,#34c759,#30b350)' : 'var(--bg-card)'};border:2px solid \${m.achieved ? '#34c759' : 'var(--border)'};display:flex;align-items:center;justify-content:center;font-size:0.7rem;margin:0 auto 6px;">\${m.achieved ? '✅' : m.icon}</div>
-                <div style="font-size:0.6rem;font-weight:700;color:\${m.achieved ? '#34c759' : 'var(--text-secondary)'};">\${m.followers >= 1000 ? (m.followers/1000)+'K' : m.followers}</div>
-                <div style="font-size:0.55rem;color:var(--text-tertiary);max-width:70px;margin:2px auto 0;">\${m.label}</div>
-              </div>
-            \`).join('')}
-          </div>
-        </div>
-      </div>
-
-      <!-- LIVE SCHEDULE -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">🔴 PROGRAMAÇÃO DE LIVES</div>
-          <span class="section-badge">3x por semana</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">
-          ${LIVE_SCHEDULE.map(l => \`
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-left:4px solid \${l.color};border-radius:var(--radius);padding:16px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                <div>
-                  <div style="font-size:1rem;font-weight:900;">\${l.emoji} \${l.name}</div>
-                  <div style="font-size:0.7rem;color:var(--text-secondary);">\${l.day} · \${l.time} BRT · \${l.duration}</div>
-                </div>
-                <span style="font-size:0.6rem;padding:3px 10px;background:rgba(254,44,85,0.12);color:#fe2c55;border-radius:10px;font-weight:700;">🔴 LIVE</span>
-              </div>
-              <div style="font-size:0.72rem;color:var(--text-secondary);line-height:1.6;">
-                \${l.script.map(s => \`
-                  <div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
-                    <span style="font-size:0.62rem;color:var(--gold);font-weight:700;min-width:32px;">\${s.time}</span>
-                    <span style="font-size:0.62rem;font-weight:700;color:var(--text-primary);min-width:80px;">\${s.block}</span>
-                    <span style="font-size:0.62rem;color:var(--text-tertiary);">\${s.content.substring(0,60)}...</span>
-                  </div>
-                \`).join('')}
-              </div>
-              <div style="margin-top:10px;padding:8px;background:rgba(212,168,83,0.06);border-radius:var(--radius-sm);">
-                <div style="font-size:0.6rem;color:var(--gold);font-weight:700;margin-bottom:4px;">💎 Gatilhos de Presentes:</div>
-                \${l.giftTriggers.map(g => \`<div style="font-size:0.6rem;color:var(--text-secondary);padding:2px 0;">• \${g}</div>\`).join('')}
-              </div>
-            </div>
-          \`).join('')}
-        </div>
-      </div>
-
-      <!-- REVENUE PROJECTIONS -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">📊 PROJEÇÃO DE RECEITA POR FASE</div>
-          <span class="section-badge">3 fases de crescimento</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-          ${REVENUE_PHASES.map(ph => \`
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-top:3px solid \${ph.color};border-radius:var(--radius);padding:16px;">
-              <div style="font-size:1.3rem;text-align:center;margin-bottom:6px;">\${ph.emoji}</div>
-              <div style="font-size:0.9rem;font-weight:900;text-align:center;margin-bottom:4px;">\${ph.name}</div>
-              <div style="font-size:0.65rem;color:var(--text-tertiary);text-align:center;margin-bottom:12px;">\${ph.followerRange} seg · \${ph.timeframe}</div>
-              <div style="text-align:center;padding:10px;background:rgba(212,168,83,0.06);border-radius:var(--radius-sm);margin-bottom:12px;">
-                <div style="font-size:1.1rem;font-weight:900;color:var(--gold);">R\$ \${ph.totalMin.toLocaleString()} — R\$ \${ph.totalMax.toLocaleString()}</div>
-                <div style="font-size:0.6rem;color:var(--text-tertiary);">receita mensal estimada</div>
-              </div>
-              <div style="font-size:0.65rem;color:var(--text-secondary);">
-                \${Object.entries(ph.streams).map(([k,v]) => \`
-                  <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
-                    <span>\${k.replace('_',' ')}</span>
-                    <span style="color:var(--gold);">R\$ \${v.min}-\${v.max}</span>
-                  </div>
-                \`).join('')}
-              </div>
-            </div>
-          \`).join('')}
-        </div>
-      </div>
-
-      <!-- PRODUCTS CATALOG -->
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">🛍️ PRODUTOS — AFILIADOS & PRÓPRIOS</div>
-          <span class="section-badge">${AFFILIATE_PRODUCTS.length} afiliados + ${OWN_PRODUCTS.length} próprios</span>
-        </div>
-        <div style="margin-bottom:16px;">
-          <div style="font-size:0.8rem;font-weight:800;margin-bottom:10px;color:var(--gold);">📦 Infoprodutos Próprios</div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;">
-            ${OWN_PRODUCTS.map(p => \`
-              <div style="background:var(--bg-card);border:1px solid rgba(212,168,83,0.2);border-radius:var(--radius);padding:14px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                  <span style="font-size:1.2rem;">\${p.emoji}</span>
-                  <span style="font-size:0.9rem;font-weight:900;color:var(--gold);">R\$ \${p.price.toFixed(2)}</span>
-                </div>
-                <div style="font-size:0.8rem;font-weight:800;margin-bottom:4px;">\${p.name}</div>
-                <div style="font-size:0.65rem;color:var(--text-secondary);line-height:1.4;">\${p.description}</div>
-                <div style="display:flex;justify-content:space-between;margin-top:8px;">
-                  <span style="font-size:0.6rem;color:#34c759;">\${p.margin}% margem</span>
-                  <span style="font-size:0.6rem;padding:2px 8px;background:rgba(255,149,0,0.1);color:#ff9500;border-radius:8px;">Fase \${p.launchPhase}</span>
-                </div>
-              </div>
-            \`).join('')}
-          </div>
-        </div>
-        <div>
-          <div style="font-size:0.8rem;font-weight:800;margin-bottom:10px;color:#af82ff;">🛒 Produtos Afiliados (TikTok Shop)</div>
-          <div style="overflow-x:auto;">
-            <table class="music-table" style="width:100%;">
-              <thead><tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Comissão</th><th>Fit</th></tr></thead>
-              <tbody>
-                ${AFFILIATE_PRODUCTS.map(p => \`
-                  <tr>
-                    <td style="font-weight:700;">\${p.name}</td>
-                    <td>\${p.category}</td>
-                    <td>\${p.priceRange}</td>
-                    <td style="color:var(--gold);font-weight:700;">\${p.commission}</td>
-                    <td>\${'⭐'.repeat(p.fit)}</td>
-                  </tr>
-                \`).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      ${monetizeHTML}
     </div>
   </div>
 
-  <!-- TOAST -->
+    <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
   <script>
