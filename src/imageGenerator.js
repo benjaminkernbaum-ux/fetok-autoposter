@@ -110,9 +110,20 @@ async function generateImage(verse) {
   const ctx = img.getContext('2d');
   ctx.drawImage(bgImg, 0, 0, width, height, 0, 0, width, height);
 
-  // Step 3: Dark overlay
-  ctx.fillStyle = 'rgba(0,0,0,0.5)';
-  ctx.fillRect(0, 0, width, height);
+  // Step 3: Subtle vignette only (NO heavy overlay — keep hero visible)
+  // Top edge fade
+  for (let row = 0; row < 300; row++) {
+    ctx.globalAlpha = 0.6 * (1 - row / 300);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, row, width, 1);
+  }
+  // Bottom edge fade
+  for (let row = 0; row < 300; row++) {
+    ctx.globalAlpha = 0.6 * (1 - row / 300);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, height - row, width, 1);
+  }
+  ctx.globalAlpha = 1.0;
 
   // Text layout
   const len = verse.text.length;
@@ -122,17 +133,6 @@ async function generateImage(verse) {
   const lineHeight = fontSize * 1.5;
   const totalH = lines.length * lineHeight;
   const startY = (height / 2) - (totalH / 2) + 30;
-
-  // Extra dark band behind text
-  for (let row = 0; row < totalH + 160; row++) {
-    const y = startY - 80 + row;
-    if (y < 0 || y >= height) continue;
-    const dist = Math.abs(row - (totalH + 160) / 2) / ((totalH + 160) / 2);
-    ctx.globalAlpha = 0.4 * (1 - dist * dist);
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, y, width, 1);
-  }
-  ctx.globalAlpha = 1.0;
 
   // Cross icon
   const crossY = startY - 50;
@@ -149,14 +149,23 @@ async function generateImage(verse) {
 
   for (let i = 0; i < lines.length; i++) {
     const y = startY + (i * lineHeight);
-    // Shadow outline
-    ctx.fillStyle = 'rgba(0,0,0,0.9)';
-    for (let ox = -4; ox <= 4; ox++) {
-      for (let oy = -4; oy <= 4; oy++) {
-        if (Math.abs(ox) + Math.abs(oy) < 3) continue;
+    // Heavy multi-pass shadow for readability on photos
+    // Pass 1: wide soft glow
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    for (let ox = -8; ox <= 8; ox += 2) {
+      for (let oy = -8; oy <= 8; oy += 2) {
         ctx.fillText(lines[i], width/2 + ox, y + oy);
       }
     }
+    // Pass 2: tight crisp outline
+    ctx.fillStyle = 'rgba(0,0,0,0.95)';
+    for (let ox = -3; ox <= 3; ox++) {
+      for (let oy = -3; oy <= 3; oy++) {
+        if (ox === 0 && oy === 0) continue;
+        ctx.fillText(lines[i], width/2 + ox, y + oy);
+      }
+    }
+    // Pass 3: white fill
     ctx.fillStyle = 'white';
     ctx.fillText(lines[i], width/2, y);
   }
