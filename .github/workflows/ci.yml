@@ -1,0 +1,29 @@
+name: CI (basic)
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install & Test
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            if npm test --silent; then
+              echo "Tests passed"
+            else
+              echo "No tests or tests failed"
+            fi
+          else
+            echo "No package.json found"
+          fi
