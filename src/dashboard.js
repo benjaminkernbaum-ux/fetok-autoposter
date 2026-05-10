@@ -20,29 +20,29 @@ const PORT = process.env.PORT || 3000;
 
 
 /* ═══════════════════════════════════════════════════════════════
-   VIRAL MUSIC DATABASE — Top trending gospel sounds on TikTok
+   VIRAL MUSIC DATABASE — Série 4 — Top trending gospel sounds (NEW)
    ═══════════════════════════════════════════════════════════════ */
 const VIRAL_MUSIC = [
-  { rank: 1, title: 'Bondade de Deus', artist: 'Isaias Saad', videos: '2.8M+', growth: '+340%', category: 'Worship', tip: 'SOM #1 do nicho gospel. Use nos posts de proteção e fé.', searchTerm: 'isaias saad bondade de deus' },
-  { rank: 2, title: 'Me Atraiu', artist: 'Isaias Saad', videos: '1.5M+', growth: '+280%', category: 'Worship', tip: 'Perfeito para vídeos emocionais e de transformação.', searchTerm: 'isaias saad me atraiu' },
-  { rank: 3, title: 'Ninguém Explica Deus', artist: 'Preto no Branco', videos: '1.2M+', growth: '+210%', category: 'Gospel Pop', tip: 'Ideal para posts sobre amor e relacionamentos com Deus.', searchTerm: 'preto no branco ninguém explica deus' },
-  { rank: 4, title: 'Lugar Secreto', artist: 'Gabriela Rocha', videos: '980K+', growth: '+195%', category: 'Worship', tip: 'Melhor para vídeos de devocionais e momentos íntimos com Deus.', searchTerm: 'gabriela rocha lugar secreto' },
-  { rank: 5, title: 'Grandes Coisas', artist: 'Fernandinho', videos: '870K+', growth: '+180%', category: 'Praise', tip: 'Energia alta — use em posts de vitória e superação.', searchTerm: 'fernandinho grandes coisas' },
-  { rank: 6, title: 'Deus Provará', artist: 'Gabriela Rocha', videos: '750K+', growth: '+165%', category: 'Worship', tip: 'Para posts sobre promessas de Deus e esperança.', searchTerm: 'gabriela rocha deus provará' },
-  { rank: 7, title: 'Ressuscita-me', artist: 'Aline Barros', videos: '680K+', growth: '+150%', category: 'Gospel', tip: 'Forte engajamento — usa em posts de manhã cedo.', searchTerm: 'aline barros ressuscita-me' },
-  { rank: 8, title: 'Raridade', artist: 'Anderson Freire', videos: '620K+', growth: '+140%', category: 'Gospel', tip: 'Audiência mais velha e fiel — gera muitos compartilhamentos.', searchTerm: 'anderson freire raridade' },
-  { rank: 9, title: 'Primeira Essência', artist: 'Anderson Freire', videos: '550K+', growth: '+125%', category: 'Gospel', tip: 'Perfeito para posts sobre voltar às origens da fé.', searchTerm: 'anderson freire primeira essência' },
-  { rank: 10, title: 'Faz Chover', artist: 'Fernandinho', videos: '520K+', growth: '+120%', category: 'Praise', tip: 'Alto poder de viralização — posts sobre renovação espiritual.', searchTerm: 'fernandinho faz chover' },
-  { rank: 11, title: 'Quão Grande É o Meu Deus', artist: 'Soraya Moraes', videos: '480K+', growth: '+115%', category: 'Worship', tip: 'Clássico gospel — gera nostalgia e muitos saves.', searchTerm: 'soraya moraes quão grande' },
-  { rank: 12, title: 'Consagração', artist: 'Aline Barros', videos: '430K+', growth: '+105%', category: 'Gospel', tip: 'Forte em devocionais matinais. Muitos comentários "Amém".', searchTerm: 'aline barros consagração' },
-  { rank: 13, title: 'Me Deixa Aqui', artist: 'Preto no Branco', videos: '410K+', growth: '+100%', category: 'Gospel Pop', tip: 'Música da nova geração gospel — atrai público jovem.', searchTerm: 'preto no branco me deixa aqui' },
-  { rank: 14, title: 'Eu Navegarei', artist: 'Gabriela Rocha', videos: '390K+', growth: '+95%', category: 'Worship', tip: 'Perfeito para posts sobre enfrentar tempestades.', searchTerm: 'gabriela rocha eu navegarei' },
-  { rank: 15, title: 'Identidade', artist: 'Anderson Freire', videos: '370K+', growth: '+90%', category: 'Gospel', tip: 'Para posts sobre propósito e identidade em Cristo.', searchTerm: 'anderson freire identidade' },
-  { rank: 16, title: 'Sonda-me', artist: 'Aline Barros', videos: '350K+', growth: '+85%', category: 'Gospel', tip: 'Intimidade com Deus — gera engajamento emocional.', searchTerm: 'aline barros sonda-me' },
-  { rank: 17, title: 'Eu Vou Abrir o Mar', artist: 'Fernandinho', videos: '320K+', growth: '+80%', category: 'Praise', tip: 'Energia épica — posts sobre milagres e conquistas.', searchTerm: 'fernandinho eu vou abrir o mar' },
-  { rank: 18, title: 'Creio que Tu és a Cura', artist: 'Isaias Saad', videos: '290K+', growth: '+75%', category: 'Worship', tip: 'SOM EM ASCENSÃO — começando a viralizar forte.', searchTerm: 'isaias saad creio que tu és a cura' },
-  { rank: 19, title: 'Digno', artist: 'Marcos Freire', videos: '260K+', growth: '+70%', category: 'Gospel', tip: 'Forte nos domingos — perfeito para conteúdo de culto.', searchTerm: 'marcos freire digno' },
-  { rank: 20, title: 'Responsório de Fé', artist: 'Manú Paiva', videos: '240K+', growth: '+65%', category: 'Viral Gospel', tip: '⚡ SOM EMERGENTE — aproveite antes de saturar!', searchTerm: 'manu paiva responsório de fé' },
+  { rank: 1, title: 'Getsêmani', artist: 'Leonardo Gonçalves', videos: '2.4M+', growth: '+360%', category: 'Worship', tip: 'SOM #1 da Série 4 — perfeito para posts de proteção e entrega.', searchTerm: 'leonardo gonçalves getsemani' },
+  { rank: 2, title: 'Tudo Posso', artist: 'Eli Soares', videos: '1.7M+', growth: '+295%', category: 'Worship', tip: 'Ideal para posts de coragem e força espiritual.', searchTerm: 'eli soares tudo posso' },
+  { rank: 3, title: 'Eu Quero Mais', artist: 'Aline Barros', videos: '1.3M+', growth: '+240%', category: 'Gospel', tip: 'Perfeito para posts emocionais sobre amor e intimidade com Deus.', searchTerm: 'aline barros eu quero mais' },
+  { rank: 4, title: 'A Casa é Sua', artist: 'Casa Worship', videos: '1.1M+', growth: '+215%', category: 'Worship', tip: 'Energia de adoração coletiva — gera muitos saves.', searchTerm: 'casa worship a casa é sua' },
+  { rank: 5, title: 'Deus de Promessas', artist: 'Davi Sacer', videos: '950K+', growth: '+200%', category: 'Gospel', tip: 'Forte em posts sobre promessas, fidelidade e coragem.', searchTerm: 'davi sacer deus de promessas' },
+  { rank: 6, title: 'Atos 2', artist: 'Gabriela Gomes', videos: '880K+', growth: '+185%', category: 'Worship', tip: 'Ideal para posts sobre amor que não se separa.', searchTerm: 'gabriela gomes atos 2' },
+  { rank: 7, title: 'Tu És Santo', artist: 'Diante do Trono', videos: '820K+', growth: '+170%', category: 'Worship', tip: 'Clássico de adoração — perfeito para posts sobre refúgio.', searchTerm: 'diante do trono tu és santo' },
+  { rank: 8, title: 'Me Encontrei Contigo', artist: 'Kemuel', videos: '760K+', growth: '+155%', category: 'Gospel Pop', tip: 'Atrai público jovem — viral em posts sobre renovação.', searchTerm: 'kemuel me encontrei contigo' },
+  { rank: 9, title: 'Pai Querido', artist: 'Eyshila', videos: '690K+', growth: '+140%', category: 'Gospel', tip: 'Posts sobre a paternidade de Deus — gera comentários AMÉM.', searchTerm: 'eyshila pai querido' },
+  { rank: 10, title: 'Vem Para Mim', artist: 'Ministério Zoe', videos: '650K+', growth: '+130%', category: 'Worship', tip: 'Som intimista — perfeito para posts sobre fé e descanso.', searchTerm: 'ministerio zoe vem para mim' },
+  { rank: 11, title: 'Conexão', artist: 'Thalles Roberto', videos: '610K+', growth: '+125%', category: 'Gospel Pop', tip: 'Energia alta — posts sobre força em Cristo.', searchTerm: 'thalles roberto conexão' },
+  { rank: 12, title: 'Coração Igual ao Teu', artist: 'Damares', videos: '570K+', growth: '+120%', category: 'Gospel', tip: 'Posts sobre amor verdadeiro e caráter — muitos compartilhamentos.', searchTerm: 'damares coração igual ao teu' },
+  { rank: 13, title: 'Liberta-me', artist: 'Bruna Karla', videos: '540K+', growth: '+115%', category: 'Gospel', tip: 'Forte em posts de gratidão e libertação.', searchTerm: 'bruna karla liberta-me' },
+  { rank: 14, title: 'Filho do Homem', artist: 'Renascer Praise', videos: '500K+', growth: '+110%', category: 'Praise', tip: 'Energia épica — posts sobre vitória.', searchTerm: 'renascer praise filho do homem' },
+  { rank: 15, title: 'Salmo 23', artist: 'Ton Carfi', videos: '470K+', growth: '+105%', category: 'Worship', tip: 'Ideal para posts sobre paz e descanso.', searchTerm: 'ton carfi salmo 23' },
+  { rank: 16, title: 'Jesus, Eu Confio em Ti', artist: 'Jotta A', videos: '440K+', growth: '+100%', category: 'Gospel', tip: 'Perfeito para posts sobre confiança e entrega.', searchTerm: 'jotta a jesus eu confio em ti' },
+  { rank: 17, title: 'Em Tua Presença', artist: 'Mara Lima', videos: '410K+', growth: '+95%', category: 'Worship', tip: 'Posts sobre força e presença de Deus — gera muito save.', searchTerm: 'mara lima em tua presença' },
+  { rank: 18, title: 'Deus está Aqui', artist: 'David Quinlan', videos: '380K+', growth: '+90%', category: 'Worship', tip: 'SOM EM ASCENSÃO — posts sobre esperança e renovação.', searchTerm: 'david quinlan deus está aqui' },
+  { rank: 19, title: 'Vejo o Senhor', artist: 'Leonardo Gonçalves', videos: '350K+', growth: '+85%', category: 'Worship', tip: 'Posts sobre vitória em Jesus — forte engajamento dominical.', searchTerm: 'leonardo gonçalves vejo o senhor' },
+  { rank: 20, title: 'Saudades dos Teus Olhos', artist: 'Júlio Cesar', videos: '320K+', growth: '+80%', category: 'Viral Gospel', tip: '⚡ SOM EMERGENTE — perfeito pra posts sobre descanso em Jesus!', searchTerm: 'júlio cesar saudades dos teus olhos' },
 ];
 
 function startDashboard() {

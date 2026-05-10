@@ -1,33 +1,33 @@
 /**
- * FéTok Verse Database — Série 3
- * 51 versículos NOVOS (zero overlap com Série 1 e 2)
+ * FéTok Verse Database — Série 4
+ * 51 versículos (21 da Série 4 + 30 do pool de reserva)
  * FIRST 21 = posts usados no POSTS_DATA (ordem de prioridade)
- * Organizados por 13 temas — cada um roda uma vez e é marcado como postado
+ * Organizados por temas — cada um roda uma vez e é marcado como postado
  */
 
 const verses = [
-  // ═══ POSTS_DATA VERSES (first 21) ═══
-  { text: "O anjo do Senhor acampa-se ao redor dos que o temem e os livra.", ref: "Salmos 34:7", theme: "proteção", bg: "divine_light" },
-  { text: "Nenhuma arma forjada contra ti prosperará.", ref: "Isaías 54:17", theme: "proteção", bg: "shepherd" },
-  { text: "O nome do Senhor é uma torre forte; o justo corre para ela e está seguro.", ref: "Provérbios 18:10", theme: "proteção", bg: "golden_rays" },
-  { text: "Espera no Senhor, anima-te e ele fortalecerá o teu coração.", ref: "Salmos 27:14", theme: "coragem", bg: "mountain" },
-  { text: "Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.", ref: "2 Timóteo 1:7", theme: "coragem", bg: "divine_light" },
-  { text: "Acima de tudo, porém, revistam-se do amor, que é o elo perfeito.", ref: "Colossenses 3:14", theme: "amor", bg: "dove" },
-  { text: "Nós amamos porque ele nos amou primeiro.", ref: "1 João 4:19", theme: "amor", bg: "cross_light" },
-  { text: "O Senhor teu Deus está no meio de ti, poderoso para te salvar; ele se deleitará em ti com alegria.", ref: "Sofonias 3:17", theme: "amor", bg: "sunrise" },
-  { text: "O Senhor Deus é a minha força; ele me dá pés como de corça e me faz andar sobre os altos.", ref: "Habacuque 3:19", theme: "força", bg: "mountain" },
-  { text: "Quando sou fraco, então é que sou forte.", ref: "2 Coríntios 12:10", theme: "força", bg: "cross_light" },
-  { text: "A alegria do Senhor é a minha força.", ref: "Neemias 8:10", theme: "força", bg: "sunrise" },
-  { text: "Se tiverdes fé como um grão de mostarda, direis a este monte: passa daqui e ele passará.", ref: "Mateus 17:20", theme: "fé", bg: "mountain" },
-  { text: "Tudo é possível ao que crê.", ref: "Marcos 9:23", theme: "fé", bg: "divine_light" },
-  { text: "Clama a mim e eu te responderei e te anunciarei coisas grandes e ocultas.", ref: "Jeremias 33:3", theme: "fé", bg: "golden_rays" },
-  { text: "Aqueles que semeiam com lágrimas, com cânticos de júbilo colherão.", ref: "Salmos 126:5", theme: "esperança", bg: "sunrise" },
-  { text: "Ele enxugará dos seus olhos toda lágrima, e não haverá mais morte, nem pranto, nem dor.", ref: "Apocalipse 21:4", theme: "esperança", bg: "dove" },
-  { text: "Tu conservarás em paz aquele cuja mente está firme em ti.", ref: "Isaías 26:3", theme: "paz", bg: "olive_tree" },
-  { text: "Não andem ansiosos por coisa alguma; apresentem seus pedidos a Deus.", ref: "Filipenses 4:6", theme: "paz", bg: "prayer_hands" },
-  { text: "Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum dos seus benefícios.", ref: "Salmos 103:2", theme: "gratidão", bg: "sunrise" },
-  { text: "O Senhor pelejará por vós, e vós vos calareis.", ref: "Êxodo 14:14", theme: "vitória", bg: "walking_water" },
-  { text: "Combati o bom combate, terminei a corrida, guardei a fé.", ref: "2 Timóteo 4:7", theme: "vitória", bg: "cross_light" },
+  // ═══ POSTS_DATA VERSES — Série 4 (first 21) ═══
+  { text: "Porque aos seus anjos dará ordens a teu respeito, para te guardarem em todos os teus caminhos.", ref: "Salmos 91:11", theme: "proteção", bg: "divine_light" },
+  { text: "O Senhor te guardará de todo o mal; ele guardará a tua alma.", ref: "Salmos 121:7", theme: "proteção", bg: "shepherd" },
+  { text: "Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.", ref: "Salmos 46:1", theme: "proteção", bg: "mountain" },
+  { text: "Sê forte e corajoso; não temas, nem te espantes, porque o Senhor teu Deus é contigo.", ref: "Josué 1:9", theme: "coragem", bg: "lion" },
+  { text: "Sede fortes e corajosos; não temais, porque o Senhor vosso Deus é quem vai convosco; não vos deixará.", ref: "Deuteronômio 31:6", theme: "coragem", bg: "eagle" },
+  { text: "Ninguém tem maior amor do que este: de dar alguém a sua vida pelos seus amigos.", ref: "João 15:13", theme: "amor", bg: "cross_light" },
+  { text: "Nem morte nem vida, nem anjos nem demônios poderá nos separar do amor de Deus.", ref: "Romanos 8:38", theme: "amor", bg: "dove" },
+  { text: "O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.", ref: "1 Coríntios 13:4", theme: "amor", bg: "sunrise" },
+  { text: "Os que esperam no Senhor renovarão as suas forças, subirão com asas como águias.", ref: "Isaías 40:31", theme: "força", bg: "eagle" },
+  { text: "Posso todas as coisas em Cristo que me fortalece.", ref: "Filipenses 4:13", theme: "força", bg: "fire" },
+  { text: "O Senhor é a minha força e o meu escudo; nele confiou o meu coração, e fui socorrido.", ref: "Salmos 28:7", theme: "força", bg: "shepherd" },
+  { text: "A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.", ref: "Hebreus 11:1", theme: "fé", bg: "bible_light" },
+  { text: "Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.", ref: "Provérbios 3:5", theme: "fé", bg: "narrow_path" },
+  { text: "Se algum de vós tem falta de sabedoria, peça-a a Deus, e ser-lhe-á dada.", ref: "Tiago 1:5", theme: "fé", bg: "olive_tree" },
+  { text: "Que o Deus da esperança vos encha de todo o gozo e paz em vosso crer.", ref: "Romanos 15:13", theme: "esperança", bg: "sunrise" },
+  { text: "As misericórdias do Senhor renovam-se cada manhã; grande é a tua fidelidade.", ref: "Lamentações 3:23", theme: "esperança", bg: "dove" },
+  { text: "Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.", ref: "João 14:27", theme: "paz", bg: "walking_water" },
+  { text: "Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.", ref: "Mateus 11:28", theme: "paz", bg: "shepherd" },
+  { text: "Em tudo dai graças, porque esta é a vontade de Deus em Cristo Jesus para convosco.", ref: "1 Tessalonicenses 5:18", theme: "gratidão", bg: "olive_tree" },
+  { text: "Em todas estas coisas somos mais que vencedores, por aquele que nos amou.", ref: "Romanos 8:37", theme: "vitória", bg: "lion" },
+  { text: "Mas graças a Deus que nos dá a vitória por nosso Senhor Jesus Cristo.", ref: "1 Coríntios 15:57", theme: "vitória", bg: "fire" },
 
   // ═══ EXTRA VERSES (backup pool) ═══
   { text: "Tu és o meu esconderijo; tu me preservas da angústia e me cercas de cânticos de livramento.", ref: "Salmos 32:7", theme: "proteção", bg: "mountain" },

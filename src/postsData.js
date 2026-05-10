@@ -1,318 +1,319 @@
-﻿/**
- * FéTok POSTS_DATA — Série 3
- * 21 posts NOVOS (zero overlap com Série 2)
+/**
+ * FéTok POSTS_DATA — Série 4
+ * 21 posts COMPLETAMENTE NOVOS (zero overlap com Série 3)
  * 7 dias × 3 slots (06:00 / 12:00 / 20:00)
+ * Versículos, fundos, músicas e legendas inéditos.
  */
 
 const POSTS_DATA = [
   // ══════════════ DIA 1 ══════════════
-  { day:1, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 34:7', theme:'proteção', themeEmoji:'🛡️',
-    text:'O anjo do Senhor acampa-se ao redor dos que o temem e os livra.',
-    videoFile:'video_salmos_34_7.mp4',
-    music:'Isaias Saad → Bondade de Deus',
-    musicSearch:'isaias saad bondade de deus',
-    caption:`O anjo do Senhor acampa-se ao redor dos que o temem e os livra. 🛡️✝️
-Salmos 34:7
+  { day:1, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 91:11', theme:'proteção', themeEmoji:'👼',
+    text:'Porque aos seus anjos dará ordens a teu respeito, para te guardarem em todos os teus caminhos.',
+    videoFile:'video_salmos_91_11.mp4',
+    music:'Leonardo Gonçalves → Getsêmani',
+    musicSearch:'leonardo gonçalves getsemani',
+    caption:`Porque aos seus anjos dará ordens a teu respeito, para te guardarem em todos os teus caminhos. 👼✝️
+Salmos 91:11
 
-ANJOS estão ao seu redor AGORA MESMO. Você não está sozinho! 🙏
-Deixe um ❤️ se você crê na proteção de Deus!
-Salve esse vídeo. Você vai precisar dele. 🔖
+Os anjos de Deus estão na sua frente ABRINDO CAMINHO. 🛡️
+Em CADA passo, em CADA esquina, eles te guardam! 🙏
+Comenta "ANJOS DE DEUS" se você crê nessa promessa! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #anjos #proteção #salmos #fetok #fyp #viral #foryou #gospel #cristao #palavradedeus`
+#versiculododia #biblia #fe #jesus #deus #anjos #proteção #salmos91 #fetok #fyp #viral #foryou #gospel #cristao #palavradedeus`
   },
-  { day:1, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 27:14', theme:'coragem', themeEmoji:'💪',
-    text:'Espera no Senhor, anima-te e ele fortalecerá o teu coração.',
-    videoFile:'video_salmos_27_14.mp4',
-    music:'Fernandinho → Grandes Coisas',
-    musicSearch:'fernandinho grandes coisas',
-    caption:`Espera no Senhor, anima-te e ele fortalecerá o teu coração. 💪✝️
-Salmos 27:14
+  { day:1, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Josué 1:9', theme:'coragem', themeEmoji:'🦁',
+    text:'Sê forte e corajoso; não temas, nem te espantes, porque o Senhor teu Deus é contigo.',
+    videoFile:'video_josue_1_9.mp4',
+    music:'Eli Soares → Tudo Posso',
+    musicSearch:'eli soares tudo posso',
+    caption:`Sê forte e corajoso; não temas, nem te espantes, porque o Senhor teu Deus é contigo. 🦁✝️
+Josué 1:9
 
-Cansado de esperar? DEUS ESTÁ TRABALHANDO no silêncio! 🔥
-A resposta vem na hora CERTA. Confia! 🙏
-Comenta AMÉM se você está esperando no Senhor! ❤️
+Onde você for, DEUS VAI JUNTO. 🔥
+Não tem batalha que você enfrenta SOZINHO! ⚔️
+Comenta "FORTE E CORAJOSO" se você recebe essa palavra HOJE! 🙏
 
-#versiculododia #biblia #fe #jesus #deus #espera #coragem #salmos #fetok #fyp #viral #gospel #cristao #fortaleza`
+#versiculododia #biblia #fe #jesus #deus #coragem #josue #guerreiro #fetok #fyp #viral #gospel #cristao #fortaleza`
   },
-  { day:1, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Colossenses 3:14', theme:'amor', themeEmoji:'💕',
-    text:'Acima de tudo, porém, revistam-se do amor, que é o elo perfeito.',
-    videoFile:'video_colossenses_3_14.mp4',
-    music:'Preto no Branco → Ninguém Explica Deus',
-    musicSearch:'preto no branco ninguém explica deus',
-    caption:`Acima de tudo, porém, revistam-se do amor, que é o elo perfeito. 💕✝️
-Colossenses 3:14
+  { day:1, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'João 15:13', theme:'amor', themeEmoji:'💝',
+    text:'Ninguém tem maior amor do que este: de dar alguém a sua vida pelos seus amigos.',
+    videoFile:'video_joao_15_13.mp4',
+    music:'Aline Barros → Eu Quero Mais',
+    musicSearch:'aline barros eu quero mais',
+    caption:`Ninguém tem maior amor do que este: de dar alguém a sua vida pelos seus amigos. 💝✝️
+João 15:13
 
-O AMOR é a roupa mais bonita que você pode vestir. ❤️
-Vista-se de amor TODOS OS DIAS! 🙏
-Marque alguém que você AMA e envie esse versículo! 💛
+JESUS deu a vida por VOCÊ antes mesmo de te conhecer. 😭
+Esse é o MAIOR amor que existe no universo! ❤️
+Marque alguém que precisa lembrar desse amor HOJE! 🙏
 
-#versiculododia #biblia #fe #jesus #deus #amor #colossenses #perfeito #fetok #fyp #viral #gospel #cristao #amordedeus`
+#versiculododia #biblia #fe #jesus #deus #amor #joao #cruz #fetok #fyp #viral #gospel #cristao #amordedeus`
   },
 
   // ══════════════ DIA 2 ══════════════
-  { day:2, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Isaías 54:17', theme:'proteção', themeEmoji:'🛡️',
-    text:'Nenhuma arma forjada contra ti prosperará.',
-    videoFile:'video_isaias_54_17.mp4',
-    music:'Gabriela Rocha → Lugar Secreto',
-    musicSearch:'gabriela rocha lugar secreto',
-    caption:`Nenhuma arma forjada contra ti prosperará. 🛡️✝️
-Isaías 54:17
+  { day:2, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 121:7', theme:'proteção', themeEmoji:'🛡️',
+    text:'O Senhor te guardará de todo o mal; ele guardará a tua alma.',
+    videoFile:'video_salmos_121_7.mp4',
+    music:'Casa Worship → A Casa é Sua',
+    musicSearch:'casa worship a casa é sua',
+    caption:`O Senhor te guardará de todo o mal; ele guardará a tua alma. 🛡️✝️
+Salmos 121:7
 
-NENHUMA. Nem inveja, nem maldade, nem doença. NADA prospera contra você! 🔥
-Deus é o seu ESCUDO INVENCÍVEL! 🙏
-Comenta "PROTEGIDO" se você crê nessa promessa! ❤️
+Sua ALMA está nas mãos do Pai. NADA pode tocá-la! 🙏
+Quando o mal tentar chegar perto, DEUS o BARRA! 🔥
+Salve esse versículo. Você vai precisar! 🔖
 
-#versiculododia #biblia #fe #jesus #deus #nenhuma #arma #isaias #proteção #fetok #fyp #viral #gospel #cristao #promessa`
+#versiculododia #biblia #fe #jesus #deus #guarda #alma #salmos121 #fetok #fyp #viral #gospel #cristao #proteção`
   },
-  { day:2, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'2 Timóteo 1:7', theme:'coragem', themeEmoji:'⚔️',
-    text:'Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.',
-    videoFile:'video_2_timoteo_1_7.mp4',
-    music:'Anderson Freire → Primeira Essência',
-    musicSearch:'anderson freire primeira essencia',
-    caption:`Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio. ⚔️✝️
-2 Timóteo 1:7
+  { day:2, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Deuteronômio 31:6', theme:'coragem', themeEmoji:'⚔️',
+    text:'Sede fortes e corajosos; não temais, porque o Senhor vosso Deus é quem vai convosco; não vos deixará.',
+    videoFile:'video_deuteronomio_31_6.mp4',
+    music:'Davi Sacer → Deus de Promessas',
+    musicSearch:'davi sacer deus de promessas',
+    caption:`Sede fortes e corajosos; não temais, porque o Senhor vosso Deus é quem vai convosco; não vos deixará. ⚔️✝️
+Deuteronômio 31:6
 
-Você NÃO nasceu pra ter MEDO. Nasceu pra ter PODER! 🔥
-Levante a cabeça, guerreiro de Deus! 👑
-Comenta AMÉM se você recebe esse poder AGORA! 🙏
+Deus NÃO te deixa. Deus NÃO te abandona. NUNCA! 🔥
+Olhe pra trás: Ele esteve em CADA momento. 🙏
+Comenta AMÉM se Deus nunca te abandonou! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #poder #coragem #timoteo #fetok #fyp #viral #gospel #cristao #guerreiro`
+#versiculododia #biblia #fe #jesus #deus #coragem #promessa #deuteronomio #fetok #fyp #viral #gospel #cristao #fidelidade`
   },
-  { day:2, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'1 João 4:19', theme:'amor', themeEmoji:'❤️',
-    text:'Nós amamos porque ele nos amou primeiro.',
-    videoFile:'video_1_joao_4_19.mp4',
-    music:'Isaias Saad → Me Atraiu',
-    musicSearch:'isaias saad me atraiu',
-    caption:`Nós amamos porque ele nos amou primeiro. ❤️✝️
-1 João 4:19
+  { day:2, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Romanos 8:38', theme:'amor', themeEmoji:'❤️',
+    text:'Nem morte nem vida, nem anjos nem demônios poderá nos separar do amor de Deus.',
+    videoFile:'video_romanos_8_38.mp4',
+    music:'Gabriela Gomes → Atos 2',
+    musicSearch:'gabriela gomes atos 2',
+    caption:`Nem morte nem vida, nem anjos nem demônios poderá nos separar do amor de Deus. ❤️✝️
+Romanos 8:38
 
-Antes de você sequer PENSAR em Deus, Ele já te AMAVA. 😭
-O amor de Deus não depende de NADA que você faça! 💛
-Deixe ❤️ se você sente esse amor! 🙏
+NADA. Nem o pior dia. Nem a pior queda. NADA te separa do amor Dele! 🔥
+O amor de Deus é INQUEBRÁVEL! 🙏
+Deixe um ❤️ se você crê nesse amor!
 
-#versiculododia #biblia #fe #jesus #deus #amor #primeiro #joao #fetok #fyp #viral #gospel #cristao #amordedeus`
+#versiculododia #biblia #fe #jesus #deus #amor #romanos #separar #fetok #fyp #viral #gospel #cristao #amordedeus`
   },
 
   // ══════════════ DIA 3 ══════════════
-  { day:3, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Provérbios 18:10', theme:'proteção', themeEmoji:'🏰',
-    text:'O nome do Senhor é uma torre forte; o justo corre para ela e está seguro.',
-    videoFile:'video_proverbios_18_10.mp4',
-    music:'Aline Barros → Ressuscita-me',
-    musicSearch:'aline barros ressuscita-me',
-    caption:`O nome do Senhor é uma torre forte; o justo corre para ela e está seguro. 🏰✝️
-Provérbios 18:10
+  { day:3, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 46:1', theme:'proteção', themeEmoji:'🏔️',
+    text:'Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.',
+    videoFile:'video_salmos_46_1.mp4',
+    music:'Diante do Trono → Tu És Santo',
+    musicSearch:'diante do trono tu és santo',
+    caption:`Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia. 🏔️✝️
+Salmos 46:1
 
-Quando o mundo desabar, CORRA pro nome de JESUS! 🙏
-Ele é sua TORRE FORTE. Nada te derruba lá dentro! 🔥
-Salve esse vídeo pra lembrar disso sempre! 🔖
+Quando a angústia bater, CORRA pro refúgio que NÃO TREME! 🏰
+Deus está PRESENTE. Não distante. PRESENTE! 🙏
+Comenta "MEU REFÚGIO" se Deus é seu abrigo! 🔥
 
-#versiculododia #biblia #fe #jesus #deus #torre #forte #proverbios #fetok #fyp #viral #gospel #cristao #seguro`
+#versiculododia #biblia #fe #jesus #deus #refugio #fortaleza #salmos46 #fetok #fyp #viral #gospel #cristao #angustia`
   },
-  { day:3, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Habacuque 3:19', theme:'força', themeEmoji:'🦌',
-    text:'O Senhor Deus é a minha força; ele me dá pés como de corça e me faz andar sobre os altos.',
-    videoFile:'video_habacuque_3_19.mp4',
-    music:'Fernandinho → Faz Chover',
-    musicSearch:'fernandinho faz chover',
-    caption:`O Senhor Deus é a minha força; ele me dá pés como de corça e me faz andar sobre os altos. 🦌✝️
-Habacuque 3:19
+  { day:3, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Isaías 40:31', theme:'força', themeEmoji:'🦅',
+    text:'Os que esperam no Senhor renovarão as suas forças, subirão com asas como águias.',
+    videoFile:'video_isaias_40_31.mp4',
+    music:'Kemuel → Me Encontrei Contigo',
+    musicSearch:'kemuel me encontrei contigo',
+    caption:`Os que esperam no Senhor renovarão as suas forças, subirão com asas como águias. 🦅✝️
+Isaías 40:31
 
-Deus te faz SUBIR onde os outros não conseguem! ⛰️
-Ele te coloca NO TOPO mesmo quando tudo parece impossível! 🔥
-Comenta AMÉM se você crê que está subindo! 🙏
+Cansado? Deus vai TROCAR sua força velha por uma NOVA. 🔥
+Você vai VOAR onde antes mal andava! 🙏
+Comenta "VOU VOAR" se você crê na renovação! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #força #habacuque #altos #fetok #fyp #viral #gospel #cristao #vitoria`
+#versiculododia #biblia #fe #jesus #deus #força #aguia #isaias40 #fetok #fyp #viral #gospel #cristao #renovação`
   },
-  { day:3, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Salmos 126:5', theme:'esperança', themeEmoji:'🌅',
-    text:'Aqueles que semeiam com lágrimas, com cânticos de júbilo colherão.',
-    videoFile:'video_salmos_126_5.mp4',
-    music:'Gabriela Rocha → Deus Provará',
-    musicSearch:'gabriela rocha deus provará',
-    caption:`Aqueles que semeiam com lágrimas, com cânticos de júbilo colherão. 🌅✝️
-Salmos 126:5
+  { day:3, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Romanos 15:13', theme:'esperança', themeEmoji:'🌅',
+    text:'Que o Deus da esperança vos encha de todo o gozo e paz em vosso crer.',
+    videoFile:'video_romanos_15_13.mp4',
+    music:'Eyshila → Pai Querido',
+    musicSearch:'eyshila pai querido',
+    caption:`Que o Deus da esperança vos encha de todo o gozo e paz em vosso crer. 🌅✝️
+Romanos 15:13
 
-Suas LÁGRIMAS de hoje serão sua COLHEITA amanhã! 😭➡️🎉
-Não desista. A colheita está chegando! 🙏
-Comenta "EU VOU COLHER" se você crê! ❤️
+Deus é o DEUS DA ESPERANÇA. Onde Ele entra, a esperança VOLTA! ✨
+Receba HOJE: gozo + paz transbordando! 🙏
+Comenta "ESPERANÇA" se você recebe essa palavra! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #lágrimas #colheita #esperança #fetok #fyp #viral #gospel #cristao #promessa`
+#versiculododia #biblia #fe #jesus #deus #esperança #gozo #romanos #fetok #fyp #viral #gospel #cristao #paz`
   },
 
   // ══════════════ DIA 4 ══════════════
-  { day:4, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Mateus 17:20', theme:'fé', themeEmoji:'🌿',
-    text:'Se tiverdes fé como um grão de mostarda, direis a este monte: passa daqui e ele passará.',
-    videoFile:'video_mateus_17_20.mp4',
-    music:'Aline Barros → Sonda-me',
-    musicSearch:'aline barros sonda-me',
-    caption:`Se tiverdes fé como um grão de mostarda, direis a este monte: passa daqui e ele passará. 🌿✝️
-Mateus 17:20
+  { day:4, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Hebreus 11:1', theme:'fé', themeEmoji:'📖',
+    text:'A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.',
+    videoFile:'video_hebreus_11_1.mp4',
+    music:'Ministério Zoe → Vem Para Mim',
+    musicSearch:'ministerio zoe vem para mim',
+    caption:`A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos. 📖✝️
+Hebreus 11:1
 
-Não precisa de fé GRANDE. Precisa de fé VERDADEIRA! 🔥
-Um GRÃO de fé move MONTANHAS inteiras! ⛰️
-Comenta "EU CREIO" se sua fé move montanhas! 🙏
+Você não PRECISA ver pra acreditar. PRECISA ACREDITAR pra ver! 🔥
+A fé é o que MOVE o invisível! 🙏
+Comenta "EU CREIO" se sua fé não depende de provas! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #mostarda #montanha #mateus #fetok #fyp #viral #gospel #cristao #milagre`
+#versiculododia #biblia #fe #jesus #deus #hebreus #certeza #invisivel #fetok #fyp #viral #gospel #cristao #milagre`
   },
-  { day:4, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'2 Coríntios 12:10', theme:'força', themeEmoji:'💪',
-    text:'Quando sou fraco, então é que sou forte.',
-    videoFile:'video_2_corintios_12_10.mp4',
-    music:'Anderson Freire → Raridade',
-    musicSearch:'anderson freire raridade',
-    caption:`Quando sou fraco, então é que sou forte. 💪✝️
-2 Coríntios 12:10
+  { day:4, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Filipenses 4:13', theme:'força', themeEmoji:'🔥',
+    text:'Posso todas as coisas em Cristo que me fortalece.',
+    videoFile:'video_filipenses_4_13.mp4',
+    music:'Thalles Roberto → Conexão',
+    musicSearch:'thalles roberto conexão',
+    caption:`Posso todas as coisas em Cristo que me fortalece. 🔥✝️
+Filipenses 4:13
 
-Sua FRAQUEZA é o palco da FORÇA de Deus! 🔥
-Quando você não aguenta mais, DEUS ASSUME! ⚡
-Comenta AMÉM se Deus já te deu forças quando você estava no chão! 🙏
+TODAS. Não algumas. TODAS! 💪
+Em Cristo você é IMPARÁVEL! Levante-se! ⚡
+Comenta "EU POSSO" se Cristo te fortalece HOJE! 🙏
 
-#versiculododia #biblia #fe #jesus #deus #fraco #forte #corintios #fetok #fyp #viral #gospel #cristao #superação`
+#versiculododia #biblia #fe #jesus #deus #posso #filipenses #cristo #fetok #fyp #viral #gospel #cristao #força`
   },
-  { day:4, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Sofonias 3:17', theme:'amor', themeEmoji:'🎶',
-    text:'O Senhor teu Deus está no meio de ti, poderoso para te salvar; ele se deleitará em ti com alegria.',
-    videoFile:'video_sofonias_3_17.mp4',
-    music:'Soraya Moraes → Quão Grande É o Meu Deus',
-    musicSearch:'soraya moraes quão grande é o meu deus',
-    caption:`O Senhor teu Deus está no meio de ti, poderoso para te salvar; ele se deleitará em ti com alegria. 🎶✝️
-Sofonias 3:17
+  { day:4, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'1 Coríntios 13:4', theme:'amor', themeEmoji:'💗',
+    text:'O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.',
+    videoFile:'video_1_corintios_13_4.mp4',
+    music:'Damares → Coração Igual ao Teu',
+    musicSearch:'damares coração igual ao teu',
+    caption:`O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. 💗✝️
+1 Coríntios 13:4
 
-Deus se ALEGRA com você. Ele CANTA por causa de você! 🎵
-Imagine o Criador do universo sorrindo por SUA causa! 😭❤️
-Compartilhe com alguém que precisa saber disso! 🙏
+O amor de DEUS é assim. PACIENTE. BONDOSO. SEM INVEJA. 🙏
+Peça pra Deus colocar ESSE amor no seu coração! ❤️
+Marque alguém que ama assim! 💛
 
-#versiculododia #biblia #fe #jesus #deus #alegria #sofonias #deleite #fetok #fyp #viral #gospel #cristao #amordedeus`
+#versiculododia #biblia #fe #jesus #deus #amor #paciente #corintios #fetok #fyp #viral #gospel #cristao #amordedeus`
   },
 
   // ══════════════ DIA 5 ══════════════
-  { day:5, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Salmos 103:2', theme:'gratidão', themeEmoji:'🙌',
-    text:'Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum dos seus benefícios.',
-    videoFile:'video_salmos_103_2.mp4',
-    music:'Gabriela Rocha → Eu Navegarei',
-    musicSearch:'gabriela rocha eu navegarei',
-    caption:`Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum dos seus benefícios. 🙌✝️
-Salmos 103:2
+  { day:5, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'1 Tessalonicenses 5:18', theme:'gratidão', themeEmoji:'🙌',
+    text:'Em tudo dai graças, porque esta é a vontade de Deus em Cristo Jesus para convosco.',
+    videoFile:'video_1_tessalonicenses_5_18.mp4',
+    music:'Bruna Karla → Liberta-me',
+    musicSearch:'bruna karla liberta-me',
+    caption:`Em tudo dai graças, porque esta é a vontade de Deus em Cristo Jesus para convosco. 🙌✝️
+1 Tessalonicenses 5:18
 
-PARE e lembre de TUDO que Deus já fez por você! 🙏
-Cada dia que você acorda é um PRESENTE dele! ☀️
-Comenta um benefício que Deus te deu! ❤️
+EM TUDO. No bom e no difícil. AGRADEÇA! 🙏
+A gratidão ABRE os céus sobre sua vida! ✨
+Comenta "GRATIDÃO" e diga uma coisa que Deus fez por você! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #gratidão #benefícios #salmos #fetok #fyp #viral #gospel #cristao #louvor`
+#versiculododia #biblia #fe #jesus #deus #gratidão #tessalonicenses #vontade #fetok #fyp #viral #gospel #cristao #louvor`
   },
-  { day:5, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Êxodo 14:14', theme:'vitória', themeEmoji:'👑',
-    text:'O Senhor pelejará por vós, e vós vos calareis.',
-    videoFile:'video_exodo_14_14.mp4',
-    music:'Fernandinho → Eu Vou Abrir o Mar',
-    musicSearch:'fernandinho eu vou abrir o mar',
-    caption:`O Senhor pelejará por vós, e vós vos calareis. 👑✝️
-Êxodo 14:14
+  { day:5, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Romanos 8:37', theme:'vitória', themeEmoji:'🏆',
+    text:'Em todas estas coisas somos mais que vencedores, por aquele que nos amou.',
+    videoFile:'video_romanos_8_37.mp4',
+    music:'Renascer Praise → Filho do Homem',
+    musicSearch:'renascer praise filho do homem',
+    caption:`Em todas estas coisas somos mais que vencedores, por aquele que nos amou. 🏆✝️
+Romanos 8:37
 
-PARE DE LUTAR SOZINHO. Deus vai LUTAR por você! ⚔️
-Quando Deus entra na batalha, o inimigo FOGE! 🔥
-Comenta "DEUS PELEJA POR MIM" se você crê! 🙏
+MAIS QUE vencedor. Não só vencedor — MAIS QUE! 🔥
+A vitória já é SUA por causa de Jesus! 👑
+Comenta "MAIS QUE VENCEDOR" se você recebe essa palavra! 🙏
 
-#versiculododia #biblia #fe #jesus #deus #vitória #peleja #exodo #fetok #fyp #viral #gospel #cristao #batalha`
+#versiculododia #biblia #fe #jesus #deus #vitoria #vencedor #romanos #fetok #fyp #viral #gospel #cristao #conquista`
   },
-  { day:5, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Isaías 26:3', theme:'paz', themeEmoji:'🕊️',
-    text:'Tu conservarás em paz aquele cuja mente está firme em ti.',
-    videoFile:'video_isaias_26_3.mp4',
-    music:'Isaias Saad → Bondade de Deus',
-    musicSearch:'isaias saad bondade de deus',
-    caption:`Tu conservarás em paz aquele cuja mente está firme em ti. 🕊️✝️
-Isaías 26:3
+  { day:5, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'João 14:27', theme:'paz', themeEmoji:'🕊️',
+    text:'Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.',
+    videoFile:'video_joao_14_27.mp4',
+    music:'Ton Carfi → Salmo 23',
+    musicSearch:'ton carfi salmo 23',
+    caption:`Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá. 🕊️✝️
+João 14:27
 
-Mente em DEUS = coração em PAZ. 🙏
-Não importa o caos ao redor, FIXE seus olhos no Senhor! ✨
-Salve esse vídeo e assista quando a ansiedade bater! 🔖
+A PAZ de Jesus é DIFERENTE da paz do mundo. 🙏
+Ela permanece MESMO no meio da tempestade! ⛈️
+Salve esse vídeo pra quando a ansiedade chegar! 🔖
 
-#versiculododia #biblia #fe #jesus #deus #paz #mente #isaias #fetok #fyp #viral #gospel #cristao #descanso`
+#versiculododia #biblia #fe #jesus #deus #paz #joao #ansiedade #fetok #fyp #viral #gospel #cristao #descanso`
   },
 
   // ══════════════ DIA 6 ══════════════
-  { day:6, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Marcos 9:23', theme:'fé', themeEmoji:'🙏',
-    text:'Tudo é possível ao que crê.',
-    videoFile:'video_marcos_9_23.mp4',
-    music:'Aline Barros → Consagração',
-    musicSearch:'aline barros consagração',
-    caption:`Tudo é possível ao que crê. 🙏✝️
-Marcos 9:23
+  { day:6, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Provérbios 3:5', theme:'fé', themeEmoji:'🌿',
+    text:'Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.',
+    videoFile:'video_proverbios_3_5.mp4',
+    music:'Jotta A → Jesus, Eu Confio em Ti',
+    musicSearch:'jotta a jesus eu confio em ti',
+    caption:`Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento. 🌿✝️
+Provérbios 3:5
 
-TUDO. Não "algumas coisas". TUDO! 🔥
-Cura? POSSÍVEL. Restauração? POSSÍVEL. Milagre? POSSÍVEL! ⚡
-Comenta "EU CREIO" se você acredita no impossível! ❤️
+Pare de tentar ENTENDER tudo. Comece a CONFIAR! 🙏
+O entendimento de Deus é INFINITAMENTE maior que o seu! 🔥
+Comenta "EU CONFIO" se você entrega o controle a Ele! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #possível #crê #marcos #fetok #fyp #viral #gospel #cristao #milagre`
+#versiculododia #biblia #fe #jesus #deus #confiança #proverbios #coração #fetok #fyp #viral #gospel #cristao #entrega`
   },
-  { day:6, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Neemias 8:10', theme:'força', themeEmoji:'😊',
-    text:'A alegria do Senhor é a minha força.',
-    videoFile:'video_neemias_8_10.mp4',
-    music:'Anderson Freire → Identidade',
-    musicSearch:'anderson freire identidade',
-    caption:`A alegria do Senhor é a minha força. 😊✝️
-Neemias 8:10
+  { day:6, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'Salmos 28:7', theme:'força', themeEmoji:'🛡️',
+    text:'O Senhor é a minha força e o meu escudo; nele confiou o meu coração, e fui socorrido.',
+    videoFile:'video_salmos_28_7.mp4',
+    music:'Mara Lima → Em Tua Presença',
+    musicSearch:'mara lima em tua presença',
+    caption:`O Senhor é a minha força e o meu escudo; nele confiou o meu coração, e fui socorrido. 🛡️✝️
+Salmos 28:7
 
-Não é a TRISTEZA que te fortalece. É a ALEGRIA de Deus! 🎉
-Mesmo na dor, a alegria do Senhor te SUSTENTA! 💪
-Comenta "ALEGRIA" se Deus te dá forças pra sorrir! 🙏
+Deus é FORÇA pra dentro e ESCUDO pra fora! 💪
+Quem confia Nele NUNCA fica desamparado! 🙏
+Comenta "MEU ESCUDO" se Deus já te socorreu! 🔥
 
-#versiculododia #biblia #fe #jesus #deus #alegria #força #neemias #fetok #fyp #viral #gospel #cristao #felicidade`
+#versiculododia #biblia #fe #jesus #deus #força #escudo #salmos28 #fetok #fyp #viral #gospel #cristao #socorro`
   },
-  { day:6, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Apocalipse 21:4', theme:'esperança', themeEmoji:'🌈',
-    text:'Ele enxugará dos seus olhos toda lágrima, e não haverá mais morte, nem pranto, nem dor.',
-    videoFile:'video_apocalipse_21_4.mp4',
-    music:'Isaias Saad → Creio que Tu és a Cura',
-    musicSearch:'isaias saad creio que tu és a cura',
-    caption:`Ele enxugará dos seus olhos toda lágrima, e não haverá mais morte, nem pranto, nem dor. 🌈✝️
-Apocalipse 21:4
+  { day:6, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Lamentações 3:23', theme:'esperança', themeEmoji:'🌄',
+    text:'As misericórdias do Senhor renovam-se cada manhã; grande é a tua fidelidade.',
+    videoFile:'video_lamentacoes_3_23.mp4',
+    music:'David Quinlan → Deus está Aqui',
+    musicSearch:'david quinlan deus está aqui',
+    caption:`As misericórdias do Senhor renovam-se cada manhã; grande é a tua fidelidade. 🌄✝️
+Lamentações 3:23
 
-Um dia, TODA lágrima vai secar. TODA dor vai acabar. 😭➡️😊
-Deus vai enxugar SEU rosto com as próprias mãos! 🙏
-Deixe ❤️ se você espera esse dia!
+CADA MANHÃ é uma misericórdia NOVA. 🙏
+Ontem ficou pra trás. HOJE é uma página em branco com Deus! ✨
+Comenta "NOVAS MISERICÓRDIAS" e receba a renovação! ❤️
 
-#versiculododia #biblia #fe #jesus #deus #lágrima #esperança #apocalipse #fetok #fyp #viral #gospel #cristao #eternidade`
+#versiculododia #biblia #fe #jesus #deus #misericordia #fidelidade #lamentacoes #fetok #fyp #viral #gospel #cristao #renovação`
   },
 
   // ══════════════ DIA 7 ══════════════
-  { day:7, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Jeremias 33:3', theme:'fé', themeEmoji:'📖',
-    text:'Clama a mim e eu te responderei e te anunciarei coisas grandes e ocultas.',
-    videoFile:'video_jeremias_33_3.mp4',
-    music:'Gabriela Rocha → Deus Provará',
-    musicSearch:'gabriela rocha deus provará',
-    caption:`Clama a mim e eu te responderei e te anunciarei coisas grandes e ocultas. 📖✝️
-Jeremias 33:3
+  { day:7, slot:'06:00', slotKey:'morning', emoji:'☀️', verse:'Tiago 1:5', theme:'fé', themeEmoji:'💡',
+    text:'Se algum de vós tem falta de sabedoria, peça-a a Deus, e ser-lhe-á dada.',
+    videoFile:'video_tiago_1_5.mp4',
+    music:'Tony Allysson → Atos 2',
+    musicSearch:'tony allysson atos 2',
+    caption:`Se algum de vós tem falta de sabedoria, peça-a a Deus, e ser-lhe-á dada. 💡✝️
+Tiago 1:5
 
-Deus tem COISAS GRANDES preparadas pra você! 🔥
-Coisas que seus olhos NÃO VIRAM ainda! ✨
-Comenta "EU CLAMO" se você quer ver o impossível! 🙏
+Sem saber que decisão tomar? PERGUNTE a Deus! 🙏
+Ele dá sabedoria com ABUNDÂNCIA, sem cobrar! ✨
+Comenta "PEÇO SABEDORIA" e receba HOJE! 🔥
 
-#versiculododia #biblia #fe #jesus #deus #clama #grandes #jeremias #fetok #fyp #viral #gospel #cristao #ocultas`
+#versiculododia #biblia #fe #jesus #deus #sabedoria #tiago #pedir #fetok #fyp #viral #gospel #cristao #direção`
   },
-  { day:7, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'2 Timóteo 4:7', theme:'vitória', themeEmoji:'🏆',
-    text:'Combati o bom combate, terminei a corrida, guardei a fé.',
-    videoFile:'video_2_timoteo_4_7.mp4',
-    music:'Preto no Branco → Me Deixa Aqui',
-    musicSearch:'preto no branco me deixa aqui',
-    caption:`Combati o bom combate, terminei a corrida, guardei a fé. 🏆✝️
-2 Timóteo 4:7
+  { day:7, slot:'12:00', slotKey:'afternoon', emoji:'🌤️', verse:'1 Coríntios 15:57', theme:'vitória', themeEmoji:'👑',
+    text:'Mas graças a Deus que nos dá a vitória por nosso Senhor Jesus Cristo.',
+    videoFile:'video_1_corintios_15_57.mp4',
+    music:'Leonardo Gonçalves → Vejo o Senhor',
+    musicSearch:'leonardo gonçalves vejo o senhor',
+    caption:`Mas graças a Deus que nos dá a vitória por nosso Senhor Jesus Cristo. 👑✝️
+1 Coríntios 15:57
 
-Não importa quantas vezes você caiu. O que importa é que NÃO DESISTIU! 🔥
-TERMINE a corrida. A coroa te espera! 👑
-Comenta "NÃO DESISTO" se você vai até o fim! 🙏
+A VITÓRIA não vem da sua força. Vem de JESUS! 🔥
+Pare de lutar como se você estivesse só. JESUS já venceu! ⚔️
+Comenta "VITÓRIA EM JESUS" se você recebe! 🙏
 
-#versiculododia #biblia #fe #jesus #deus #combate #corrida #timoteo #fetok #fyp #viral #gospel #cristao #vitoria`
+#versiculododia #biblia #fe #jesus #deus #vitoria #corintios #cristo #fetok #fyp #viral #gospel #cristao #conquista`
   },
-  { day:7, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Filipenses 4:6', theme:'paz', themeEmoji:'🕊️',
-    text:'Não andem ansiosos por coisa alguma; apresentem seus pedidos a Deus.',
-    videoFile:'video_filipenses_4_6.mp4',
-    music:'Isaias Saad → Bondade de Deus',
-    musicSearch:'isaias saad bondade de deus',
-    caption:`Não andem ansiosos por coisa alguma; apresentem seus pedidos a Deus. 🕊️✝️
-Filipenses 4:6
+  { day:7, slot:'20:00', slotKey:'evening', emoji:'🌙', verse:'Mateus 11:28', theme:'paz', themeEmoji:'🕊️',
+    text:'Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.',
+    videoFile:'video_mateus_11_28.mp4',
+    music:'Júlio Cesar → Saudades dos Teus Olhos',
+    musicSearch:'júlio cesar saudades dos teus olhos',
+    caption:`Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei. 🕊️✝️
+Mateus 11:28
 
-ANSIEDADE? Entregue a Deus. MEDO? Entregue a Deus. DÚVIDA? Entregue a Deus! 🙏
-Ele cuida de TUDO por você! ❤️
-Comenta "ENTREGO" se você entrega tudo nas mãos de Deus! 🙏
+CANSADO? OPRIMIDO? Jesus tá te chamando! 🙏
+Vai a Ele AGORA. Ele tira o peso das suas costas! ❤️
+Comenta "VOU A JESUS" e descanse Nele!
 
-Esse foi o último post da semana. Se essa página te abençoou, SIGA para mais versículos diários! 🔔
+Esse foi o último post da semana. Se essa página te abençoou, SIGA pra mais versículos diários! 🔔
 
-#versiculododia #biblia #fe #jesus #deus #ansiedade #paz #filipenses #fetok #fyp #viral #gospel #cristao #descanso`
+#versiculododia #biblia #fe #jesus #deus #descanso #mateus #cansado #fetok #fyp #viral #gospel #cristao #paz`
   },
 ];
 
