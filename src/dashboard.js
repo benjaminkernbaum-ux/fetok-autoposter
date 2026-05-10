@@ -1,5 +1,5 @@
 /**
- * FÃ©Tok Dashboard v5.0 â€” SÃ©rie 5 Content Management Hub
+ * FéTok Dashboard v5.0 â€” Série 5 Content Management Hub
  * All 21 videos + captions + viral music + mobile-responsive
  */
 
@@ -15,7 +15,7 @@ const OUTPUT_DIR = path.resolve(__dirname, '../output');
 const PORT = process.env.PORT || 3000;
 
 /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   POSTS_DATA loaded from ./postsData.js â€” SÃ©rie 5 (21 posts)
+   POSTS_DATA loaded from ./postsData.js â€” Série 5 (21 posts)
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 
@@ -244,13 +244,13 @@ function startDashboard() {
   app.post('/api/generate-all', (req, res) => {
     const { spawn } = require('child_process');
     const batchScript = path.join(__dirname, 'batchSerie3.js');
-    console.log('ðŸš€ Batch generation started via API...');
+    console.log('🚀 Batch generation started via API...');
     const child = spawn('node', [batchScript, '--force'], { cwd: path.resolve(__dirname, '..') });
     let output = '';
     child.stdout.on('data', d => { output += d.toString(); console.log(d.toString()); });
     child.stderr.on('data', d => { output += d.toString(); console.error(d.toString()); });
     child.on('close', code => {
-      console.log(`ðŸ Batch generation finished with code ${code}`);
+      console.log(`🚀 Batch generation finished with code ${code}`);
     });
     res.json({ success: true, message: 'Batch generation started (21 videos). Check /api/diagnostic for progress.' });
   });
@@ -268,12 +268,12 @@ function startDashboard() {
   app.get('/api/generate-all/go', (req, res) => {
     const { spawn } = require('child_process');
     const batchScript = path.join(__dirname, 'batchGenerate.js');
-    console.log('ðŸš€ Batch generation started via browser GET...');
+    console.log('🚀 Batch generation started via browser GET...');
     const child = spawn('node', [batchScript, '--force'], { cwd: path.resolve(__dirname, '..') });
     child.stdout.on('data', d => console.log(d.toString()));
     child.stderr.on('data', d => console.error(d.toString()));
-    child.on('close', code => console.log(`ðŸ Batch done (code ${code})`));
-    res.send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;padding:40px;text-align:center"><h1 style="color:#d4a853">ðŸš€ Generating 21 Videos...</h1><p>This runs in the background on Railway.</p><p>Check progress at <a href="/api/diagnostic" style="color:#d4a853">/api/diagnostic</a></p><p>Then refresh the <a href="/" style="color:#d4a853">dashboard</a> to see your videos.</p></body></html>');
+    child.on('close', code => console.log(`🏁 Batch done (code ${code})`));
+    res.send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;padding:40px;text-align:center"><h1 style="color:#d4a853">🚀 Generating 21 Videos...</h1><p>This runs in the background on Railway.</p><p>Check progress at <a href="/api/diagnostic" style="color:#d4a853">/api/diagnostic</a></p><p>Then refresh the <a href="/" style="color:#d4a853">dashboard</a> to see your videos.</p></body></html>');
   });
 
   app.get('/api/guide', (req, res) => {
@@ -945,7 +945,7 @@ function startDashboard() {
     // Build post cards HTML
     let currentDay = 0;
     let postsHTML = '';
-    const dayNames = ['', 'Segunda', 'TerÃ§a', 'Quarta', 'Quinta', 'Sexta', 'SÃ¡bado', 'Domingo'];
+    const dayNames = ['', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
 
     POSTS_DATA.forEach((p, i) => {
       // Day separator
@@ -956,7 +956,7 @@ function startDashboard() {
           <div class="day-separator" id="day-${p.day}">
             <div class="day-number">${p.day}</div>
             <div class="day-info">
-              <div class="day-label">ðŸ“… Dia ${p.day} â€” ${dayNames[p.day] || ''}</div>
+              <div class="day-label">📅 Dia ${p.day} â€” ${dayNames[p.day] || ''}</div>
               <div class="day-date">3 posts programados</div>
             </div>
             <div class="day-themes">
@@ -983,12 +983,12 @@ function startDashboard() {
             <div class="post-video-wrap">
               <video controls muted playsinline preload="metadata">
                 <source src="/video/${encodeURIComponent(p.videoFile)}" type="video/mp4">
-                Seu navegador nÃ£o suporta vÃ­deo.
+                Seu navegador não suporta vídeo.
               </video>
             </div>
             <div class="post-content">
               <div class="post-music">
-                <span class="post-music-icon">ðŸŽµ</span>
+                <span class="post-music-icon">🎵</span>
                 <div>
                   <div>${p.music}</div>
                   <div class="post-music-search">Buscar: "${p.musicSearch}"</div>
@@ -996,12 +996,12 @@ function startDashboard() {
               </div>
               <div class="post-caption-wrap">
                 <pre class="post-caption" id="caption-${i}">${escapeHtml(p.caption)}</pre>
-                <button class="expand-btn" onclick="toggleCaption(${i})">â–¼ Expandir legenda</button>
+                <button class="expand-btn" onclick="toggleCaption(${i})">▼ Expandir legenda</button>
               </div>
               <div class="post-actions">
-                <button class="btn btn-gold" onclick="copyCaption(${i})">ðŸ“‹ Copiar Legenda</button>
-                <a class="btn btn-outline" href="/download/${encodeURIComponent(p.videoFile)}" download="${p.videoFile}">â¬‡ï¸ Baixar VÃ­deo</a>
-                <button class="btn btn-green" onclick="markAsPosted(${i}, '${p.verse}')">âœ… Marcar Postado</button>
+                <button class="btn btn-gold" onclick="copyCaption(${i})">📋 Copiar Legenda</button>
+                <a class="btn btn-outline" href="/download/${encodeURIComponent(p.videoFile)}" download="${p.videoFile}">⬇️ Baixar Vídeo</a>
+                <button class="btn btn-green" onclick="markAsPosted(${i}, '${p.verse}')">✅ Marcar Postado</button>
               </div>
             </div>
           </div>
@@ -1012,16 +1012,16 @@ function startDashboard() {
     // Build music table HTML
     const musicHTML = VIRAL_MUSIC.map(m => `
       <tr>
-        <td><span class="music-rank ${m.rank <= 3 ? 'top3' : ''}">${m.rank <= 3 ? ['ðŸ¥‡','ðŸ¥ˆ','ðŸ¥‰'][m.rank-1] : '#'+m.rank}</span></td>
+        <td><span class="music-rank ${m.rank <= 3 ? 'top3' : ''}">${m.rank <= 3 ? ['🥇','🥈','🥉'][m.rank-1] : '#'+m.rank}</span></td>
         <td>
           <div class="music-title">${m.title}</div>
           <div class="music-artist">${m.artist}</div>
         </td>
-        <td><span class="music-videos">${m.videos}</span> vÃ­deos</td>
+        <td><span class="music-videos">${m.videos}</span> vídeos</td>
         <td><span class="music-growth">${m.growth}</span></td>
         <td><span class="music-cat">${m.category}</span></td>
         <td><span class="music-tip">${m.tip}</span></td>
-        <td><button class="music-search-btn" onclick="navigator.clipboard.writeText('${m.searchTerm}');showToast('ðŸŽµ Termo copiado: ${m.searchTerm}')">ðŸ“‹ Copiar busca</button></td>
+        <td><button class="music-search-btn" onclick="navigator.clipboard.writeText('${m.searchTerm}');showToast('🎵 Termo copiado: ${m.searchTerm}')">📋 Copiar busca</button></td>
       </tr>
     `).join('');
 
@@ -1050,8 +1050,8 @@ function startDashboard() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FÃ©Tok â€” SÃ©rie 5 Content Hub</title>
-  <meta name="description" content="FÃ©Tok SÃ©rie 5 â€” 21 posts NOVOS prontos para viralizar no TikTok">
+  <title>FéTok â€” Série 5 Content Hub</title>
+  <meta name="description" content="FéTok Série 5 â€” 21 posts NOVOS prontos para viralizar no TikTok">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>âœï¸</text></svg>">
   <style>${CSS}</style>
 </head>
@@ -1060,10 +1060,10 @@ function startDashboard() {
     <!-- TOP NAV -->
     <div class="topnav">
       <div class="topnav-brand">
-        <h1>FÃ©<span>Tok</span> SÃ©rie 5 âœï¸</h1>
+        <h1>Fé<span>Tok</span> Série 5 âœï¸</h1>
         <span class="topnav-status">SÃ‰RIE 5 ATIVA</span>
       </div>
-      <div class="topnav-handle">@luz.da.palavra.oficial Â· ${new Date().toLocaleDateString('pt-BR')} Â· ${videos.length} vÃ­deos prontos</div>
+      <div class="topnav-handle">@luz.da.palavra.oficial · ${new Date().toLocaleDateString('pt-BR')} · ${videos.length} vídeos prontos</div>
     </div>
 
     <!-- STATS -->
@@ -1074,7 +1074,7 @@ function startDashboard() {
       </div>
       <div class="stat-card">
         <div class="stat-value">${videos.length}</div>
-        <div class="stat-label">VÃ­deos Gerados</div>
+        <div class="stat-label">Vídeos Gerados</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">7</div>
@@ -1082,25 +1082,25 @@ function startDashboard() {
       </div>
       <div class="stat-card">
         <div class="stat-value">${VIRAL_MUSIC.length}</div>
-        <div class="stat-label">MÃºsicas Virais</div>
+        <div class="stat-label">Músicas Virais</div>
       </div>
     </div>
 
     <!-- TAB NAVIGATION -->
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('posts')">ðŸ“± 21 Posts</div>
-      <div class="tab" onclick="switchTab('calendar')">ðŸ“… CalendÃ¡rio</div>
-      <div class="tab" onclick="switchTab('captions')">ðŸ“ Legendas</div>
-      <div class="tab" onclick="switchTab('music')">ðŸŽµ MÃºsicas Virais</div>
-      <div class="tab" onclick="switchTab('rotina')">ðŸ”¥ Rotina</div>
-      <div class="tab" onclick="switchTab('monetize')" style="background:linear-gradient(135deg,rgba(212,168,83,0.15),rgba(175,130,255,0.15));border:1px solid rgba(212,168,83,0.3);">ðŸ’° MonetizaÃ§Ã£o</div>
+      <div class="tab active" onclick="switchTab('posts')">📱 21 Posts</div>
+      <div class="tab" onclick="switchTab('calendar')">📅 Calendário</div>
+      <div class="tab" onclick="switchTab('captions')">📝 Legendas</div>
+      <div class="tab" onclick="switchTab('music')">🎵 Músicas Virais</div>
+      <div class="tab" onclick="switchTab('rotina')">🔥 Rotina</div>
+      <div class="tab" onclick="switchTab('monetize')" style="background:linear-gradient(135deg,rgba(212,168,83,0.15),rgba(175,130,255,0.15));border:1px solid rgba(212,168,83,0.3);">💰 Monetização</div>
     </div>
 
     <!-- â•â•â• TAB: 21 POSTS â•â•â• -->
     <div class="tab-content active" id="tab-posts">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">ðŸ“± TODOS OS 21 POSTS â€” PRONTOS PARA POSTAR</div>
+          <div class="section-title">📱 TODOS OS 21 POSTS â€” PRONTOS PARA POSTAR</div>
           <span class="section-badge">7 dias Ã— 3/dia</span>
         </div>
 
@@ -1108,9 +1108,9 @@ function startDashboard() {
         <div class="filter-bar">
           <span style="font-size:0.7rem;color:var(--text-tertiary);margin-right:4px;">Filtrar:</span>
           <button class="filter-btn active" onclick="filterPosts('all', this)">Todos</button>
-          <button class="filter-btn" onclick="filterPosts('morning', this)">â˜€ï¸ ManhÃ£</button>
-          <button class="filter-btn" onclick="filterPosts('afternoon', this)">ðŸŒ¤ï¸ Tarde</button>
-          <button class="filter-btn" onclick="filterPosts('evening', this)">ðŸŒ™ Noite</button>
+          <button class="filter-btn" onclick="filterPosts('morning', this)">☀️ Manhã</button>
+          <button class="filter-btn" onclick="filterPosts('afternoon', this)">🌤️ Tarde</button>
+          <button class="filter-btn" onclick="filterPosts('evening', this)">🌙 Noite</button>
           <button class="filter-btn" onclick="filterByTheme('fidelidade', this)">🔑 Fidelidade</button>
           <button class="filter-btn" onclick="filterByTheme('renovação', this)">🔄 Renovação</button>
           <button class="filter-btn" onclick="filterByTheme('confiança', this)">🛡️ Confiança</button>
@@ -1124,31 +1124,31 @@ function startDashboard() {
       </div>
     </div>
 
-    <!-- â•â•â• TAB: CALENDÃRIO â•â•â• -->
+    <!-- â•â•â• TAB: CALENDÁRIO â•â•â• -->
     <div class="tab-content" id="tab-calendar">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">ðŸ“… CALENDÃRIO DE POSTAGENS</div>
+          <div class="section-title">📅 CALENDÁRIO DE POSTAGENS</div>
           <span class="section-badge">Clique no dia para navegar</span>
         </div>
         <div class="calendar-week">${calendarHTML}</div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-          <h3 style="font-size:0.9rem;margin-bottom:12px;">ðŸ“Š HorÃ¡rios de Ouro (Brasil)</h3>
+          <h3 style="font-size:0.9rem;margin-bottom:12px;">📊 Horários de Ouro (Brasil)</h3>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
             <div style="text-align:center;padding:14px;background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.2);border-radius:var(--radius-sm);">
               <div style="font-size:1.3rem;font-weight:900;color:#ffc400;">06:00</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">â˜€ï¸ Devocional matinal</div>
-              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">fÃ© Â· proteÃ§Ã£o Â· gratidÃ£o</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">☀️ Devocional matinal</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">fé · proteção · gratidão</div>
             </div>
             <div style="text-align:center;padding:14px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);border-radius:var(--radius-sm);">
               <div style="font-size:1.3rem;font-weight:900;color:#ff9500;">12:00</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">ðŸŒ¤ï¸ Motivacional</div>
-              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">forÃ§a Â· coragem Â· vitÃ³ria</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">🌤️ Motivacional</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">força · coragem · vitória</div>
             </div>
             <div style="text-align:center;padding:14px;background:rgba(175,130,255,0.08);border:1px solid rgba(175,130,255,0.2);border-radius:var(--radius-sm);">
               <div style="font-size:1.3rem;font-weight:900;color:#af82ff;">20:00</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">ðŸŒ™ Emocional</div>
-              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">amor Â· paz Â· esperanÃ§a</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">🌙 Emocional</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">amor · paz · esperança</div>
             </div>
           </div>
         </div>
@@ -1159,20 +1159,20 @@ function startDashboard() {
     <div class="tab-content" id="tab-captions">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">ðŸ“ LEGENDAS PRONTAS â€” CLIQUE PARA COPIAR</div>
+          <div class="section-title">📝 LEGENDAS PRONTAS â€” CLIQUE PARA COPIAR</div>
           <span class="section-badge">Toque em qualquer legenda para copiar</span>
         </div>
         <div class="quick-copy-grid">
           ${POSTS_DATA.map((p, i) => `
-            <div class="quick-copy-card" onclick="navigator.clipboard.writeText(${JSON.stringify(p.caption).replace(/'/g, "\\'")}); showToast('ðŸ“‹ Legenda copiada: ${p.verse}'); this.style.borderColor='var(--gold-border)'">
+            <div class="quick-copy-card" onclick="navigator.clipboard.writeText(${JSON.stringify(p.caption).replace(/'/g, "\\'")}); showToast('📋 Legenda copiada: ${p.verse}'); this.style.borderColor='var(--gold-border)'">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                 <span style="font-weight:800;font-size:0.85rem;">${p.themeEmoji} ${p.verse}</span>
-                <span class="post-slot-badge ${p.slotKey === 'morning' ? 'slot-morning' : p.slotKey === 'afternoon' ? 'slot-afternoon' : 'slot-evening'}" style="font-size:0.65rem;">${p.emoji} Dia ${p.day} Â· ${p.slot}</span>
+                <span class="post-slot-badge ${p.slotKey === 'morning' ? 'slot-morning' : p.slotKey === 'afternoon' ? 'slot-afternoon' : 'slot-evening'}" style="font-size:0.65rem;">${p.emoji} Dia ${p.day} · ${p.slot}</span>
               </div>
               <div style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;white-space:pre-wrap;max-height:100px;overflow:hidden;">${escapeHtml(p.caption.split('\n').slice(0,4).join('\n'))}</div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                <span style="font-size:0.65rem;color:var(--gold);">ðŸŽµ ${p.music}</span>
-                <span style="font-size:0.65rem;color:var(--text-tertiary);">ðŸ“‹ Toque para copiar</span>
+                <span style="font-size:0.65rem;color:var(--gold);">🎵 ${p.music}</span>
+                <span style="font-size:0.65rem;color:var(--text-tertiary);"> 📋 Toque para copiar</span>
               </div>
             </div>
           `).join('')}
@@ -1184,23 +1184,23 @@ function startDashboard() {
     <div class="tab-content" id="tab-music">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">ðŸŽµ TOP 20 MÃšSICAS VIRAIS GOSPEL â€” TIKTOK 2026</div>
+          <div class="section-title">🎵 TOP 20 MÃšSICAS VIRAIS GOSPEL â€” TIKTOK 2026</div>
           <span class="section-badge">Ranking por engajamento</span>
         </div>
         <div style="padding:14px;background:rgba(212,168,83,0.06);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:20px;font-size:0.75rem;color:var(--text-secondary);">
-          ðŸ’¡ <strong style="color:var(--gold);">DICA PRO:</strong> No TikTok, vÃ¡ em "Sons" â†’ cole o termo de busca â†’ escolha a versÃ£o com <strong>MAIS vÃ­deos</strong> = mais viral. O algoritmo prioriza sons em alta!
+          ✨ <strong style="color:var(--gold);">DICA PRO:</strong> No TikTok, vá em "Sons" â†’ cole o termo de busca â†’ escolha a versão com <strong>MAIS vídeos</strong> = mais viral. O algoritmo prioriza sons em alta!
         </div>
         <div style="overflow-x:auto;">
           <table class="music-table">
             <thead>
               <tr>
                 <th>#</th>
-                <th>MÃºsica</th>
-                <th>VÃ­deos</th>
+                <th>Música</th>
+                <th>Vídeos</th>
                 <th>Crescimento</th>
                 <th>Categoria</th>
                 <th>Dica de Uso</th>
-                <th>AÃ§Ã£o</th>
+                <th>Ação</th>
               </tr>
             </thead>
             <tbody>
@@ -1211,23 +1211,23 @@ function startDashboard() {
       </div>
 
       <div class="section">
-        <div class="section-title" style="margin-bottom:16px;">âš¡ ESTRATÃ‰GIA MUSICAL PARA VIRALIZAÃ‡ÃƒO</div>
+        <div class="section-title" style="margin-bottom:16px;">⚡ ESTRATÃ‰GIA MUSICAL PARA VIRALIZAÃ‡ÃƒO</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">ðŸ”¥ Regra #1: Sons em Alta</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">O algoritmo do TikTok prioriza vÃ­deos que usam sons TRENDING. Use os sons do TOP 5 para maximizar alcance.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">🔥 Regra #1: Sons em Alta</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">O algoritmo do TikTok prioriza vídeos que usam sons TRENDING. Use os sons do TOP 5 para maximizar alcance.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">ðŸŽ¯ Regra #2: Match com ConteÃºdo</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÃ‡ÃƒO â†’ musicas suaves. Posts de FORÃ‡A â†’ mÃºsicas com energia. Posts EMOCIONAIS â†’ mÃºsicas que fazem chorar.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">🎯 Regra #2: Match com Conteúdo</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÃ‡ÃƒO â†’ musicas suaves. Posts de FORÃ‡A â†’ músicas com energia. Posts EMOCIONAIS â†’ músicas que fazem chorar.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">â±ï¸ Regra #3: Timing</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Use o mesmo som por 3-5 vÃ­deos SEGUIDOS. O TikTok te associa ao som e mostra seu conteÃºdo para quem curtiu aquele som.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">⏱ï¸ Regra #3: Timing</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Use o mesmo som por 3-5 vídeos SEGUIDOS. O TikTok te associa ao som e mostra seu conteúdo para quem curtiu aquele som.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">ðŸ“ˆ Regra #4: Sons Emergentes</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Sons com < 100K vÃ­deos mas crescendo RÃPIDO sÃ£o OURO. Menos competiÃ§Ã£o + algoritmo empurra = viralizaÃ§Ã£o fÃ¡cil.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">📈 Regra #4: Sons Emergentes</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Sons com < 100K vídeos mas crescendo RÁPIDO são OURO. Menos competição + algoritmo empurra = viralização fácil.</p>
           </div>
         </div>
       </div>
@@ -1260,7 +1260,7 @@ function startDashboard() {
     function copyCaption(i) {
       const el = document.getElementById('caption-' + i);
       navigator.clipboard.writeText(el.textContent).then(() => {
-        showToast('ðŸ“‹ Legenda copiada! Cole no TikTok Studio');
+        showToast('📋 Legenda copiada! Cole no TikTok Studio');
       });
     }
 
@@ -1269,7 +1269,7 @@ function startDashboard() {
       const el = document.getElementById('caption-' + i);
       el.classList.toggle('expanded');
       const btn = el.nextElementSibling;
-      btn.textContent = el.classList.contains('expanded') ? 'â–² Recolher' : 'â–¼ Expandir legenda';
+      btn.textContent = el.classList.contains('expanded') ? '▲ Recolher' : '▼ Expandir legenda';
     }
 
     // Mark as posted
@@ -1281,7 +1281,7 @@ function startDashboard() {
         card.style.opacity = '0.5';
         card.style.borderColor = 'rgba(52,199,89,0.3)';
       }
-      showToast('âœ… ' + verse + ' marcado como postado!');
+      showToast('✅ ' + verse + ' marcado como postado!');
     }
 
     // Filter posts
@@ -1352,7 +1352,7 @@ function startDashboard() {
   });
 
   app.listen(PORT, () => {
-    console.log(`ðŸ“Š FÃ©Tok Content Hub running on port ${PORT}`);
+    console.log(`✨ FéTok Content Hub running on port ${PORT}`);
     console.log(`   http://localhost:${PORT}\n`);
   });
 
@@ -1364,36 +1364,36 @@ function startDashboard() {
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function getRotinaSectionHTML() {
   const today = new Date();
-  const dayNames = ['Domingo','Segunda','TerÃ§a','Quarta','Quinta','Sexta','SÃ¡bado'];
+  const dayNames = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   const dayName = dayNames[today.getDay()];
   const dateStr = today.toLocaleDateString('pt-BR');
   const isSunday = today.getDay() === 0;
 
   const checkItems = [
-    { title: 'â˜€ï¸ Post da ManhÃ£ (06:00)', desc: 'Upload vÃ­deo + legenda + mÃºsica gospel â†’ postar 06:00', time: '06:00', timeClass: 'slot-morning' },
-    { title: 'ðŸ”¥ Engajar apÃ³s post da manhÃ£', desc: 'Curtir 10 vÃ­deos em #versiculododia + comentar 5 deles', time: '06:30', timeClass: 'slot-morning' },
-    { title: 'ðŸŒ¤ï¸ Post do AlmoÃ§o (12:00)', desc: 'Upload vÃ­deo motivacional + legenda + mÃºsica', time: '12:00', timeClass: 'slot-afternoon' },
-    { title: 'ðŸ“± Seguir 10-15 criadores gospel', desc: 'Buscar #gospel #fÃ© â†’ seguir contas ativas do nicho', time: '12:30', timeClass: 'slot-afternoon' },
-    { title: 'ðŸ’¬ Responder TODOS os comentÃ¡rios', desc: 'Respostas geram notificaÃ§Ãµes = mais engajamento = algoritmo te promove', time: 'Qualquer hora', timeClass: '' },
-    { title: 'ðŸŒ™ Post da Noite (20:00)', desc: 'Upload vÃ­deo emocional + legenda + mÃºsica', time: '20:00', timeClass: 'slot-evening' },
-    { title: 'ðŸŒŸ Comentar em 5 vÃ­deos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha â€” seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
+    { title: '☀️ Post da Manhã (06:00)', desc: 'Upload vídeo + legenda + música gospel â†’ postar 06:00', time: '06:00', timeClass: 'slot-morning' },
+    { title: '🔥 Engajar após post da manhã', desc: 'Curtir 10 vídeos em #versiculododia + comentar 5 deles', time: '06:30', timeClass: 'slot-morning' },
+    { title: '🌤️ Post do Almoço (12:00)', desc: 'Upload vídeo motivacional + legenda + música', time: '12:00', timeClass: 'slot-afternoon' },
+    { title: '📱 Seguir 10-15 criadores gospel', desc: 'Buscar #gospel #fé â†’ seguir contas ativas do nicho', time: '12:30', timeClass: 'slot-afternoon' },
+    { title: '💬 Responder TODOS os comentários', desc: 'Respostas geram notificações = mais engajamento = algoritmo te promove', time: 'Qualquer hora', timeClass: '' },
+    { title: '🌙 Post da Noite (20:00)', desc: 'Upload vídeo emocional + legenda + música', time: '20:00', timeClass: 'slot-evening' },
+    { title: '🌟 Comentar em 5 vídeos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha â€” seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
   ];
 
   const comments = [
-    'ðŸ™ Que palavra poderosa! Isso tocou meu coraÃ§Ã£o. AMÃ‰M!',
-    'Deus te abenÃ§oe por compartilhar isso! Salvei pra reler ðŸ”–â¤ï¸',
-    'Esse versÃ­culo mudou meu dia INTEIRO! GlÃ³ria a Deus ðŸ”¥ðŸ™',
-    'AMÃ‰M! Isso nÃ£o foi coincidÃªncia, Deus me trouxe atÃ© aqui âœï¸',
-    'Chorei com esse vÃ­deo ðŸ˜­ðŸ™ Deus Ã© maravilhoso!',
-    'Quem precisa ouvir isso HOJE? Marque nos comentÃ¡rios! â¤ï¸',
-    'Obrigado Senhor por essa palavra! Comenta AMÃ‰M quem recebe ðŸ™',
-    'Isso Ã© pra mim! O Senhor estÃ¡ falando comigo nesse momento ðŸ’›âœï¸',
+    '🙏 Que palavra poderosa! Isso tocou meu coração. AMÃ‰M!',
+    'Deus te abençoe por compartilhar isso! Salvei pra reler 📖',
+    'Esse versículo mudou meu dia INTEIRO! Glória a Deus 🔥',
+    'AMÃ‰M! Isso não foi coincidência, Deus me trouxe até aqui âœï¸',
+    'Chorei com esse vídeo 😭🙏 Deus é maravilhoso!',
+    'Quem precisa ouvir isso HOJE? Marque nos comentários! ❤ï¸',
+    'Obrigado Senhor por essa palavra! Comenta AMÃ‰M quem recebe 🙏',
+    'Isso é pra mim! O Senhor está falando comigo nesse momento 💛✝️',
   ];
 
   return `
     <div class="section">
       <div class="section-header">
-        <div class="section-title">ðŸ”¥ ROTINA DIÃRIA DE ENGAJAMENTO</div>
+        <div class="section-title">🔥 ROTINA DIÁRIA DE ENGAJAMENTO</div>
         <span class="section-badge">${dayName}, ${dateStr}</span>
       </div>
 
@@ -1412,32 +1412,32 @@ function getRotinaSectionHTML() {
           <div class="rotina-check" style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(255,45,85,0.05);border:1px solid rgba(255,45,85,0.2);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;" onclick="this.querySelector('input').click()">
             <input type="checkbox" style="margin-top:3px;accent-color:var(--red);width:16px;height:16px;cursor:pointer;" onclick="event.stopPropagation()">
             <div style="flex:1;">
-              <div style="font-size:0.82rem;font-weight:600;">ðŸ”´ LIVE DE ORAÃ‡ÃƒO (Domingo 20h)</div>
-              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oraÃ§Ã£o ao vivo â€” MAIOR acelerador de crescimento!</div>
+              <div style="font-size:0.82rem;font-weight:600;">🔴 LIVE DE ORAÃ‡ÃƒO (Domingo 20h)</div>
+              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oração ao vivo â€” MAIOR acelerador de crescimento!</div>
             </div>
             <span style="font-size:0.62rem;padding:4px 10px;background:rgba(255,45,85,0.2);color:var(--red);border-radius:20px;font-weight:600;">LIVE</span>
           </div>
         ` : ''}
       </div>
 
-      <div class="section-title" style="margin-bottom:12px;">ðŸ’¬ COMENTÃRIOS PRONTOS â€” CLIQUE PARA COPIAR</div>
+      <div class="section-title" style="margin-bottom:12px;">💬 COMENTÁRIOS PRONTOS â€” CLIQUE PARA COPIAR</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px;margin-bottom:28px;">
         ${comments.map(c => `
-          <div style="padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.75rem;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;" onclick="navigator.clipboard.writeText('${c.replace(/'/g, "\\'")}');showToast('ðŸ’¬ ComentÃ¡rio copiado!');this.style.borderColor='var(--gold-border)'" onmouseenter="this.style.background='var(--bg-card-hover)'" onmouseleave="this.style.background='var(--bg-card)'">${c}</div>
+          <div style="padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.75rem;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;" onclick="navigator.clipboard.writeText('${c.replace(/'/g, "\\'")}');showToast('💬 Comentário copiado!');this.style.borderColor='var(--gold-border)'" onmouseenter="this.style.background='var(--bg-card-hover)'" onmouseleave="this.style.background='var(--bg-card)'">${c}</div>
         `).join('')}
       </div>
 
-      <div class="section-title" style="margin-bottom:12px;">ðŸ‘¥ CONTAS PARA INTERAGIR</div>
+      <div class="section-title" style="margin-bottom:12px;">👥 CONTAS PARA INTERAGIR</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:20px;">
         ${[
-          {handle:'@isaiassaad', desc:'Worship Â· 5M+'},
-          {handle:'@fernandinhoficial', desc:'Gospel Â· 3M+'},
-          {handle:'@gabrielarocha', desc:'Worship Â· 4M+'},
-          {handle:'@pretononbranco', desc:'Gospel Duo Â· 2M+'},
-          {handle:'@alinebarros', desc:'Gospel Â· 6M+'},
-          {handle:'@andersonfreire', desc:'Gospel Â· 3M+'},
-          {handle:'@tiagobrunet', desc:'PregaÃ§Ã£o Â· 2M+'},
-          {handle:'@lucianosubira', desc:'Teologia Â· 1M+'},
+          {handle:'@isaiassaad', desc:'Worship · 5M+'},
+          {handle:'@fernandinhoficial', desc:'Gospel · 3M+'},
+          {handle:'@gabrielarocha', desc:'Worship · 4M+'},
+          {handle:'@pretononbranco', desc:'Gospel Duo · 2M+'},
+          {handle:'@alinebarros', desc:'Gospel · 6M+'},
+          {handle:'@andersonfreire', desc:'Gospel · 3M+'},
+          {handle:'@tiagobrunet', desc:'Pregação · 2M+'},
+          {handle:'@lucianosubira', desc:'Teologia · 1M+'},
         ].map(a => `
           <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div>
@@ -1449,7 +1449,7 @@ function getRotinaSectionHTML() {
       </div>
 
       <div style="padding:12px 16px;background:var(--gold-bg);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:0.72rem;color:var(--text-secondary);">
-        ðŸ’¡ <strong style="color:var(--gold);">DICA:</strong> Comente nos vÃ­deos RECENTES deles (Ãºltimas 2h) â€” seu comentÃ¡rio fica no topo e outros seguidores veem o seu perfil!
+        ✨ <strong style="color:var(--gold);">DICA:</strong> Comente nos vídeos RECENTES deles (últimas 2h) â€” seu comentário fica no topo e outros seguidores veem o seu perfil!
       </div>
     </div>
   `;

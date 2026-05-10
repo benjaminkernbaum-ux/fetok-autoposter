@@ -73,8 +73,38 @@ const THEME_ACCENT = {
   'default':  [212, 168, 83],
 };
 
+// Série 5 — 1:1 unique hero per post (21 AI-generated images)
+const VERSE_HEROES = {
+  'Josué 1:5':              'hero_s5_post01.jpg',
+  'Números 23:19':          'hero_s5_post02.jpg',
+  '1 Tessalonicenses 5:24': 'hero_s5_post03.jpg',
+  'Isaías 43:19':           'hero_s5_post04.jpg',
+  'Romanos 12:2':           'hero_s5_post05.jpg',
+  'Ezequiel 36:26':         'hero_s5_post06.jpg',
+  'Salmos 125:1':           'hero_s5_post07.jpg',
+  'Provérbios 3:5-6':       'hero_s5_post08.jpg',
+  'Salmos 56:3':            'hero_s5_post09.jpg',
+  'Jeremias 29:11':         'hero_s5_post10.jpg',
+  'Habacuque 2:3':          'hero_s5_post11.jpg',
+  '2 Coríntios 1:20':       'hero_s5_post12.jpg',
+  'João 8:36':              'hero_s5_post13.jpg',
+  'Gálatas 5:1':            'hero_s5_post14.jpg',
+  'Salmos 107:14':          'hero_s5_post15.jpg',
+  'Colossenses 3:17':       'hero_s5_post16.jpg',
+  'Salmos 136:1':           'hero_s5_post17.jpg',
+  '1 Crônicas 16:34':       'hero_s5_post18.jpg',
+  'João 3:16':              'hero_s5_post19.jpg',
+  'João 11:25':             'hero_s5_post20.jpg',
+  'Apocalipse 22:5':        'hero_s5_post21.jpg',
+};
+
 const heroIndex = {};
-function getHeroForTheme(theme) {
+function getHeroForTheme(theme, verseRef) {
+  // Série 5: direct 1:1 mapping by verse reference
+  if (verseRef && VERSE_HEROES[verseRef]) {
+    return VERSE_HEROES[verseRef];
+  }
+  // Fallback: theme-based rotation (backup pool)
   const heroes = THEME_HEROES[theme] || THEME_HEROES['default'];
   if (!heroIndex[theme]) heroIndex[theme] = 0;
   const hero = heroes[heroIndex[theme] % heroes.length];
@@ -110,7 +140,7 @@ async function generateImage(verse) {
     return outputPath;
   }
 
-  const heroFile = getHeroForTheme(verse.theme);
+  const heroFile = getHeroForTheme(verse.theme, verse.ref);
   const heroPath = path.join(HEROES_DIR, heroFile);
   const accent = THEME_ACCENT[verse.theme] || THEME_ACCENT['default'];
 
