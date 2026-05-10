@@ -1,5 +1,5 @@
 /**
- * FéTok Dashboard v3.0 — Série 3 Content Management Hub
+ * FÃ©Tok Dashboard v5.0 â€” SÃ©rie 5 Content Management Hub
  * All 21 videos + captions + viral music + mobile-responsive
  */
 
@@ -14,41 +14,41 @@ const { POSTS_DATA } = require('./postsData');
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 const PORT = process.env.PORT || 3000;
 
-/* ═══════════════════════════════════════════════════════════════
-   POSTS_DATA loaded from ./postsData.js — Série 3 (21 posts)
-   ═══════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   POSTS_DATA loaded from ./postsData.js â€” SÃ©rie 5 (21 posts)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 
-/* ═══════════════════════════════════════════════════════════════
-   VIRAL MUSIC DATABASE — Top trending gospel sounds on TikTok
-   ═══════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   VIRAL MUSIC DATABASE â€” Top trending gospel sounds on TikTok
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const VIRAL_MUSIC = [
-  { rank: 1, title: 'Bondade de Deus', artist: 'Isaias Saad', videos: '2.8M+', growth: '+340%', category: 'Worship', tip: 'SOM #1 do nicho gospel. Use nos posts de proteção e fé.', searchTerm: 'isaias saad bondade de deus' },
-  { rank: 2, title: 'Me Atraiu', artist: 'Isaias Saad', videos: '1.5M+', growth: '+280%', category: 'Worship', tip: 'Perfeito para vídeos emocionais e de transformação.', searchTerm: 'isaias saad me atraiu' },
-  { rank: 3, title: 'Ninguém Explica Deus', artist: 'Preto no Branco', videos: '1.2M+', growth: '+210%', category: 'Gospel Pop', tip: 'Ideal para posts sobre amor e relacionamentos com Deus.', searchTerm: 'preto no branco ninguém explica deus' },
-  { rank: 4, title: 'Lugar Secreto', artist: 'Gabriela Rocha', videos: '980K+', growth: '+195%', category: 'Worship', tip: 'Melhor para vídeos de devocionais e momentos íntimos com Deus.', searchTerm: 'gabriela rocha lugar secreto' },
-  { rank: 5, title: 'Grandes Coisas', artist: 'Fernandinho', videos: '870K+', growth: '+180%', category: 'Praise', tip: 'Energia alta — use em posts de vitória e superação.', searchTerm: 'fernandinho grandes coisas' },
-  { rank: 6, title: 'Deus Provará', artist: 'Gabriela Rocha', videos: '750K+', growth: '+165%', category: 'Worship', tip: 'Para posts sobre promessas de Deus e esperança.', searchTerm: 'gabriela rocha deus provará' },
-  { rank: 7, title: 'Ressuscita-me', artist: 'Aline Barros', videos: '680K+', growth: '+150%', category: 'Gospel', tip: 'Forte engajamento — usa em posts de manhã cedo.', searchTerm: 'aline barros ressuscita-me' },
-  { rank: 8, title: 'Raridade', artist: 'Anderson Freire', videos: '620K+', growth: '+140%', category: 'Gospel', tip: 'Audiência mais velha e fiel — gera muitos compartilhamentos.', searchTerm: 'anderson freire raridade' },
-  { rank: 9, title: 'Primeira Essência', artist: 'Anderson Freire', videos: '550K+', growth: '+125%', category: 'Gospel', tip: 'Perfeito para posts sobre voltar às origens da fé.', searchTerm: 'anderson freire primeira essência' },
-  { rank: 10, title: 'Faz Chover', artist: 'Fernandinho', videos: '520K+', growth: '+120%', category: 'Praise', tip: 'Alto poder de viralização — posts sobre renovação espiritual.', searchTerm: 'fernandinho faz chover' },
-  { rank: 11, title: 'Quão Grande É o Meu Deus', artist: 'Soraya Moraes', videos: '480K+', growth: '+115%', category: 'Worship', tip: 'Clássico gospel — gera nostalgia e muitos saves.', searchTerm: 'soraya moraes quão grande' },
-  { rank: 12, title: 'Consagração', artist: 'Aline Barros', videos: '430K+', growth: '+105%', category: 'Gospel', tip: 'Forte em devocionais matinais. Muitos comentários "Amém".', searchTerm: 'aline barros consagração' },
-  { rank: 13, title: 'Me Deixa Aqui', artist: 'Preto no Branco', videos: '410K+', growth: '+100%', category: 'Gospel Pop', tip: 'Música da nova geração gospel — atrai público jovem.', searchTerm: 'preto no branco me deixa aqui' },
-  { rank: 14, title: 'Eu Navegarei', artist: 'Gabriela Rocha', videos: '390K+', growth: '+95%', category: 'Worship', tip: 'Perfeito para posts sobre enfrentar tempestades.', searchTerm: 'gabriela rocha eu navegarei' },
-  { rank: 15, title: 'Identidade', artist: 'Anderson Freire', videos: '370K+', growth: '+90%', category: 'Gospel', tip: 'Para posts sobre propósito e identidade em Cristo.', searchTerm: 'anderson freire identidade' },
-  { rank: 16, title: 'Sonda-me', artist: 'Aline Barros', videos: '350K+', growth: '+85%', category: 'Gospel', tip: 'Intimidade com Deus — gera engajamento emocional.', searchTerm: 'aline barros sonda-me' },
-  { rank: 17, title: 'Eu Vou Abrir o Mar', artist: 'Fernandinho', videos: '320K+', growth: '+80%', category: 'Praise', tip: 'Energia épica — posts sobre milagres e conquistas.', searchTerm: 'fernandinho eu vou abrir o mar' },
-  { rank: 18, title: 'Creio que Tu és a Cura', artist: 'Isaias Saad', videos: '290K+', growth: '+75%', category: 'Worship', tip: 'SOM EM ASCENSÃO — começando a viralizar forte.', searchTerm: 'isaias saad creio que tu és a cura' },
-  { rank: 19, title: 'Digno', artist: 'Marcos Freire', videos: '260K+', growth: '+70%', category: 'Gospel', tip: 'Forte nos domingos — perfeito para conteúdo de culto.', searchTerm: 'marcos freire digno' },
-  { rank: 20, title: 'Responsório de Fé', artist: 'Manú Paiva', videos: '240K+', growth: '+65%', category: 'Viral Gospel', tip: '⚡ SOM EMERGENTE — aproveite antes de saturar!', searchTerm: 'manu paiva responsório de fé' },
+  { rank: 1, title: 'Uma Nova Historia', artist: 'Fernandinho', videos: '1.9M+', growth: '+310%', category: 'Praise', tip: 'SOM #1 da Serie 5. Perfeito pra posts de fidelidade.', searchTerm: 'fernandinho uma nova historia' },
+  { rank: 2, title: 'Lugar Secreto', artist: 'Gabriela Rocha', videos: '980K+', growth: '+195%', category: 'Worship', tip: 'Intimidade com Deus - forte engajamento emocional.', searchTerm: 'gabriela rocha lugar secreto' },
+  { rank: 3, title: 'Boas Novas', artist: 'Isadora Pompeo', videos: '870K+', growth: '+185%', category: 'Gospel Pop', tip: 'Atrai publico jovem. Ideal pra posts de fidelidade.', searchTerm: 'isadora pompeo boas novas' },
+  { rank: 4, title: 'Eu Vou Subir', artist: 'Marina de Oliveira', videos: '720K+', growth: '+170%', category: 'Gospel', tip: 'Energia de renovacao - use em posts de transformacao.', searchTerm: 'marina de oliveira eu vou subir' },
+  { rank: 5, title: 'Te Louvo em Verdade', artist: 'Ministerio Zoe', videos: '680K+', growth: '+160%', category: 'Worship', tip: 'Som suave - ideal pra videos de renovacao da mente.', searchTerm: 'ministerio zoe te louvo em verdade' },
+  { rank: 6, title: 'Marca da Promessa', artist: 'Jefferson Bethel', videos: '550K+', growth: '+140%', category: 'Gospel', tip: 'Posts sobre coracao novo e transformacao interior.', searchTerm: 'jefferson bethel marca da promessa' },
+  { rank: 7, title: 'Eu Me Rendo', artist: 'Paulo Cesar Baruk', videos: '490K+', growth: '+130%', category: 'Worship', tip: 'Para posts de confianca e entrega total a Deus.', searchTerm: 'paulo cesar baruk eu me rendo' },
+  { rank: 8, title: 'Deus Provera', artist: 'Julliany Souza', videos: '470K+', growth: '+125%', category: 'Gospel', tip: 'Promessas de Deus - forte em posts de confianca.', searchTerm: 'julliany souza deus provera' },
+  { rank: 9, title: 'Confio em Ti', artist: 'Davi Sacer', videos: '430K+', growth: '+115%', category: 'Worship', tip: 'Match perfeito com tema confianca. Gera saves.', searchTerm: 'davi sacer confio em ti' },
+  { rank: 10, title: 'Ressuscita-me', artist: 'Aline Barros', videos: '680K+', growth: '+150%', category: 'Gospel', tip: 'Forte em posts de promessas e futuro.', searchTerm: 'aline barros ressuscita-me' },
+  { rank: 11, title: 'Deus de Promessas', artist: 'Nivea Soares', videos: '520K+', growth: '+120%', category: 'Worship', tip: 'SOM CLASSICO - posts sobre esperar no tempo de Deus.', searchTerm: 'nivea soares deus de promessas' },
+  { rank: 12, title: 'Manancial', artist: 'Diante do Trono', videos: '610K+', growth: '+135%', category: 'Worship', tip: 'Energia de adoracao - posts sobre promessas cumpridas.', searchTerm: 'diante do trono manancial' },
+  { rank: 13, title: 'Filho Meu', artist: 'Thalles Roberto', videos: '580K+', growth: '+130%', category: 'Gospel', tip: 'Posts de libertacao - forte impacto emocional.', searchTerm: 'thalles roberto filho meu' },
+  { rank: 14, title: 'O Tempo', artist: 'Oficina G3', videos: '340K+', growth: '+90%', category: 'Rock Gospel', tip: 'Atrai publico alternativo. Otimo pra libertacao.', searchTerm: 'oficina g3 o tempo' },
+  { rank: 15, title: 'Hino da Vitoria', artist: 'Cassiane', videos: '460K+', growth: '+110%', category: 'Gospel', tip: 'Classico de libertacao - gera muitos compartilhamentos.', searchTerm: 'cassiane hino da vitoria' },
+  { rank: 16, title: 'Alegria', artist: 'Andre Valadao', videos: '530K+', growth: '+125%', category: 'Praise', tip: 'Posts de gratidao - energia positiva e engajamento alto.', searchTerm: 'andre valadao alegria' },
+  { rank: 17, title: 'Mil Graus', artist: 'Renascer Praise', videos: '750K+', growth: '+145%', category: 'Praise', tip: 'SOM QUENTE - viraliza forte em posts de louvor.', searchTerm: 'renascer praise mil graus' },
+  { rank: 18, title: 'Descansarei', artist: 'Jotta A', videos: '410K+', growth: '+105%', category: 'Gospel', tip: 'Posts noturnos de gratidao e bondade de Deus.', searchTerm: 'jotta a descansarei' },
+  { rank: 19, title: 'Quando Eu Chorar', artist: 'David Quinlan', videos: '390K+', growth: '+95%', category: 'Worship', tip: 'Perfeito pra domingo - posts sobre eternidade e salvacao.', searchTerm: 'david quinlan quando eu chorar' },
+  { rank: 20, title: 'Ainda Que a Figueira', artist: 'Fernandinho', videos: '920K+', growth: '+175%', category: 'Praise', tip: 'SOM EPICO - encerramento de semana com poder!', searchTerm: 'fernandinho ainda que a figueira' },
 ];
 
 function startDashboard() {
   const app = express();
 
-  // ── STATIC FILE SERVING with proper headers ──
+  // â”€â”€ STATIC FILE SERVING with proper headers â”€â”€
   const staticOpts = {
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('.mp4')) {
@@ -62,7 +62,7 @@ function startDashboard() {
   app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
   app.use('/output', express.static(OUTPUT_DIR, staticOpts));
 
-  // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
+  // â”€â”€ DEDICATED DOWNLOAD ROUTE â€” handles Unicode filenames properly â”€â”€
   const VIDEOS_DIR = path.join(OUTPUT_DIR, 'videos');
   // Helper: find video in output root, videos subdir, or fuzzy match (accent-insensitive)
   function resolveVideoPath(filename) {
@@ -87,7 +87,7 @@ function startDashboard() {
     const filePath = resolveVideoPath(filename);
     
     if (!filePath) {
-      console.log(`❌ Download 404: ${filename}`);
+      console.log(`âŒ Download 404: ${filename}`);
       return res.status(404).json({ error: 'File not found', requested: filename });
     }
     
@@ -101,7 +101,7 @@ function startDashboard() {
     stream.pipe(res);
   });
 
-  // ── DEDICATED VIDEO STREAM ROUTE — for reliable playback ──
+  // â”€â”€ DEDICATED VIDEO STREAM ROUTE â€” for reliable playback â”€â”€
   app.get('/video/:filename', (req, res) => {
     const filename = decodeURIComponent(req.params.filename);
     const filePath = resolveVideoPath(filename);
@@ -136,7 +136,7 @@ function startDashboard() {
     }
   });
 
-  // ── DIAGNOSTIC ENDPOINT — verify all files on Railway ──
+  // â”€â”€ DIAGNOSTIC ENDPOINT â€” verify all files on Railway â”€â”€
   app.get('/api/diagnostic', (req, res) => {
     const allFiles = fs.existsSync(OUTPUT_DIR) ? fs.readdirSync(OUTPUT_DIR) : [];
     const mp4Files = allFiles.filter(f => f.endsWith('.mp4'));
@@ -197,7 +197,7 @@ function startDashboard() {
 
   app.get('/api/music', (req, res) => { res.json(VIRAL_MUSIC); });
 
-  // ── MONETIZATION API ENDPOINTS ──
+  // â”€â”€ MONETIZATION API ENDPOINTS â”€â”€
   const {
     MONETIZATION_PILLARS, SUBSCRIPTION_TIERS, AFFILIATE_PRODUCTS,
     OWN_PRODUCTS, LIVE_SCHEDULE, BRAND_TARGETS, REVENUE_PHASES,
@@ -240,17 +240,17 @@ function startDashboard() {
     } catch (err) { res.status(500).json({ error: err.message }); }
   });
 
-  // ── BATCH GENERATE ALL 21 VIDEOS ──
+  // â”€â”€ BATCH GENERATE ALL 21 VIDEOS â”€â”€
   app.post('/api/generate-all', (req, res) => {
     const { spawn } = require('child_process');
     const batchScript = path.join(__dirname, 'batchSerie3.js');
-    console.log('🚀 Batch generation started via API...');
+    console.log('ðŸš€ Batch generation started via API...');
     const child = spawn('node', [batchScript, '--force'], { cwd: path.resolve(__dirname, '..') });
     let output = '';
     child.stdout.on('data', d => { output += d.toString(); console.log(d.toString()); });
     child.stderr.on('data', d => { output += d.toString(); console.error(d.toString()); });
     child.on('close', code => {
-      console.log(`🏁 Batch generation finished with code ${code}`);
+      console.log(`ðŸ Batch generation finished with code ${code}`);
     });
     res.json({ success: true, message: 'Batch generation started (21 videos). Check /api/diagnostic for progress.' });
   });
@@ -268,12 +268,12 @@ function startDashboard() {
   app.get('/api/generate-all/go', (req, res) => {
     const { spawn } = require('child_process');
     const batchScript = path.join(__dirname, 'batchGenerate.js');
-    console.log('🚀 Batch generation started via browser GET...');
+    console.log('ðŸš€ Batch generation started via browser GET...');
     const child = spawn('node', [batchScript, '--force'], { cwd: path.resolve(__dirname, '..') });
     child.stdout.on('data', d => console.log(d.toString()));
     child.stderr.on('data', d => console.error(d.toString()));
-    child.on('close', code => console.log(`🏁 Batch done (code ${code})`));
-    res.send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;padding:40px;text-align:center"><h1 style="color:#d4a853">🚀 Generating 21 Videos...</h1><p>This runs in the background on Railway.</p><p>Check progress at <a href="/api/diagnostic" style="color:#d4a853">/api/diagnostic</a></p><p>Then refresh the <a href="/" style="color:#d4a853">dashboard</a> to see your videos.</p></body></html>');
+    child.on('close', code => console.log(`ðŸ Batch done (code ${code})`));
+    res.send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;padding:40px;text-align:center"><h1 style="color:#d4a853">ðŸš€ Generating 21 Videos...</h1><p>This runs in the background on Railway.</p><p>Check progress at <a href="/api/diagnostic" style="color:#d4a853">/api/diagnostic</a></p><p>Then refresh the <a href="/" style="color:#d4a853">dashboard</a> to see your videos.</p></body></html>');
   });
 
   app.get('/api/guide', (req, res) => {
@@ -283,9 +283,9 @@ function startDashboard() {
     } else { res.status(404).send('Guide not found'); }
   });
 
-  /* ═══════════════════════════════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      CSS DESIGN SYSTEM
-     ═══════════════════════════════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
   const CSS = `
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -325,16 +325,16 @@ function startDashboard() {
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── SCROLLBAR ── */
+    /* â”€â”€ SCROLLBAR â”€â”€ */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 
-    /* ── LAYOUT ── */
+    /* â”€â”€ LAYOUT â”€â”€ */
     .app { max-width: 1400px; margin: 0 auto; padding: 20px; }
 
-    /* ── TOP NAV ── */
+    /* â”€â”€ TOP NAV â”€â”€ */
     .topnav {
       display: flex;
       align-items: center;
@@ -386,7 +386,7 @@ function startDashboard() {
       color: var(--text-secondary);
     }
 
-    /* ── TAB NAVIGATION ── */
+    /* â”€â”€ TAB NAVIGATION â”€â”€ */
     .tabs {
       display: flex;
       gap: 6px;
@@ -419,7 +419,7 @@ function startDashboard() {
       color: var(--gold);
     }
 
-    /* ── STATS ROW ── */
+    /* â”€â”€ STATS ROW â”€â”€ */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -455,7 +455,7 @@ function startDashboard() {
       margin-top: 6px;
     }
 
-    /* ── SECTION ── */
+    /* â”€â”€ SECTION â”€â”€ */
     .section {
       margin-bottom: 36px;
     }
@@ -485,7 +485,7 @@ function startDashboard() {
       font-weight: 700;
     }
 
-    /* ── DAY SEPARATOR ── */
+    /* â”€â”€ DAY SEPARATOR â”€â”€ */
     .day-separator {
       display: flex;
       align-items: center;
@@ -522,17 +522,15 @@ function startDashboard() {
       border-radius: 20px;
       font-weight: 600;
     }
-    .theme-proteção { background: rgba(52,199,89,0.12); color: #34c759; }
-    .theme-coragem { background: rgba(255,149,0,0.12); color: #ff9500; }
-    .theme-amor { background: rgba(255,45,85,0.12); color: #ff2d55; }
-    .theme-força { background: rgba(175,130,255,0.12); color: #af82ff; }
-    .theme-fé { background: rgba(0,122,255,0.12); color: #007aff; }
-    .theme-esperança { background: rgba(255,214,10,0.12); color: #ffd60a; }
-    .theme-gratidão { background: rgba(255,179,64,0.12); color: #ffb340; }
-    .theme-vitória { background: rgba(0,199,190,0.12); color: #00c7be; }
-    .theme-paz { background: rgba(100,210,255,0.12); color: #64d2ff; }
+    .theme-fidelidade { background: rgba(251,146,60,0.12); color: #fb923c; }
+    .theme-renovaÃ§Ã£o { background: rgba(34,211,238,0.12); color: #22d3ee; }
+    .theme-confianÃ§a { background: rgba(168,85,247,0.12); color: #a855f7; }
+    .theme-promessa { background: rgba(250,204,21,0.12); color: #facc15; }
+    .theme-libertaÃ§Ã£o { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .theme-gratidÃ£o { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .theme-eternidade { background: rgba(236,72,153,0.12); color: #ec4899; }
 
-    /* ── POST CARD ── */
+    /* â”€â”€ POST CARD â”€â”€ */
     .post-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -699,7 +697,7 @@ function startDashboard() {
     }
     .btn-green:hover { background: rgba(52,199,89,0.2); }
 
-    /* ── MUSIC TABLE ── */
+    /* â”€â”€ MUSIC TABLE â”€â”€ */
     .music-table {
       width: 100%;
       border-collapse: separate;
@@ -784,7 +782,7 @@ function startDashboard() {
       color: var(--gold);
     }
 
-    /* ── FILTER BAR ── */
+    /* â”€â”€ FILTER BAR â”€â”€ */
     .filter-bar {
       display: flex;
       gap: 8px;
@@ -809,7 +807,7 @@ function startDashboard() {
       color: var(--gold);
     }
 
-    /* ── NOTIFICATION TOAST ── */
+    /* â”€â”€ NOTIFICATION TOAST â”€â”€ */
     .toast {
       position: fixed;
       bottom: 24px;
@@ -831,11 +829,11 @@ function startDashboard() {
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ── TAB CONTENT ── */
+    /* â”€â”€ TAB CONTENT â”€â”€ */
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* ── CALENDAR GRID ── */
+    /* â”€â”€ CALENDAR GRID â”€â”€ */
     .calendar-week {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -879,7 +877,7 @@ function startDashboard() {
     .dot-afternoon { background: #ff9500; }
     .dot-evening { background: #af82ff; }
 
-    /* ── QUICK COPY SECTION ── */
+    /* â”€â”€ QUICK COPY SECTION â”€â”€ */
     .quick-copy-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -901,7 +899,7 @@ function startDashboard() {
       transform: scale(0.98);
     }
 
-    /* ── MOBILE RESPONSIVE ── */
+    /* â”€â”€ MOBILE RESPONSIVE â”€â”€ */
     @media (max-width: 768px) {
       .app { padding: 12px; }
       .topnav { flex-direction: column; align-items: stretch; gap: 8px; }
@@ -929,9 +927,9 @@ function startDashboard() {
     }
   `;
 
-  /* ═══════════════════════════════════════════════════════════
-     MAIN DASHBOARD — / route
-     ═══════════════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     MAIN DASHBOARD â€” / route
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
   app.get('/', (req, res) => {
     const stats = getStats();
     const historyFile = path.join(OUTPUT_DIR, 'history.json');
@@ -947,7 +945,7 @@ function startDashboard() {
     // Build post cards HTML
     let currentDay = 0;
     let postsHTML = '';
-    const dayNames = ['', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+    const dayNames = ['', 'Segunda', 'TerÃ§a', 'Quarta', 'Quinta', 'Sexta', 'SÃ¡bado', 'Domingo'];
 
     POSTS_DATA.forEach((p, i) => {
       // Day separator
@@ -958,7 +956,7 @@ function startDashboard() {
           <div class="day-separator" id="day-${p.day}">
             <div class="day-number">${p.day}</div>
             <div class="day-info">
-              <div class="day-label">📅 Dia ${p.day} — ${dayNames[p.day] || ''}</div>
+              <div class="day-label">ðŸ“… Dia ${p.day} â€” ${dayNames[p.day] || ''}</div>
               <div class="day-date">3 posts programados</div>
             </div>
             <div class="day-themes">
@@ -985,12 +983,12 @@ function startDashboard() {
             <div class="post-video-wrap">
               <video controls muted playsinline preload="metadata">
                 <source src="/video/${encodeURIComponent(p.videoFile)}" type="video/mp4">
-                Seu navegador não suporta vídeo.
+                Seu navegador nÃ£o suporta vÃ­deo.
               </video>
             </div>
             <div class="post-content">
               <div class="post-music">
-                <span class="post-music-icon">🎵</span>
+                <span class="post-music-icon">ðŸŽµ</span>
                 <div>
                   <div>${p.music}</div>
                   <div class="post-music-search">Buscar: "${p.musicSearch}"</div>
@@ -998,12 +996,12 @@ function startDashboard() {
               </div>
               <div class="post-caption-wrap">
                 <pre class="post-caption" id="caption-${i}">${escapeHtml(p.caption)}</pre>
-                <button class="expand-btn" onclick="toggleCaption(${i})">▼ Expandir legenda</button>
+                <button class="expand-btn" onclick="toggleCaption(${i})">â–¼ Expandir legenda</button>
               </div>
               <div class="post-actions">
-                <button class="btn btn-gold" onclick="copyCaption(${i})">📋 Copiar Legenda</button>
-                <a class="btn btn-outline" href="/download/${encodeURIComponent(p.videoFile)}" download="${p.videoFile}">⬇️ Baixar Vídeo</a>
-                <button class="btn btn-green" onclick="markAsPosted(${i}, '${p.verse}')">✅ Marcar Postado</button>
+                <button class="btn btn-gold" onclick="copyCaption(${i})">ðŸ“‹ Copiar Legenda</button>
+                <a class="btn btn-outline" href="/download/${encodeURIComponent(p.videoFile)}" download="${p.videoFile}">â¬‡ï¸ Baixar VÃ­deo</a>
+                <button class="btn btn-green" onclick="markAsPosted(${i}, '${p.verse}')">âœ… Marcar Postado</button>
               </div>
             </div>
           </div>
@@ -1014,16 +1012,16 @@ function startDashboard() {
     // Build music table HTML
     const musicHTML = VIRAL_MUSIC.map(m => `
       <tr>
-        <td><span class="music-rank ${m.rank <= 3 ? 'top3' : ''}">${m.rank <= 3 ? ['🥇','🥈','🥉'][m.rank-1] : '#'+m.rank}</span></td>
+        <td><span class="music-rank ${m.rank <= 3 ? 'top3' : ''}">${m.rank <= 3 ? ['ðŸ¥‡','ðŸ¥ˆ','ðŸ¥‰'][m.rank-1] : '#'+m.rank}</span></td>
         <td>
           <div class="music-title">${m.title}</div>
           <div class="music-artist">${m.artist}</div>
         </td>
-        <td><span class="music-videos">${m.videos}</span> vídeos</td>
+        <td><span class="music-videos">${m.videos}</span> vÃ­deos</td>
         <td><span class="music-growth">${m.growth}</span></td>
         <td><span class="music-cat">${m.category}</span></td>
         <td><span class="music-tip">${m.tip}</span></td>
-        <td><button class="music-search-btn" onclick="navigator.clipboard.writeText('${m.searchTerm}');showToast('🎵 Termo copiado: ${m.searchTerm}')">📋 Copiar busca</button></td>
+        <td><button class="music-search-btn" onclick="navigator.clipboard.writeText('${m.searchTerm}');showToast('ðŸŽµ Termo copiado: ${m.searchTerm}')">ðŸ“‹ Copiar busca</button></td>
       </tr>
     `).join('');
 
@@ -1052,9 +1050,9 @@ function startDashboard() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FéTok — Série 3 Content Hub</title>
-  <meta name="description" content="FéTok Série 3 — 21 posts NOVOS prontos para viralizar no TikTok">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✝️</text></svg>">
+  <title>FÃ©Tok â€” SÃ©rie 3 Content Hub</title>
+  <meta name="description" content="FÃ©Tok SÃ©rie 3 â€” 21 posts NOVOS prontos para viralizar no TikTok">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>âœï¸</text></svg>">
   <style>${CSS}</style>
 </head>
 <body>
@@ -1062,10 +1060,10 @@ function startDashboard() {
     <!-- TOP NAV -->
     <div class="topnav">
       <div class="topnav-brand">
-        <h1>Fé<span>Tok</span> Série 3 ✝️</h1>
-        <span class="topnav-status">SÉRIE 3 ATIVA</span>
+        <h1>FÃ©<span>Tok</span> SÃ©rie 3 âœï¸</h1>
+        <span class="topnav-status">SÃ‰RIE 3 ATIVA</span>
       </div>
-      <div class="topnav-handle">@luz.da.palavra.oficial · ${new Date().toLocaleDateString('pt-BR')} · ${videos.length} vídeos prontos</div>
+      <div class="topnav-handle">@luz.da.palavra.oficial Â· ${new Date().toLocaleDateString('pt-BR')} Â· ${videos.length} vÃ­deos prontos</div>
     </div>
 
     <!-- STATS -->
@@ -1076,7 +1074,7 @@ function startDashboard() {
       </div>
       <div class="stat-card">
         <div class="stat-value">${videos.length}</div>
-        <div class="stat-label">Vídeos Gerados</div>
+        <div class="stat-label">VÃ­deos Gerados</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">7</div>
@@ -1084,99 +1082,99 @@ function startDashboard() {
       </div>
       <div class="stat-card">
         <div class="stat-value">${VIRAL_MUSIC.length}</div>
-        <div class="stat-label">Músicas Virais</div>
+        <div class="stat-label">MÃºsicas Virais</div>
       </div>
     </div>
 
     <!-- TAB NAVIGATION -->
     <div class="tabs">
-      <div class="tab active" onclick="switchTab('posts')">📱 21 Posts</div>
-      <div class="tab" onclick="switchTab('calendar')">📅 Calendário</div>
-      <div class="tab" onclick="switchTab('captions')">📝 Legendas</div>
-      <div class="tab" onclick="switchTab('music')">🎵 Músicas Virais</div>
-      <div class="tab" onclick="switchTab('rotina')">🔥 Rotina</div>
-      <div class="tab" onclick="switchTab('monetize')" style="background:linear-gradient(135deg,rgba(212,168,83,0.15),rgba(175,130,255,0.15));border:1px solid rgba(212,168,83,0.3);">💰 Monetização</div>
+      <div class="tab active" onclick="switchTab('posts')">ðŸ“± 21 Posts</div>
+      <div class="tab" onclick="switchTab('calendar')">ðŸ“… CalendÃ¡rio</div>
+      <div class="tab" onclick="switchTab('captions')">ðŸ“ Legendas</div>
+      <div class="tab" onclick="switchTab('music')">ðŸŽµ MÃºsicas Virais</div>
+      <div class="tab" onclick="switchTab('rotina')">ðŸ”¥ Rotina</div>
+      <div class="tab" onclick="switchTab('monetize')" style="background:linear-gradient(135deg,rgba(212,168,83,0.15),rgba(175,130,255,0.15));border:1px solid rgba(212,168,83,0.3);">ðŸ’° MonetizaÃ§Ã£o</div>
     </div>
 
-    <!-- ═══ TAB: 21 POSTS ═══ -->
+    <!-- â•â•â• TAB: 21 POSTS â•â•â• -->
     <div class="tab-content active" id="tab-posts">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">📱 TODOS OS 21 POSTS — PRONTOS PARA POSTAR</div>
-          <span class="section-badge">7 dias × 3/dia</span>
+          <div class="section-title">ðŸ“± TODOS OS 21 POSTS â€” PRONTOS PARA POSTAR</div>
+          <span class="section-badge">7 dias Ã— 3/dia</span>
         </div>
 
         <!-- Filters -->
         <div class="filter-bar">
           <span style="font-size:0.7rem;color:var(--text-tertiary);margin-right:4px;">Filtrar:</span>
           <button class="filter-btn active" onclick="filterPosts('all', this)">Todos</button>
-          <button class="filter-btn" onclick="filterPosts('morning', this)">☀️ Manhã</button>
-          <button class="filter-btn" onclick="filterPosts('afternoon', this)">🌤️ Tarde</button>
-          <button class="filter-btn" onclick="filterPosts('evening', this)">🌙 Noite</button>
-          <button class="filter-btn" onclick="filterByTheme('proteção', this)">🛡️ Proteção</button>
-          <button class="filter-btn" onclick="filterByTheme('coragem', this)">💪 Coragem</button>
-          <button class="filter-btn" onclick="filterByTheme('amor', this)">❤️ Amor</button>
-          <button class="filter-btn" onclick="filterByTheme('força', this)">⚡ Força</button>
-          <button class="filter-btn" onclick="filterByTheme('fé', this)">🙏 Fé</button>
-          <button class="filter-btn" onclick="filterByTheme('esperança', this)">🌅 Esperança</button>
-          <button class="filter-btn" onclick="filterByTheme('gratidão', this)">🙌 Gratidão</button>
-          <button class="filter-btn" onclick="filterByTheme('vitória', this)">👑 Vitória</button>
-          <button class="filter-btn" onclick="filterByTheme('paz', this)">🕊️ Paz</button>
+          <button class="filter-btn" onclick="filterPosts('morning', this)">â˜€ï¸ ManhÃ£</button>
+          <button class="filter-btn" onclick="filterPosts('afternoon', this)">ðŸŒ¤ï¸ Tarde</button>
+          <button class="filter-btn" onclick="filterPosts('evening', this)">ðŸŒ™ Noite</button>
+          <button class="filter-btn" onclick="filterByTheme('proteÃ§Ã£o', this)">ðŸ›¡ï¸ ProteÃ§Ã£o</button>
+          <button class="filter-btn" onclick="filterByTheme('coragem', this)">ðŸ’ª Coragem</button>
+          <button class="filter-btn" onclick="filterByTheme('amor', this)">â¤ï¸ Amor</button>
+          <button class="filter-btn" onclick="filterByTheme('forÃ§a', this)">âš¡ ForÃ§a</button>
+          <button class="filter-btn" onclick="filterByTheme('fÃ©', this)">ðŸ™ FÃ©</button>
+          <button class="filter-btn" onclick="filterByTheme('esperanÃ§a', this)">ðŸŒ… EsperanÃ§a</button>
+          <button class="filter-btn" onclick="filterByTheme('gratidÃ£o', this)">ðŸ™Œ GratidÃ£o</button>
+          <button class="filter-btn" onclick="filterByTheme('vitÃ³ria', this)">ðŸ‘‘ VitÃ³ria</button>
+          <button class="filter-btn" onclick="filterByTheme('paz', this)">ðŸ•Šï¸ Paz</button>
         </div>
 
         ${postsHTML}
       </div>
     </div>
 
-    <!-- ═══ TAB: CALENDÁRIO ═══ -->
+    <!-- â•â•â• TAB: CALENDÃRIO â•â•â• -->
     <div class="tab-content" id="tab-calendar">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">📅 CALENDÁRIO DE POSTAGENS</div>
+          <div class="section-title">ðŸ“… CALENDÃRIO DE POSTAGENS</div>
           <span class="section-badge">Clique no dia para navegar</span>
         </div>
         <div class="calendar-week">${calendarHTML}</div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;">
-          <h3 style="font-size:0.9rem;margin-bottom:12px;">📊 Horários de Ouro (Brasil)</h3>
+          <h3 style="font-size:0.9rem;margin-bottom:12px;">ðŸ“Š HorÃ¡rios de Ouro (Brasil)</h3>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
             <div style="text-align:center;padding:14px;background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.2);border-radius:var(--radius-sm);">
               <div style="font-size:1.3rem;font-weight:900;color:#ffc400;">06:00</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">☀️ Devocional matinal</div>
-              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">fé · proteção · gratidão</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">â˜€ï¸ Devocional matinal</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">fÃ© Â· proteÃ§Ã£o Â· gratidÃ£o</div>
             </div>
             <div style="text-align:center;padding:14px;background:rgba(255,149,0,0.08);border:1px solid rgba(255,149,0,0.2);border-radius:var(--radius-sm);">
               <div style="font-size:1.3rem;font-weight:900;color:#ff9500;">12:00</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">🌤️ Motivacional</div>
-              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">força · coragem · vitória</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">ðŸŒ¤ï¸ Motivacional</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">forÃ§a Â· coragem Â· vitÃ³ria</div>
             </div>
             <div style="text-align:center;padding:14px;background:rgba(175,130,255,0.08);border:1px solid rgba(175,130,255,0.2);border-radius:var(--radius-sm);">
               <div style="font-size:1.3rem;font-weight:900;color:#af82ff;">20:00</div>
-              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">🌙 Emocional</div>
-              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">amor · paz · esperança</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);margin-top:4px;">ðŸŒ™ Emocional</div>
+              <div style="font-size:0.62rem;color:var(--text-tertiary);margin-top:2px;">amor Â· paz Â· esperanÃ§a</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ TAB: LEGENDAS (QUICK COPY) ═══ -->
+    <!-- â•â•â• TAB: LEGENDAS (QUICK COPY) â•â•â• -->
     <div class="tab-content" id="tab-captions">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">📝 LEGENDAS PRONTAS — CLIQUE PARA COPIAR</div>
+          <div class="section-title">ðŸ“ LEGENDAS PRONTAS â€” CLIQUE PARA COPIAR</div>
           <span class="section-badge">Toque em qualquer legenda para copiar</span>
         </div>
         <div class="quick-copy-grid">
           ${POSTS_DATA.map((p, i) => `
-            <div class="quick-copy-card" onclick="navigator.clipboard.writeText(${JSON.stringify(p.caption).replace(/'/g, "\\'")}); showToast('📋 Legenda copiada: ${p.verse}'); this.style.borderColor='var(--gold-border)'">
+            <div class="quick-copy-card" onclick="navigator.clipboard.writeText(${JSON.stringify(p.caption).replace(/'/g, "\\'")}); showToast('ðŸ“‹ Legenda copiada: ${p.verse}'); this.style.borderColor='var(--gold-border)'">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                 <span style="font-weight:800;font-size:0.85rem;">${p.themeEmoji} ${p.verse}</span>
-                <span class="post-slot-badge ${p.slotKey === 'morning' ? 'slot-morning' : p.slotKey === 'afternoon' ? 'slot-afternoon' : 'slot-evening'}" style="font-size:0.65rem;">${p.emoji} Dia ${p.day} · ${p.slot}</span>
+                <span class="post-slot-badge ${p.slotKey === 'morning' ? 'slot-morning' : p.slotKey === 'afternoon' ? 'slot-afternoon' : 'slot-evening'}" style="font-size:0.65rem;">${p.emoji} Dia ${p.day} Â· ${p.slot}</span>
               </div>
               <div style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;white-space:pre-wrap;max-height:100px;overflow:hidden;">${escapeHtml(p.caption.split('\n').slice(0,4).join('\n'))}</div>
               <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                <span style="font-size:0.65rem;color:var(--gold);">🎵 ${p.music}</span>
-                <span style="font-size:0.65rem;color:var(--text-tertiary);">📋 Toque para copiar</span>
+                <span style="font-size:0.65rem;color:var(--gold);">ðŸŽµ ${p.music}</span>
+                <span style="font-size:0.65rem;color:var(--text-tertiary);">ðŸ“‹ Toque para copiar</span>
               </div>
             </div>
           `).join('')}
@@ -1184,27 +1182,27 @@ function startDashboard() {
       </div>
     </div>
 
-    <!-- ═══ TAB: MÚSICAS VIRAIS ═══ -->
+    <!-- â•â•â• TAB: MÃšSICAS VIRAIS â•â•â• -->
     <div class="tab-content" id="tab-music">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">🎵 TOP 20 MÚSICAS VIRAIS GOSPEL — TIKTOK 2026</div>
+          <div class="section-title">ðŸŽµ TOP 20 MÃšSICAS VIRAIS GOSPEL â€” TIKTOK 2026</div>
           <span class="section-badge">Ranking por engajamento</span>
         </div>
         <div style="padding:14px;background:rgba(212,168,83,0.06);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:20px;font-size:0.75rem;color:var(--text-secondary);">
-          💡 <strong style="color:var(--gold);">DICA PRO:</strong> No TikTok, vá em "Sons" → cole o termo de busca → escolha a versão com <strong>MAIS vídeos</strong> = mais viral. O algoritmo prioriza sons em alta!
+          ðŸ’¡ <strong style="color:var(--gold);">DICA PRO:</strong> No TikTok, vÃ¡ em "Sons" â†’ cole o termo de busca â†’ escolha a versÃ£o com <strong>MAIS vÃ­deos</strong> = mais viral. O algoritmo prioriza sons em alta!
         </div>
         <div style="overflow-x:auto;">
           <table class="music-table">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Música</th>
-                <th>Vídeos</th>
+                <th>MÃºsica</th>
+                <th>VÃ­deos</th>
                 <th>Crescimento</th>
                 <th>Categoria</th>
                 <th>Dica de Uso</th>
-                <th>Ação</th>
+                <th>AÃ§Ã£o</th>
               </tr>
             </thead>
             <tbody>
@@ -1215,34 +1213,34 @@ function startDashboard() {
       </div>
 
       <div class="section">
-        <div class="section-title" style="margin-bottom:16px;">⚡ ESTRATÉGIA MUSICAL PARA VIRALIZAÇÃO</div>
+        <div class="section-title" style="margin-bottom:16px;">âš¡ ESTRATÃ‰GIA MUSICAL PARA VIRALIZAÃ‡ÃƒO</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">🔥 Regra #1: Sons em Alta</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">O algoritmo do TikTok prioriza vídeos que usam sons TRENDING. Use os sons do TOP 5 para maximizar alcance.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">ðŸ”¥ Regra #1: Sons em Alta</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">O algoritmo do TikTok prioriza vÃ­deos que usam sons TRENDING. Use os sons do TOP 5 para maximizar alcance.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">🎯 Regra #2: Match com Conteúdo</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÇÃO → musicas suaves. Posts de FORÇA → músicas com energia. Posts EMOCIONAIS → músicas que fazem chorar.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">ðŸŽ¯ Regra #2: Match com ConteÃºdo</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÃ‡ÃƒO â†’ musicas suaves. Posts de FORÃ‡A â†’ mÃºsicas com energia. Posts EMOCIONAIS â†’ mÃºsicas que fazem chorar.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">⏱️ Regra #3: Timing</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Use o mesmo som por 3-5 vídeos SEGUIDOS. O TikTok te associa ao som e mostra seu conteúdo para quem curtiu aquele som.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">â±ï¸ Regra #3: Timing</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Use o mesmo som por 3-5 vÃ­deos SEGUIDOS. O TikTok te associa ao som e mostra seu conteÃºdo para quem curtiu aquele som.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
-            <h3 style="font-size:0.85rem;margin-bottom:8px;">📈 Regra #4: Sons Emergentes</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Sons com < 100K vídeos mas crescendo RÁPIDO são OURO. Menos competição + algoritmo empurra = viralização fácil.</p>
+            <h3 style="font-size:0.85rem;margin-bottom:8px;">ðŸ“ˆ Regra #4: Sons Emergentes</h3>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Sons com < 100K vÃ­deos mas crescendo RÃPIDO sÃ£o OURO. Menos competiÃ§Ã£o + algoritmo empurra = viralizaÃ§Ã£o fÃ¡cil.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ TAB: ROTINA ═══ -->
+    <!-- â•â•â• TAB: ROTINA â•â•â• -->
     <div class="tab-content" id="tab-rotina">
       ${getRotinaSectionHTML()}
     </div>
 
-    <!-- ═══ TAB: MONETIZAÇÃO ═══ -->
+    <!-- â•â•â• TAB: MONETIZAÃ‡ÃƒO â•â•â• -->
     <div class="tab-content" id="tab-monetize">
       ${monetizeHTML}
     </div>
@@ -1264,7 +1262,7 @@ function startDashboard() {
     function copyCaption(i) {
       const el = document.getElementById('caption-' + i);
       navigator.clipboard.writeText(el.textContent).then(() => {
-        showToast('📋 Legenda copiada! Cole no TikTok Studio');
+        showToast('ðŸ“‹ Legenda copiada! Cole no TikTok Studio');
       });
     }
 
@@ -1273,7 +1271,7 @@ function startDashboard() {
       const el = document.getElementById('caption-' + i);
       el.classList.toggle('expanded');
       const btn = el.nextElementSibling;
-      btn.textContent = el.classList.contains('expanded') ? '▲ Recolher' : '▼ Expandir legenda';
+      btn.textContent = el.classList.contains('expanded') ? 'â–² Recolher' : 'â–¼ Expandir legenda';
     }
 
     // Mark as posted
@@ -1285,7 +1283,7 @@ function startDashboard() {
         card.style.opacity = '0.5';
         card.style.borderColor = 'rgba(52,199,89,0.3)';
       }
-      showToast('✅ ' + verse + ' marcado como postado!');
+      showToast('âœ… ' + verse + ' marcado como postado!');
     }
 
     // Filter posts
@@ -1356,48 +1354,48 @@ function startDashboard() {
   });
 
   app.listen(PORT, () => {
-    console.log(`📊 FéTok Content Hub running on port ${PORT}`);
+    console.log(`ðŸ“Š FÃ©Tok Content Hub running on port ${PORT}`);
     console.log(`   http://localhost:${PORT}\n`);
   });
 
   return app;
 }
 
-/* ═══════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    HELPER: Rotina section
-   ═══════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function getRotinaSectionHTML() {
   const today = new Date();
-  const dayNames = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const dayNames = ['Domingo','Segunda','TerÃ§a','Quarta','Quinta','Sexta','SÃ¡bado'];
   const dayName = dayNames[today.getDay()];
   const dateStr = today.toLocaleDateString('pt-BR');
   const isSunday = today.getDay() === 0;
 
   const checkItems = [
-    { title: '☀️ Post da Manhã (06:00)', desc: 'Upload vídeo + legenda + música gospel → postar 06:00', time: '06:00', timeClass: 'slot-morning' },
-    { title: '🔥 Engajar após post da manhã', desc: 'Curtir 10 vídeos em #versiculododia + comentar 5 deles', time: '06:30', timeClass: 'slot-morning' },
-    { title: '🌤️ Post do Almoço (12:00)', desc: 'Upload vídeo motivacional + legenda + música', time: '12:00', timeClass: 'slot-afternoon' },
-    { title: '📱 Seguir 10-15 criadores gospel', desc: 'Buscar #gospel #fé → seguir contas ativas do nicho', time: '12:30', timeClass: 'slot-afternoon' },
-    { title: '💬 Responder TODOS os comentários', desc: 'Respostas geram notificações = mais engajamento = algoritmo te promove', time: 'Qualquer hora', timeClass: '' },
-    { title: '🌙 Post da Noite (20:00)', desc: 'Upload vídeo emocional + legenda + música', time: '20:00', timeClass: 'slot-evening' },
-    { title: '🌟 Comentar em 5 vídeos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha — seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
+    { title: 'â˜€ï¸ Post da ManhÃ£ (06:00)', desc: 'Upload vÃ­deo + legenda + mÃºsica gospel â†’ postar 06:00', time: '06:00', timeClass: 'slot-morning' },
+    { title: 'ðŸ”¥ Engajar apÃ³s post da manhÃ£', desc: 'Curtir 10 vÃ­deos em #versiculododia + comentar 5 deles', time: '06:30', timeClass: 'slot-morning' },
+    { title: 'ðŸŒ¤ï¸ Post do AlmoÃ§o (12:00)', desc: 'Upload vÃ­deo motivacional + legenda + mÃºsica', time: '12:00', timeClass: 'slot-afternoon' },
+    { title: 'ðŸ“± Seguir 10-15 criadores gospel', desc: 'Buscar #gospel #fÃ© â†’ seguir contas ativas do nicho', time: '12:30', timeClass: 'slot-afternoon' },
+    { title: 'ðŸ’¬ Responder TODOS os comentÃ¡rios', desc: 'Respostas geram notificaÃ§Ãµes = mais engajamento = algoritmo te promove', time: 'Qualquer hora', timeClass: '' },
+    { title: 'ðŸŒ™ Post da Noite (20:00)', desc: 'Upload vÃ­deo emocional + legenda + mÃºsica', time: '20:00', timeClass: 'slot-evening' },
+    { title: 'ðŸŒŸ Comentar em 5 vÃ­deos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha â€” seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
   ];
 
   const comments = [
-    '🙏 Que palavra poderosa! Isso tocou meu coração. AMÉM!',
-    'Deus te abençoe por compartilhar isso! Salvei pra reler 🔖❤️',
-    'Esse versículo mudou meu dia INTEIRO! Glória a Deus 🔥🙏',
-    'AMÉM! Isso não foi coincidência, Deus me trouxe até aqui ✝️',
-    'Chorei com esse vídeo 😭🙏 Deus é maravilhoso!',
-    'Quem precisa ouvir isso HOJE? Marque nos comentários! ❤️',
-    'Obrigado Senhor por essa palavra! Comenta AMÉM quem recebe 🙏',
-    'Isso é pra mim! O Senhor está falando comigo nesse momento 💛✝️',
+    'ðŸ™ Que palavra poderosa! Isso tocou meu coraÃ§Ã£o. AMÃ‰M!',
+    'Deus te abenÃ§oe por compartilhar isso! Salvei pra reler ðŸ”–â¤ï¸',
+    'Esse versÃ­culo mudou meu dia INTEIRO! GlÃ³ria a Deus ðŸ”¥ðŸ™',
+    'AMÃ‰M! Isso nÃ£o foi coincidÃªncia, Deus me trouxe atÃ© aqui âœï¸',
+    'Chorei com esse vÃ­deo ðŸ˜­ðŸ™ Deus Ã© maravilhoso!',
+    'Quem precisa ouvir isso HOJE? Marque nos comentÃ¡rios! â¤ï¸',
+    'Obrigado Senhor por essa palavra! Comenta AMÃ‰M quem recebe ðŸ™',
+    'Isso Ã© pra mim! O Senhor estÃ¡ falando comigo nesse momento ðŸ’›âœï¸',
   ];
 
   return `
     <div class="section">
       <div class="section-header">
-        <div class="section-title">🔥 ROTINA DIÁRIA DE ENGAJAMENTO</div>
+        <div class="section-title">ðŸ”¥ ROTINA DIÃRIA DE ENGAJAMENTO</div>
         <span class="section-badge">${dayName}, ${dateStr}</span>
       </div>
 
@@ -1416,32 +1414,32 @@ function getRotinaSectionHTML() {
           <div class="rotina-check" style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(255,45,85,0.05);border:1px solid rgba(255,45,85,0.2);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;" onclick="this.querySelector('input').click()">
             <input type="checkbox" style="margin-top:3px;accent-color:var(--red);width:16px;height:16px;cursor:pointer;" onclick="event.stopPropagation()">
             <div style="flex:1;">
-              <div style="font-size:0.82rem;font-weight:600;">🔴 LIVE DE ORAÇÃO (Domingo 20h)</div>
-              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oração ao vivo — MAIOR acelerador de crescimento!</div>
+              <div style="font-size:0.82rem;font-weight:600;">ðŸ”´ LIVE DE ORAÃ‡ÃƒO (Domingo 20h)</div>
+              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oraÃ§Ã£o ao vivo â€” MAIOR acelerador de crescimento!</div>
             </div>
             <span style="font-size:0.62rem;padding:4px 10px;background:rgba(255,45,85,0.2);color:var(--red);border-radius:20px;font-weight:600;">LIVE</span>
           </div>
         ` : ''}
       </div>
 
-      <div class="section-title" style="margin-bottom:12px;">💬 COMENTÁRIOS PRONTOS — CLIQUE PARA COPIAR</div>
+      <div class="section-title" style="margin-bottom:12px;">ðŸ’¬ COMENTÃRIOS PRONTOS â€” CLIQUE PARA COPIAR</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px;margin-bottom:28px;">
         ${comments.map(c => `
-          <div style="padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.75rem;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;" onclick="navigator.clipboard.writeText('${c.replace(/'/g, "\\'")}');showToast('💬 Comentário copiado!');this.style.borderColor='var(--gold-border)'" onmouseenter="this.style.background='var(--bg-card-hover)'" onmouseleave="this.style.background='var(--bg-card)'">${c}</div>
+          <div style="padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.75rem;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;" onclick="navigator.clipboard.writeText('${c.replace(/'/g, "\\'")}');showToast('ðŸ’¬ ComentÃ¡rio copiado!');this.style.borderColor='var(--gold-border)'" onmouseenter="this.style.background='var(--bg-card-hover)'" onmouseleave="this.style.background='var(--bg-card)'">${c}</div>
         `).join('')}
       </div>
 
-      <div class="section-title" style="margin-bottom:12px;">👥 CONTAS PARA INTERAGIR</div>
+      <div class="section-title" style="margin-bottom:12px;">ðŸ‘¥ CONTAS PARA INTERAGIR</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:20px;">
         ${[
-          {handle:'@isaiassaad', desc:'Worship · 5M+'},
-          {handle:'@fernandinhoficial', desc:'Gospel · 3M+'},
-          {handle:'@gabrielarocha', desc:'Worship · 4M+'},
-          {handle:'@pretononbranco', desc:'Gospel Duo · 2M+'},
-          {handle:'@alinebarros', desc:'Gospel · 6M+'},
-          {handle:'@andersonfreire', desc:'Gospel · 3M+'},
-          {handle:'@tiagobrunet', desc:'Pregação · 2M+'},
-          {handle:'@lucianosubira', desc:'Teologia · 1M+'},
+          {handle:'@isaiassaad', desc:'Worship Â· 5M+'},
+          {handle:'@fernandinhoficial', desc:'Gospel Â· 3M+'},
+          {handle:'@gabrielarocha', desc:'Worship Â· 4M+'},
+          {handle:'@pretononbranco', desc:'Gospel Duo Â· 2M+'},
+          {handle:'@alinebarros', desc:'Gospel Â· 6M+'},
+          {handle:'@andersonfreire', desc:'Gospel Â· 3M+'},
+          {handle:'@tiagobrunet', desc:'PregaÃ§Ã£o Â· 2M+'},
+          {handle:'@lucianosubira', desc:'Teologia Â· 1M+'},
         ].map(a => `
           <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);">
             <div>
@@ -1453,15 +1451,15 @@ function getRotinaSectionHTML() {
       </div>
 
       <div style="padding:12px 16px;background:var(--gold-bg);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:0.72rem;color:var(--text-secondary);">
-        💡 <strong style="color:var(--gold);">DICA:</strong> Comente nos vídeos RECENTES deles (últimas 2h) — seu comentário fica no topo e outros seguidores veem o seu perfil!
+        ðŸ’¡ <strong style="color:var(--gold);">DICA:</strong> Comente nos vÃ­deos RECENTES deles (Ãºltimas 2h) â€” seu comentÃ¡rio fica no topo e outros seguidores veem o seu perfil!
       </div>
     </div>
   `;
 }
 
-/* ═══════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    HELPER: HTML Escape
-   ═══════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function escapeHtml(text) {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

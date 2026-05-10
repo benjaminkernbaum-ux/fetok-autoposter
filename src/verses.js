@@ -1,33 +1,33 @@
 /**
- * FéTok Verse Database — Série 3
- * 51 versículos NOVOS (zero overlap com Série 1 e 2)
+ * FéTok Verse Database — Série 5
+ * 51+ versículos (zero overlap com Séries 1-4)
  * FIRST 21 = posts usados no POSTS_DATA (ordem de prioridade)
- * Organizados por 13 temas — cada um roda uma vez e é marcado como postado
+ * Organizados por temas — cada um roda uma vez e é marcado como postado
  */
 
 const verses = [
-  // ═══ POSTS_DATA VERSES (first 21) ═══
-  { text: "O anjo do Senhor acampa-se ao redor dos que o temem e os livra.", ref: "Salmos 34:7", theme: "proteção", bg: "divine_light" },
-  { text: "Nenhuma arma forjada contra ti prosperará.", ref: "Isaías 54:17", theme: "proteção", bg: "shepherd" },
-  { text: "O nome do Senhor é uma torre forte; o justo corre para ela e está seguro.", ref: "Provérbios 18:10", theme: "proteção", bg: "golden_rays" },
-  { text: "Espera no Senhor, anima-te e ele fortalecerá o teu coração.", ref: "Salmos 27:14", theme: "coragem", bg: "mountain" },
-  { text: "Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.", ref: "2 Timóteo 1:7", theme: "coragem", bg: "divine_light" },
-  { text: "Acima de tudo, porém, revistam-se do amor, que é o elo perfeito.", ref: "Colossenses 3:14", theme: "amor", bg: "dove" },
-  { text: "Nós amamos porque ele nos amou primeiro.", ref: "1 João 4:19", theme: "amor", bg: "cross_light" },
-  { text: "O Senhor teu Deus está no meio de ti, poderoso para te salvar; ele se deleitará em ti com alegria.", ref: "Sofonias 3:17", theme: "amor", bg: "sunrise" },
-  { text: "O Senhor Deus é a minha força; ele me dá pés como de corça e me faz andar sobre os altos.", ref: "Habacuque 3:19", theme: "força", bg: "mountain" },
-  { text: "Quando sou fraco, então é que sou forte.", ref: "2 Coríntios 12:10", theme: "força", bg: "cross_light" },
-  { text: "A alegria do Senhor é a minha força.", ref: "Neemias 8:10", theme: "força", bg: "sunrise" },
-  { text: "Se tiverdes fé como um grão de mostarda, direis a este monte: passa daqui e ele passará.", ref: "Mateus 17:20", theme: "fé", bg: "mountain" },
-  { text: "Tudo é possível ao que crê.", ref: "Marcos 9:23", theme: "fé", bg: "divine_light" },
-  { text: "Clama a mim e eu te responderei e te anunciarei coisas grandes e ocultas.", ref: "Jeremias 33:3", theme: "fé", bg: "golden_rays" },
-  { text: "Aqueles que semeiam com lágrimas, com cânticos de júbilo colherão.", ref: "Salmos 126:5", theme: "esperança", bg: "sunrise" },
-  { text: "Ele enxugará dos seus olhos toda lágrima, e não haverá mais morte, nem pranto, nem dor.", ref: "Apocalipse 21:4", theme: "esperança", bg: "dove" },
-  { text: "Tu conservarás em paz aquele cuja mente está firme em ti.", ref: "Isaías 26:3", theme: "paz", bg: "olive_tree" },
-  { text: "Não andem ansiosos por coisa alguma; apresentem seus pedidos a Deus.", ref: "Filipenses 4:6", theme: "paz", bg: "prayer_hands" },
-  { text: "Bendize, ó minha alma, ao Senhor, e não te esqueças de nenhum dos seus benefícios.", ref: "Salmos 103:2", theme: "gratidão", bg: "sunrise" },
-  { text: "O Senhor pelejará por vós, e vós vos calareis.", ref: "Êxodo 14:14", theme: "vitória", bg: "walking_water" },
-  { text: "Combati o bom combate, terminei a corrida, guardei a fé.", ref: "2 Timóteo 4:7", theme: "vitória", bg: "cross_light" },
+  // ═══ POSTS_DATA VERSES — Série 5 (first 21) ═══
+  { text: "Ninguém te poderá resistir todos os dias da tua vida; como fui com Moisés, assim serei contigo.", ref: "Josué 1:5", theme: "fidelidade", bg: "divine_light" },
+  { text: "Deus não é homem para que minta, nem filho de homem para que se arrependa.", ref: "Números 23:19", theme: "fidelidade", bg: "golden_rays" },
+  { text: "Fiel é o que vos chama, o qual também o fará.", ref: "1 Tessalonicenses 5:24", theme: "fidelidade", bg: "cross_light" },
+  { text: "Eis que faço coisa nova, e agora sairá à luz; não a conhecereis?", ref: "Isaías 43:19", theme: "renovação", bg: "sunrise" },
+  { text: "Não se amoldem ao padrão deste mundo, mas transformem-se pela renovação da mente.", ref: "Romanos 12:2", theme: "renovação", bg: "mountain" },
+  { text: "Dar-vos-ei um coração novo e porei dentro de vós um espírito novo.", ref: "Ezequiel 36:26", theme: "renovação", bg: "dove" },
+  { text: "Os que confiam no Senhor serão como o Monte Sião, que não se abala, firme para sempre.", ref: "Salmos 125:1", theme: "confiança", bg: "mountain" },
+  { text: "Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.", ref: "Provérbios 3:5-6", theme: "confiança", bg: "prayer_hands" },
+  { text: "Quando eu tiver medo, confiarei em ti.", ref: "Salmos 56:3", theme: "confiança", bg: "narrow_path" },
+  { text: "Eu sei os planos que tenho para vocês; planos de paz e não de mal, para dar-vos futuro e esperança.", ref: "Jeremias 29:11", theme: "promessa", bg: "sunrise" },
+  { text: "A visão é ainda para o tempo determinado; se tardar, espera-o, porque certamente virá.", ref: "Habacuque 2:3", theme: "promessa", bg: "golden_rays" },
+  { text: "Porque todas as promessas de Deus são nEle sim, e por Ele o amém.", ref: "2 Coríntios 1:20", theme: "promessa", bg: "cross_light" },
+  { text: "Se o Filho vos libertar, verdadeiramente sereis livres.", ref: "João 8:36", theme: "libertação", bg: "divine_light" },
+  { text: "Para a liberdade Cristo nos libertou; permanecei firmes e não vos submetais de novo ao jugo.", ref: "Gálatas 5:1", theme: "libertação", bg: "walking_water" },
+  { text: "Tirou-os das trevas e da sombra da morte e despedaçou as suas cadeias.", ref: "Salmos 107:14", theme: "libertação", bg: "narrow_path" },
+  { text: "Tudo o que fizerem, seja em palavra seja em ação, façam-no em nome do Senhor Jesus, dando graças.", ref: "Colossenses 3:17", theme: "gratidão", bg: "olive_tree" },
+  { text: "Deem graças ao Senhor porque Ele é bom; o seu amor dura para sempre.", ref: "Salmos 136:1", theme: "gratidão", bg: "golden_rays" },
+  { text: "Louvem ao Senhor porque Ele é bom; a sua bondade dura para sempre.", ref: "1 Crônicas 16:34", theme: "gratidão", bg: "shepherd" },
+  { text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho para que todo o que nele crê não pereça.", ref: "João 3:16", theme: "eternidade", bg: "cross_light" },
+  { text: "Eu sou a ressurreição e a vida. Quem crê em mim, ainda que morra, viverá.", ref: "João 11:25", theme: "eternidade", bg: "divine_light" },
+  { text: "Já não haverá noite. Não precisarão de luz, pois o Senhor Deus os iluminará.", ref: "Apocalipse 22:5", theme: "eternidade", bg: "sunrise" },
 
   // ═══ EXTRA VERSES (backup pool) ═══
   { text: "Tu és o meu esconderijo; tu me preservas da angústia e me cercas de cânticos de livramento.", ref: "Salmos 32:7", theme: "proteção", bg: "mountain" },
