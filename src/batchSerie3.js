@@ -1,5 +1,5 @@
 /**
- * FéTok Serie 3 — Generate ALL 21 videos with cinematic backgrounds
+ * FéTok Serie 5 — Generate ALL 21 videos with cinematic backgrounds
  * Usage: node src/batchSerie3.js [--force]
  *   --force: delete existing files and regenerate everything
  */
@@ -14,7 +14,7 @@ const OUTPUT_DIR = path.resolve(__dirname, '../output');
 const FORCE = process.argv.includes('--force');
 
 async function generateAll() {
-  console.log('\n🚀 FéTok Serie 3 — Cinematic Video Generator');
+  console.log('\n🚀 FéTok Serie 5 — Cinematic Video Generator');
   console.log('━'.repeat(50));
   if (FORCE) console.log('⚠️  FORCE mode — regenerating ALL files\n');
 

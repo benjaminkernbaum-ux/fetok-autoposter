@@ -523,11 +523,11 @@ function startDashboard() {
       font-weight: 600;
     }
     .theme-fidelidade { background: rgba(251,146,60,0.12); color: #fb923c; }
-    .theme-renovaÃ§Ã£o { background: rgba(34,211,238,0.12); color: #22d3ee; }
-    .theme-confianÃ§a { background: rgba(168,85,247,0.12); color: #a855f7; }
+    .theme-renovação { background: rgba(34,211,238,0.12); color: #22d3ee; }
+    .theme-confiança { background: rgba(168,85,247,0.12); color: #a855f7; }
     .theme-promessa { background: rgba(250,204,21,0.12); color: #facc15; }
-    .theme-libertaÃ§Ã£o { background: rgba(239,68,68,0.12); color: #ef4444; }
-    .theme-gratidÃ£o { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .theme-libertação { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .theme-gratidão { background: rgba(34,197,94,0.12); color: #22c55e; }
     .theme-eternidade { background: rgba(236,72,153,0.12); color: #ec4899; }
 
     /* â”€â”€ POST CARD â”€â”€ */
@@ -1050,8 +1050,8 @@ function startDashboard() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FÃ©Tok â€” SÃ©rie 3 Content Hub</title>
-  <meta name="description" content="FÃ©Tok SÃ©rie 3 â€” 21 posts NOVOS prontos para viralizar no TikTok">
+  <title>FÃ©Tok â€” SÃ©rie 5 Content Hub</title>
+  <meta name="description" content="FÃ©Tok SÃ©rie 5 â€” 21 posts NOVOS prontos para viralizar no TikTok">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>âœï¸</text></svg>">
   <style>${CSS}</style>
 </head>
@@ -1060,8 +1060,8 @@ function startDashboard() {
     <!-- TOP NAV -->
     <div class="topnav">
       <div class="topnav-brand">
-        <h1>FÃ©<span>Tok</span> SÃ©rie 3 âœï¸</h1>
-        <span class="topnav-status">SÃ‰RIE 3 ATIVA</span>
+        <h1>FÃ©<span>Tok</span> SÃ©rie 5 âœï¸</h1>
+        <span class="topnav-status">SÃ‰RIE 5 ATIVA</span>
       </div>
       <div class="topnav-handle">@luz.da.palavra.oficial Â· ${new Date().toLocaleDateString('pt-BR')} Â· ${videos.length} vÃ­deos prontos</div>
     </div>
@@ -1111,15 +1111,13 @@ function startDashboard() {
           <button class="filter-btn" onclick="filterPosts('morning', this)">â˜€ï¸ ManhÃ£</button>
           <button class="filter-btn" onclick="filterPosts('afternoon', this)">ðŸŒ¤ï¸ Tarde</button>
           <button class="filter-btn" onclick="filterPosts('evening', this)">ðŸŒ™ Noite</button>
-          <button class="filter-btn" onclick="filterByTheme('proteÃ§Ã£o', this)">ðŸ›¡ï¸ ProteÃ§Ã£o</button>
-          <button class="filter-btn" onclick="filterByTheme('coragem', this)">ðŸ’ª Coragem</button>
-          <button class="filter-btn" onclick="filterByTheme('amor', this)">â¤ï¸ Amor</button>
-          <button class="filter-btn" onclick="filterByTheme('forÃ§a', this)">âš¡ ForÃ§a</button>
-          <button class="filter-btn" onclick="filterByTheme('fÃ©', this)">ðŸ™ FÃ©</button>
-          <button class="filter-btn" onclick="filterByTheme('esperanÃ§a', this)">ðŸŒ… EsperanÃ§a</button>
-          <button class="filter-btn" onclick="filterByTheme('gratidÃ£o', this)">ðŸ™Œ GratidÃ£o</button>
-          <button class="filter-btn" onclick="filterByTheme('vitÃ³ria', this)">ðŸ‘‘ VitÃ³ria</button>
-          <button class="filter-btn" onclick="filterByTheme('paz', this)">ðŸ•Šï¸ Paz</button>
+          <button class="filter-btn" onclick="filterByTheme('fidelidade', this)">🔑 Fidelidade</button>
+          <button class="filter-btn" onclick="filterByTheme('renovação', this)">🔄 Renovação</button>
+          <button class="filter-btn" onclick="filterByTheme('confiança', this)">🛡️ Confiança</button>
+          <button class="filter-btn" onclick="filterByTheme('promessa', this)">📜 Promessa</button>
+          <button class="filter-btn" onclick="filterByTheme('libertação', this)">⛓️ Libertação</button>
+          <button class="filter-btn" onclick="filterByTheme('gratidão', this)">🙌 Gratidão</button>
+          <button class="filter-btn" onclick="filterByTheme('eternidade', this)">✨ Eternidade</button>
         </div>
 
         ${postsHTML}

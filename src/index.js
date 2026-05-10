@@ -42,9 +42,9 @@ function saveHistory() {
  */
 async function createPost(slot) {
   const themeMap = {
-    morning: ['fé', 'proteção', 'gratidão', 'sabedoria'],
-    afternoon: ['força', 'coragem', 'vitória', 'provisão'],
-    evening: ['amor', 'paz', 'cura', 'esperança'],
+    morning: ['fidelidade', 'renovação', 'confiança', 'gratidão'],
+    afternoon: ['promessa', 'confiança', 'renovação', 'fidelidade'],
+    evening: ['libertação', 'gratidão', 'eternidade', 'promessa'],
   };
 
   const themes = themeMap[slot] || themeMap.morning;
@@ -182,7 +182,7 @@ setTimeout(() => {
     console.log('✅ Font cache rebuilt');
   } catch(e) { console.log('⚠️ fc-cache not available (OK on Windows)'); }
 
-  console.log('\n🎬 Auto-generating cinematic Serie 3 videos...');
+  console.log('\n🎬 Auto-generating cinematic Serie 5 videos...');
   const { spawn } = require('child_process');
   const child = spawn('node', [path.join(__dirname, 'batchSerie3.js'), '--force'], { cwd: __dirname });
   child.stdout.on('data', d => process.stdout.write(d));

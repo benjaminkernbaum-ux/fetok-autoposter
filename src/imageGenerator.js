@@ -24,28 +24,52 @@ console.log('✅ Fonts loaded');
 
 // Map themes to cinematic hero backgrounds (JPG)
 const THEME_HEROES = {
+  // Série 5 themes
+  'fidelidade':  ['hero_divine_cross.jpg', 'hero_lion_judah.jpg', 'hero_bible_light.jpg'],
+  'renovação':   ['hero_sunrise_cross.jpg', 'hero_eagle_soaring.jpg', 'hero_dove_sky.jpg'],
+  'confiança':   ['hero_shepherd.jpg', 'hero_narrow_path.jpg', 'hero_prayer_hands.jpg'],
+  'promessa':    ['hero_sunrise_cross.jpg', 'hero_olive_tree.jpg', 'hero_divine_cross.jpg'],
+  'libertação':  ['hero_fire_warrior.jpg', 'hero_lion_judah.jpg', 'hero_walking_water.jpg'],
+  'gratidão':    ['hero_olive_tree.jpg', 'hero_prayer_hands.jpg', 'hero_bible_light.jpg'],
+  'eternidade':  ['hero_divine_cross.jpg', 'hero_dove_sky.jpg', 'hero_sunrise_cross.jpg'],
+  // Legacy themes (backup pool in verses.js)
   'proteção': ['hero_fire_warrior.jpg', 'hero_divine_cross.jpg', 'hero_lion_judah.jpg'],
   'coragem':  ['hero_eagle_soaring.jpg', 'hero_shepherd.jpg', 'hero_fire_warrior.jpg'],
   'amor':     ['hero_prayer_hands.jpg', 'hero_dove_sky.jpg', 'hero_sunrise_cross.jpg'],
   'força':    ['hero_fire_warrior.jpg', 'hero_lion_judah.jpg', 'hero_eagle_soaring.jpg'],
   'fé':       ['hero_bible_light.jpg', 'hero_narrow_path.jpg', 'hero_olive_tree.jpg'],
   'esperança':['hero_dove_sky.jpg', 'hero_sunrise_cross.jpg', 'hero_shepherd.jpg'],
-  'gratidão': ['hero_olive_tree.jpg', 'hero_prayer_hands.jpg', 'hero_bible_light.jpg'],
   'vitória':  ['hero_lion_judah.jpg', 'hero_fire_warrior.jpg', 'hero_eagle_soaring.jpg'],
   'paz':      ['hero_walking_water.jpg', 'hero_shepherd.jpg', 'hero_dove_sky.jpg'],
+  'perdão':   ['hero_divine_cross.jpg', 'hero_prayer_hands.jpg', 'hero_dove_sky.jpg'],
+  'provisão': ['hero_shepherd.jpg', 'hero_olive_tree.jpg', 'hero_sunrise_cross.jpg'],
+  'sabedoria':['hero_bible_light.jpg', 'hero_narrow_path.jpg', 'hero_olive_tree.jpg'],
+  'cura':     ['hero_prayer_hands.jpg', 'hero_divine_cross.jpg', 'hero_sunrise_cross.jpg'],
   'default':  ['hero_divine_cross.jpg', 'hero_bible_light.jpg', 'hero_sunrise_cross.jpg'],
 };
 
 const THEME_ACCENT = {
+  // Série 5 themes
+  'fidelidade':  [212, 168, 83],
+  'renovação':   [34, 211, 238],
+  'confiança':   [168, 85, 247],
+  'promessa':    [250, 204, 21],
+  'libertação':  [239, 68, 68],
+  'gratidão':    [94, 234, 212],
+  'eternidade':  [236, 72, 153],
+  // Legacy themes
   'proteção': [212, 168, 83],
   'coragem':  [253, 186, 116],
   'amor':     [255, 180, 190],
   'força':    [196, 181, 253],
   'fé':       [212, 168, 83],
   'esperança':[253, 230, 138],
-  'gratidão': [94, 234, 212],
   'vitória':  [252, 165, 165],
   'paz':      [186, 230, 253],
+  'perdão':   [255, 210, 170],
+  'provisão': [180, 220, 150],
+  'sabedoria':[212, 168, 83],
+  'cura':     [255, 200, 200],
   'default':  [212, 168, 83],
 };
 
