@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3000;
 
 
 /* ═══════════════════════════════════════════════════════════════
-   VIRAL MUSIC DATABASE ” Top trending gospel sounds on TikTok
+   VIRAL MUSIC DATABASE — Top trending gospel sounds on TikTok
    ═══════════════════════════════════════════════════════════════ */
 const VIRAL_MUSIC = [
   { rank: 1, title: 'Uma Nova Historia', artist: 'Fernandinho', videos: '1.9M+', growth: '+310%', category: 'Praise', tip: 'SOM #1 da Serie 5. Perfeito pra posts de fidelidade.', searchTerm: 'fernandinho uma nova historia' },
@@ -62,7 +62,7 @@ function startDashboard() {
   app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
   app.use('/output', express.static(OUTPUT_DIR, staticOpts));
 
-  // ── DEDICATED DOWNLOAD ROUTE ” handles Unicode filenames properly ──
+  // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
   const VIDEOS_DIR = path.join(OUTPUT_DIR, 'videos');
   // Helper: find video in output root, videos subdir, or fuzzy match (accent-insensitive)
   function resolveVideoPath(filename) {
@@ -101,7 +101,7 @@ function startDashboard() {
     stream.pipe(res);
   });
 
-  // ── DEDICATED VIDEO STREAM ROUTE ” for reliable playback ──
+  // ── DEDICATED VIDEO STREAM ROUTE — for reliable playback ──
   app.get('/video/:filename', (req, res) => {
     const filename = decodeURIComponent(req.params.filename);
     const filePath = resolveVideoPath(filename);
@@ -136,7 +136,7 @@ function startDashboard() {
     }
   });
 
-  // ── DIAGNOSTIC ENDPOINT ” verify all files on Railway ──
+  // ── DIAGNOSTIC ENDPOINT — verify all files on Railway ──
   app.get('/api/diagnostic', (req, res) => {
     const allFiles = fs.existsSync(OUTPUT_DIR) ? fs.readdirSync(OUTPUT_DIR) : [];
     const mp4Files = allFiles.filter(f => f.endsWith('.mp4'));
@@ -928,7 +928,7 @@ function startDashboard() {
   `;
 
   /* ═══════════════════════════════════════════════════════════
-     MAIN DASHBOARD ” / route
+     MAIN DASHBOARD — / route
      ═══════════════════════════════════════════════════════════ */
   app.get('/', (req, res) => {
     const stats = getStats();
@@ -956,7 +956,7 @@ function startDashboard() {
           <div class="day-separator" id="day-${p.day}">
             <div class="day-number">${p.day}</div>
             <div class="day-info">
-              <div class="day-label">📅 Dia ${p.day} ” ${dayNames[p.day] || ''}</div>
+              <div class="day-label">📅 Dia ${p.day} — ${dayNames[p.day] || ''}</div>
               <div class="day-date">3 posts programados</div>
             </div>
             <div class="day-themes">
@@ -1100,7 +1100,7 @@ function startDashboard() {
     <div class="tab-content active" id="tab-posts">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">📱 TODOS OS 21 POSTS ” PRONTOS PARA POSTAR</div>
+          <div class="section-title">📱 TODOS OS 21 POSTS — PRONTOS PARA POSTAR</div>
           <span class="section-badge">7 dias Ã— 3/dia</span>
         </div>
 
@@ -1159,7 +1159,7 @@ function startDashboard() {
     <div class="tab-content" id="tab-captions">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">📝 LEGENDAS PRONTAS ” CLIQUE PARA COPIAR</div>
+          <div class="section-title">📝 LEGENDAS PRONTAS — CLIQUE PARA COPIAR</div>
           <span class="section-badge">Toque em qualquer legenda para copiar</span>
         </div>
         <div class="quick-copy-grid">
@@ -1184,7 +1184,7 @@ function startDashboard() {
     <div class="tab-content" id="tab-music">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">🎵 TOP 20 MÃšSICAS VIRAIS GOSPEL ” TIKTOK 2026</div>
+          <div class="section-title">🎵 TOP 20 MÃšSICAS VIRAIS GOSPEL — TIKTOK 2026</div>
           <span class="section-badge">Ranking por engajamento</span>
         </div>
         <div style="padding:14px;background:rgba(212,168,83,0.06);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:20px;font-size:0.75rem;color:var(--text-secondary);">
@@ -1376,7 +1376,7 @@ function getRotinaSectionHTML() {
     { title: '📱 Seguir 10-15 criadores gospel', desc: 'Buscar #gospel #fé → seguir contas ativas do nicho', time: '12:30', timeClass: 'slot-afternoon' },
     { title: '💬 Responder TODOS os comentários', desc: 'Respostas geram notificações = mais engajamento = algoritmo te promove', time: 'Qualquer hora', timeClass: '' },
     { title: '🌙 Post da Noite (20:00)', desc: 'Upload vídeo emocional + legenda + música', time: '20:00', timeClass: 'slot-evening' },
-    { title: '🌟 Comentar em 5 vídeos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha ” seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
+    { title: '🌟 Comentar em 5 vídeos de criadores GRANDES', desc: 'Isaias Saad, Fernandinho, Gabriela Rocha — seu nome aparece no feed deles', time: '21:00', timeClass: 'slot-evening' },
   ];
 
   const comments = [
@@ -1413,14 +1413,14 @@ function getRotinaSectionHTML() {
             <input type="checkbox" style="margin-top:3px;accent-color:var(--red);width:16px;height:16px;cursor:pointer;" onclick="event.stopPropagation()">
             <div style="flex:1;">
               <div style="font-size:0.82rem;font-weight:600;">🔴 LIVE DE ORAÃ‡ÃƒO (Domingo 20h)</div>
-              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oração ao vivo ” MAIOR acelerador de crescimento!</div>
+              <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oração ao vivo — MAIOR acelerador de crescimento!</div>
             </div>
             <span style="font-size:0.62rem;padding:4px 10px;background:rgba(255,45,85,0.2);color:var(--red);border-radius:20px;font-weight:600;">LIVE</span>
           </div>
         ` : ''}
       </div>
 
-      <div class="section-title" style="margin-bottom:12px;">💬 COMENTÁRIOS PRONTOS ” CLIQUE PARA COPIAR</div>
+      <div class="section-title" style="margin-bottom:12px;">💬 COMENTÁRIOS PRONTOS — CLIQUE PARA COPIAR</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px;margin-bottom:28px;">
         ${comments.map(c => `
           <div style="padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.75rem;color:var(--text-secondary);cursor:pointer;transition:all 0.2s;" onclick="navigator.clipboard.writeText('${c.replace(/'/g, "\\'")}');showToast('💬 Comentário copiado!');this.style.borderColor='var(--gold-border)'" onmouseenter="this.style.background='var(--bg-card-hover)'" onmouseleave="this.style.background='var(--bg-card)'">${c}</div>
@@ -1449,7 +1449,7 @@ function getRotinaSectionHTML() {
       </div>
 
       <div style="padding:12px 16px;background:var(--gold-bg);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:0.72rem;color:var(--text-secondary);">
-        ✨ <strong style="color:var(--gold);">DICA:</strong> Comente nos vídeos RECENTES deles (últimas 2h) ” seu comentário fica no topo e outros seguidores veem o seu perfil!
+        ✨ <strong style="color:var(--gold);">DICA:</strong> Comente nos vídeos RECENTES deles (últimas 2h) — seu comentário fica no topo e outros seguidores veem o seu perfil!
       </div>
     </div>
   `;
