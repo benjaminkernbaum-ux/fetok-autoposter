@@ -62,8 +62,13 @@ function startDashboard() {
   app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
   app.use('/output', express.static(OUTPUT_DIR, staticOpts));
 
-  // ── TikTok URL Verification — serve public/ dir at /download/ ──
+  // ── TikTok URL Verification — exact match route + fallback static ──
   const PUBLIC_DIR = path.resolve(__dirname, '../public');
+  app.get('/download/tiktokaX40EUwMYHkVqEmiZutktM7wFltzsQm5.txt', (req, res) => {
+    res.set('Content-Type', 'text/plain; charset=utf-8');
+    res.set('Cache-Control', 'no-cache');
+    res.send('tiktokaX40EUwMYHkVqEmiZutktM7wFltzsQm5');
+  });
   app.use('/download', express.static(PUBLIC_DIR));
 
   // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
