@@ -62,6 +62,10 @@ function startDashboard() {
   app.use('/images', express.static(path.join(OUTPUT_DIR, 'ai_images')));
   app.use('/output', express.static(OUTPUT_DIR, staticOpts));
 
+  // ── TikTok URL Verification — serve public/ dir at /download/ ──
+  const PUBLIC_DIR = path.resolve(__dirname, '../public');
+  app.use('/download', express.static(PUBLIC_DIR));
+
   // ── DEDICATED DOWNLOAD ROUTE — handles Unicode filenames properly ──
   const VIDEOS_DIR = path.join(OUTPUT_DIR, 'videos');
   // Helper: find video in output root, videos subdir, or fuzzy match (accent-insensitive)
