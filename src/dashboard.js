@@ -197,6 +197,50 @@ function startDashboard() {
 
   app.get('/api/music', (req, res) => { res.json(VIRAL_MUSIC); });
 
+  // ── TIKTOK OAUTH CALLBACK ROUTE ──
+  app.get('/callback', async (req, res) => {
+    const code = req.query.code;
+    const error = req.query.error;
+    if (error) {
+      return res.status(400).send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><div style="text-align:center"><h1 style="color:#ff2d55">Error</h1><p>' + error + '</p></div></body></html>');
+    }
+    if (code) {
+      return res.send('<html><body style="background:#06060b;color:#fff;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0"><div style="text-align:center;max-width:600px"><h1 style="color:#d4a853">FeTok OAuth OK</h1><p style="color:rgba(255,255,255,0.7);margin:20px 0">Auth code received. Copy the full URL and paste in terminal.</p><textarea style="width:100%;height:80px;background:#111;color:#d4a853;border:1px solid rgba(212,168,83,0.3);border-radius:8px;padding:12px;font-family:monospace;font-size:12px" readonly onclick="this.select()">' + req.protocol + '://' + req.get('host') + req.originalUrl + '</textarea></div></body></html>');
+    }
+    res.redirect('/');
+  });
+
+  // ── TIKTOK STATUS API ──
+  app.get('/api/tiktok/status', (req, res) => {
+    const tokenFile = path.join(OUTPUT_DIR, 'tiktok_tokens.json');
+    if (!fs.existsSync(tokenFile)) {
+      return res.json({ status: 'not_configured' });
+    }
+    const tokens = JSON.parse(fs.readFileSync(tokenFile, 'utf8'));
+    const remainingMs = (tokens.expires_at || 0) - Date.now();
+    res.json({
+      status: remainingMs > 0 ? 'active' : 'expired',
+      open_id: tokens.open_id,
+      scope: tokens.scope,
+      expires_in_hours: remainingMs > 0 ? Math.round(remainingMs / 3600000 * 10) / 10 : 0,
+      refreshed_at: tokens.refreshed_at,
+      has_refresh_token: !!tokens.refresh_token,
+    });
+  });
+
+  // ── MANUAL POST TRIGGER ──
+  app.post('/api/tiktok/post-now', async (req, res) => {
+    try {
+      const { createPost } = require('./index');
+      const slot = req.query.slot || 'morning';
+      console.log('Manual TikTok post triggered (slot: ' + slot + ')');
+      const result = await createPost(slot);
+      res.json({ success: true, result });
+    } catch (err) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
   // ── MONETIZATION API ENDPOINTS ──
   const {
     MONETIZATION_PILLARS, SUBSCRIPTION_TIERS, AFFILIATE_PRODUCTS,
@@ -1101,7 +1145,7 @@ function startDashboard() {
       <div class="section">
         <div class="section-header">
           <div class="section-title">📱 TODOS OS 21 POSTS — PRONTOS PARA POSTAR</div>
-          <span class="section-badge">7 dias Ã— 3/dia</span>
+          <span class="section-badge">7 dias × 3/dia</span>
         </div>
 
         <!-- Filters -->
@@ -1180,11 +1224,11 @@ function startDashboard() {
       </div>
     </div>
 
-    <!-- ═══ TAB: MÃšSICAS VIRAIS ═══ -->
+    <!-- ═══ TAB: MÚSICAS VIRAIS ═══ -->
     <div class="tab-content" id="tab-music">
       <div class="section">
         <div class="section-header">
-          <div class="section-title">🎵 TOP 20 MÃšSICAS VIRAIS GOSPEL — TIKTOK 2026</div>
+          <div class="section-title">🎵 TOP 20 MÚSICAS VIRAIS GOSPEL — TIKTOK 2026</div>
           <span class="section-badge">Ranking por engajamento</span>
         </div>
         <div style="padding:14px;background:rgba(212,168,83,0.06);border:1px solid var(--gold-border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin-bottom:20px;font-size:0.75rem;color:var(--text-secondary);">
@@ -1211,7 +1255,7 @@ function startDashboard() {
       </div>
 
       <div class="section">
-        <div class="section-title" style="margin-bottom:16px;">⚡ ESTRATÃ‰GIA MUSICAL PARA VIRALIZAÃ‡ÃƒO</div>
+        <div class="section-title" style="margin-bottom:16px;">⚡ ESTRATÉGIA MUSICAL PARA VIRALIZAÇÃO</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
             <h3 style="font-size:0.85rem;margin-bottom:8px;">🔥 Regra #1: Sons em Alta</h3>
@@ -1219,7 +1263,7 @@ function startDashboard() {
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
             <h3 style="font-size:0.85rem;margin-bottom:8px;">🎯 Regra #2: Match com Conteúdo</h3>
-            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÃ‡ÃƒO → musicas suaves. Posts de FORÃ‡A → músicas com energia. Posts EMOCIONAIS → músicas que fazem chorar.</p>
+            <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.5;">Posts de PROTEÇÃO → musicas suaves. Posts de FORÇA → músicas com energia. Posts EMOCIONAIS → músicas que fazem chorar.</p>
           </div>
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;">
             <h3 style="font-size:0.85rem;margin-bottom:8px;">⏱️ Regra #3: Timing</h3>
@@ -1238,7 +1282,7 @@ function startDashboard() {
       ${getRotinaSectionHTML()}
     </div>
 
-    <!-- ═══ TAB: MONETIZAÃ‡ÃƒO ═══ -->
+    <!-- ═══ TAB: MONETIZAÇÃO ═══ -->
     <div class="tab-content" id="tab-monetize">
       ${monetizeHTML}
     </div>
@@ -1380,13 +1424,13 @@ function getRotinaSectionHTML() {
   ];
 
   const comments = [
-    '🙏 Que palavra poderosa! Isso tocou meu coração. AMÃ‰M!',
+    '🙏 Que palavra poderosa! Isso tocou meu coração. AMÉM!',
     'Deus te abençoe por compartilhar isso! Salvei pra reler 📖',
     'Esse versículo mudou meu dia INTEIRO! Glória a Deus 🔥',
-    'AMÃ‰M! Isso não foi coincidência, Deus me trouxe até aqui ✝️',
+    'AMÉM! Isso não foi coincidência, Deus me trouxe até aqui ✝️',
     'Chorei com esse vídeo 😭🙏 Deus é maravilhoso!',
     'Quem precisa ouvir isso HOJE? Marque nos comentários! ❤️',
-    'Obrigado Senhor por essa palavra! Comenta AMÃ‰M quem recebe 🙏',
+    'Obrigado Senhor por essa palavra! Comenta AMÉM quem recebe 🙏',
     'Isso é pra mim! O Senhor está falando comigo nesse momento 💛✝️',
   ];
 
@@ -1412,7 +1456,7 @@ function getRotinaSectionHTML() {
           <div class="rotina-check" style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:rgba(255,45,85,0.05);border:1px solid rgba(255,45,85,0.2);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;" onclick="this.querySelector('input').click()">
             <input type="checkbox" style="margin-top:3px;accent-color:var(--red);width:16px;height:16px;cursor:pointer;" onclick="event.stopPropagation()">
             <div style="flex:1;">
-              <div style="font-size:0.82rem;font-weight:600;">🔴 LIVE DE ORAÃ‡ÃƒO (Domingo 20h)</div>
+              <div style="font-size:0.82rem;font-weight:600;">🔴 LIVE DE ORAÇÃO (Domingo 20h)</div>
               <div style="font-size:0.68rem;color:var(--text-tertiary);">30-60 min de oração ao vivo — MAIOR acelerador de crescimento!</div>
             </div>
             <span style="font-size:0.62rem;padding:4px 10px;background:rgba(255,45,85,0.2);color:var(--red);border-radius:20px;font-weight:600;">LIVE</span>

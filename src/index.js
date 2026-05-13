@@ -3,7 +3,7 @@
  * Runs on Railway 24/7
  * 
  * Features:
- * - Cron scheduler (3x/day at 6h, 12h, 20h BRT)
+ * - Cron scheduler (4x/day at 6h, 11h, 17h, 21h BRT)
  * - Auto-generates verse images + videos
  * - Dashboard to monitor schedule
  * - TikTok API posting (when token configured)
@@ -38,7 +38,7 @@ function saveHistory() {
 }
 
 /**
- * Main post pipeline — generate + optionally publish
+ * Main post pipeline — generate + optionally publish to TikTok
  */
 async function createPost(slot) {
   const themeMap = {
@@ -83,19 +83,22 @@ async function createPost(slot) {
     fs.writeFileSync(captionFile, caption);
     console.log(`📝 Caption: ✅`);
 
-    // 4. Try TikTok API posting (if configured)
+    // 4. Post to TikTok via Content Posting API
     let posted = false;
-    if (process.env.TIKTOK_ACCESS_TOKEN) {
+    let postResult = null;
+    if (process.env.TIKTOK_ACCESS_TOKEN || process.env.TIKTOK_CLIENT_KEY) {
       try {
-        // const { postToTikTok } = require('./tiktokPoster');
-        // await postToTikTok(videoPath, caption);
-        // posted = true;
-        console.log(`📤 TikTok API: ⏳ (not yet configured)`);
+        const { postToTikTok } = require('./tiktokPoster');
+        const baseUrl = process.env.PUBLIC_BASE_URL || 'https://web-production-0662.up.railway.app';
+        const videoUrl = `${baseUrl}/download/${path.basename(videoPath)}`;
+        postResult = await postToTikTok(videoUrl, caption, verse);
+        posted = postResult.success;
+        console.log(`📤 TikTok: ${posted ? '✅ Published!' : '❌ ' + (postResult.error || 'Failed')}`);
       } catch (err) {
         console.log(`📤 TikTok API: ❌ ${err.message}`);
       }
     } else {
-      console.log(`📤 TikTok API: ⏸️  (no token — manual upload needed)`);
+      console.log(`📤 TikTok API: ⏸️  (no credentials — set TIKTOK_CLIENT_KEY in env)`);
     }
 
     // 5. Send webhook notification
@@ -137,33 +140,40 @@ async function createPost(slot) {
 }
 
 /**
- * Start the scheduler
+ * Start the 4x/day automated scheduler
  */
 function startScheduler() {
   console.log(`\n🚀 FéTok Auto-Poster Started!`);
   console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
   console.log(`📊 Verses: ${getStats().total} total, ${getStats().remaining} remaining`);
-  console.log(`⏰ Schedule: 06:00, 12:00, 20:00 (BRT / UTC-3)\n`);
+  console.log(`⏰ Schedule: 06:00, 11:00, 17:00, 21:00 (BRT / UTC-3)`);
+  console.log(`📤 TikTok API: ${process.env.TIKTOK_CLIENT_KEY ? '✅ ENABLED' : '⏸️ DISABLED'}\n`);
 
-  // Schedule: 06:00 BRT = 09:00 UTC
+  // 06:00 BRT = 09:00 UTC — Morning devotional
   cron.schedule('0 9 * * *', () => {
     console.log('⏰ CRON: Morning post (06:00 BRT)');
     createPost('morning');
   }, { timezone: 'UTC' });
 
-  // Schedule: 12:00 BRT = 15:00 UTC
-  cron.schedule('0 15 * * *', () => {
-    console.log('⏰ CRON: Afternoon post (12:00 BRT)');
+  // 11:00 BRT = 14:00 UTC — Midday boost
+  cron.schedule('0 14 * * *', () => {
+    console.log('⏰ CRON: Midday post (11:00 BRT)');
     createPost('afternoon');
   }, { timezone: 'UTC' });
 
-  // Schedule: 20:00 BRT = 23:00 UTC
-  cron.schedule('0 23 * * *', () => {
-    console.log('⏰ CRON: Evening post (20:00 BRT)');
+  // 17:00 BRT = 20:00 UTC — Evening prime time
+  cron.schedule('0 20 * * *', () => {
+    console.log('⏰ CRON: Evening post (17:00 BRT)');
     createPost('evening');
   }, { timezone: 'UTC' });
 
-  console.log(`✅ Cron jobs scheduled. Waiting for next trigger...\n`);
+  // 21:00 BRT = 00:00 UTC — Night viral window
+  cron.schedule('0 0 * * *', () => {
+    console.log('⏰ CRON: Night post (21:00 BRT)');
+    createPost('evening');
+  }, { timezone: 'UTC' });
+
+  console.log(`✅ 4 cron jobs scheduled. Waiting for next trigger...\n`);
 }
 
 // Export for dashboard use
@@ -182,7 +192,7 @@ setTimeout(() => {
     console.log('✅ Font cache rebuilt');
   } catch(e) { console.log('⚠️ fc-cache not available (OK on Windows)'); }
 
-  console.log('\n🎬 Auto-generating cinematic Serie 5 videos...');
+  console.log('\n🎬 Auto-generating cinematic videos...');
   const { spawn } = require('child_process');
   const child = spawn('node', [path.join(__dirname, 'batchSerie3.js'), '--force'], { cwd: __dirname });
   child.stdout.on('data', d => process.stdout.write(d));

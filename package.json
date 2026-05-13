@@ -7,7 +7,11 @@
     "start": "node src/index.js",
     "generate": "node src/batchGenerate.js",
     "live-generate": "node src/liveVideoGenerator.js",
-    "dev": "node src/index.js"
+    "dev": "node src/index.js",
+    "tiktok:bootstrap": "node src/tiktokAuth.js --bootstrap",
+    "tiktok:check": "node src/tiktokAuth.js --check",
+    "tiktok:dry-run": "node src/tiktokPoster.js --dry-run",
+    "tiktok:test-post": "node src/tiktokPoster.js"
   },
   "dependencies": {
     "@sefinek/google-tts-api": "^2.1.13",
