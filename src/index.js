@@ -89,9 +89,8 @@ async function createPost(slot) {
     if (process.env.TIKTOK_ACCESS_TOKEN || process.env.TIKTOK_CLIENT_KEY) {
       try {
         const { postToTikTok } = require('./tiktokPoster');
-        const baseUrl = process.env.PUBLIC_BASE_URL || 'https://web-production-0662.up.railway.app';
-        const videoUrl = `${baseUrl}/download/${path.basename(videoPath)}`;
-        postResult = await postToTikTok(videoUrl, caption, verse);
+        // FILE_UPLOAD mode — pass local file path directly
+        postResult = await postToTikTok(videoPath, caption, verse);
         posted = postResult.success;
         console.log(`📤 TikTok: ${posted ? '✅ Published!' : '❌ ' + (postResult.error || 'Failed')}`);
       } catch (err) {
