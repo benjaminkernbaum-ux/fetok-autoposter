@@ -127,20 +127,32 @@ async function initVideoUpload(accessToken, videoFilePath, caption, verse, creat
   console.log(`   AI Generated: ✅ (disclosed)`);
   console.log(`   Upload mode: FILE_UPLOAD (direct binary)`);
 
-  const response = await axios.post(
-    `${API_BASE}/post/publish/video/init/`,
-    payload,
-    {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+  let response;
+  try {
+    response = await axios.post(
+      `${API_BASE}/post/publish/video/init/`,
+      payload,
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      }
+    );
+  } catch (err) {
+    // Log the full error response from TikTok
+    if (err.response) {
+      console.error(`   ❌ TikTok init HTTP ${err.response.status}`);
+      console.error(`   Response: ${JSON.stringify(err.response.data)}`);
+      throw new Error(`TikTok init failed (HTTP ${err.response.status}): ${JSON.stringify(err.response.data)}`);
     }
-  );
+    throw err;
+  }
 
   const data = response.data.data;
 
   if (response.data.error?.code) {
+    console.error(`   ❌ TikTok error: ${JSON.stringify(response.data.error)}`);
     throw new Error(`TikTok init failed: ${response.data.error.code} — ${response.data.error.message}`);
   }
 
