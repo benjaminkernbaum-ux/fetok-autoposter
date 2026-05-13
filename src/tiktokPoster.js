@@ -86,12 +86,16 @@ async function initVideoPost(accessToken, videoUrl, caption, verse, creatorInfo)
   const title = buildTitle(caption, verse);
 
   // Determine best privacy level
+  // NOTE: Sandbox/unaudited apps MUST use SELF_ONLY — TikTok returns 403 otherwise
   const privacyOptions = creatorInfo.privacy_level_options || [];
-  let privacyLevel = 'PUBLIC_TO_EVERYONE';
-  if (!privacyOptions.includes('PUBLIC_TO_EVERYONE')) {
-    // Unaudited app or restricted account — fall back
+  const isSandbox = process.env.TIKTOK_CLIENT_KEY && process.env.TIKTOK_CLIENT_KEY.startsWith('sb');
+  let privacyLevel = isSandbox ? 'SELF_ONLY' : 'PUBLIC_TO_EVERYONE';
+  if (!isSandbox && !privacyOptions.includes('PUBLIC_TO_EVERYONE')) {
     privacyLevel = privacyOptions.includes('SELF_ONLY') ? 'SELF_ONLY' : privacyOptions[0] || 'SELF_ONLY';
     console.log(`⚠️  Public posting not available. Using: ${privacyLevel}`);
+  }
+  if (isSandbox) {
+    console.log(`   🧪 Sandbox mode detected — using SELF_ONLY privacy`);
   }
 
   const payload = {
