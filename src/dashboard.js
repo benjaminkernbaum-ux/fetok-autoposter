@@ -64,10 +64,17 @@ function startDashboard() {
 
   // ── TikTok URL Verification — exact match route + fallback static ──
   const PUBLIC_DIR = path.resolve(__dirname, '../public');
+  // Sandbox verification
   app.get('/download/tiktokaX40EUwMYHkVqEmiZutktM7wFltzsQm5.txt', (req, res) => {
     res.set('Content-Type', 'text/plain; charset=utf-8');
     res.set('Cache-Control', 'no-cache');
     res.send('tiktokaX40EUwMYHkVqEmiZutktM7wFltzsQm5');
+  });
+  // Production verification (root-level)
+  app.get('/tiktokdsmLmJUTOefIdRQtPq0sle2RcnKdexOy.txt', (req, res) => {
+    res.set('Content-Type', 'text/plain; charset=utf-8');
+    res.set('Cache-Control', 'no-cache');
+    res.send('tiktokdsmLmJUTOefIdRQtPq0sle2RcnKdexOy');
   });
   app.use('/download', express.static(PUBLIC_DIR));
 
@@ -206,7 +213,14 @@ function startDashboard() {
 
   app.get('/api/music', (req, res) => { res.json(VIRAL_MUSIC); });
 
-  // ── TIKTOK OAUTH CALLBACK ROUTE ──
+  // ── TIKTOK OAUTH CALLBACK ROUTES ──
+  // Production redirect URI: /api/tiktok/callback
+  // Legacy/Sandbox redirect URI: /callback
+  app.get('/api/tiktok/callback', async (req, res) => {
+    // Forward to /callback handler
+    req.url = '/callback?' + require('url').parse(req.url).query;
+    res.redirect('/callback?' + (req.query.code ? 'code=' + req.query.code : '') + '&scopes=' + (req.query.scopes || '') + '&state=' + (req.query.state || ''));
+  });
   app.get('/callback', async (req, res) => {
     const code = req.query.code;
     const error = req.query.error;
