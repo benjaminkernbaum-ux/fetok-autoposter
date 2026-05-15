@@ -1,0 +1,136 @@
+{
+  "id": "jonas_e_a_baleia",
+  "title": "Jonas e a Baleia",
+  "slug": "jonas",
+  "hookSeconds": 3,
+  "style": {
+    "visualAnchor": "epic biblical oil painting cinematic dramatic lighting volumetric god rays renaissance composition photorealistic 8k detailed faces hyperrealistic skin texture",
+    "negative": "cartoon, anime, blurry, watermark, text, logo, modern clothes, plastic, deformed hands, extra fingers, cropped face, low quality, oversaturated",
+    "characterLock": "homem hebreu, 35 anos, barba escura cerrada, túnica de linho desgastada cor terra, olhos castanhos profundos, pele bronzeada do sol do deserto",
+    "aspect": "9:16",
+    "colorGrade": "teal and orange Hollywood grade, deep shadows, golden highlights"
+  },
+  "voice": {
+    "stability": 0.32,
+    "similarity": 0.78,
+    "style": 0.65,
+    "speakerBoost": true,
+    "model": "eleven_multilingual_v2"
+  },
+  "music": {
+    "track": "ambient_tension_01.mp3",
+    "duckDb": -18,
+    "fadeInSec": 1.2,
+    "fadeOutSec": 2.0
+  },
+  "shots": [
+    {
+      "id": "JN00",
+      "type": "hook",
+      "lines": [
+        "Ele tentou fugir de Deus.",
+        "E acabou no fundo do mar, dentro de um peixe gigante."
+      ],
+      "prompt": "Close-up dramatic of {characterLock}, terrified eyes wide open, lit by single shaft of stormy blue light from above, raindrops on his face, dark ocean depths behind him, swirling shadows of a massive sea creature suggested in the background. Vertical 9:16 composition, face centered upper third.",
+      "kenBurns": "in",
+      "zoomStart": 1.0,
+      "zoomEnd": 1.15
+    },
+    {
+      "id": "JN01",
+      "type": "scene",
+      "lines": [
+        "Deus disse a Jonas: vai à cidade de Nínive.",
+        "Mas Jonas tinha outro plano."
+      ],
+      "prompt": "Wide establishing shot of ancient port of Jaffa at golden hour, {characterLock} walking with purpose toward a wooden Phoenician merchant ship, sails rolled, dock workers carrying amphoras, seagulls, warm orange sun low on horizon casting long shadows. Vertical 9:16 composition.",
+      "kenBurns": "out",
+      "zoomStart": 1.15,
+      "zoomEnd": 1.0
+    },
+    {
+      "id": "JN02",
+      "type": "scene",
+      "lines": [
+        "No meio do mar, uma tempestade brutal.",
+        "O navio quase partindo em dois."
+      ],
+      "prompt": "Massive storm at sea at night, towering 20-meter waves crashing over a small wooden ship, lightning striking the mast, sailors gripping ropes in terror, rain horizontal, dark green-black water, white foam exploding. Dramatic low angle. Vertical 9:16 composition.",
+      "kenBurns": "in",
+      "zoomStart": 1.0,
+      "zoomEnd": 1.2
+    },
+    {
+      "id": "JN03",
+      "type": "scene",
+      "lines": [
+        "Jonas confessou: a culpa é minha.",
+        "Me joguem no mar."
+      ],
+      "prompt": "{characterLock} mid-air being thrown from the ship into raging black ocean, arms outstretched, expression of surrender and acceptance, lightning illuminating his silhouette against towering wave, rain, dramatic high contrast. Vertical 9:16 composition.",
+      "kenBurns": "out",
+      "zoomStart": 1.1,
+      "zoomEnd": 1.0
+    },
+    {
+      "id": "JN04",
+      "type": "scene",
+      "lines": [
+        "E Deus preparou um grande peixe.",
+        "Que engoliu Jonas inteiro."
+      ],
+      "prompt": "Underwater shot, enormous biblical sea creature (massive whale-like leviathan) opening cavernous mouth, bioluminescent plankton swirling, {characterLock} small silhouette being pulled in, dark blue depths, god rays piercing from surface above. Awe-inspiring scale. Vertical 9:16 composition.",
+      "kenBurns": "in",
+      "zoomStart": 1.0,
+      "zoomEnd": 1.25
+    },
+    {
+      "id": "JN05",
+      "type": "scene",
+      "lines": [
+        "Três dias no escuro total.",
+        "Jonas pensou: aqui eu morro."
+      ],
+      "prompt": "Inside the belly of the giant fish, {characterLock} sitting hunched, soaked, knees pulled to chest, single faint shaft of phosphorescent green-blue light from above, wet organic walls glistening, water around his feet, claustrophobic, ribs of the creature visible. Vertical 9:16 composition.",
+      "kenBurns": "out",
+      "zoomStart": 1.2,
+      "zoomEnd": 1.0
+    },
+    {
+      "id": "JN06",
+      "type": "scene",
+      "lines": [
+        "Mas no fundo, Jonas orou.",
+        "E Deus ouviu."
+      ],
+      "prompt": "Close-up of {characterLock} face, eyes closed, tear rolling down cheek, lips moving in prayer, faint warm golden light beginning to break through the darkness behind him, his hands clasped, raw emotion, hope returning. Vertical 9:16 composition.",
+      "kenBurns": "in",
+      "zoomStart": 1.0,
+      "zoomEnd": 1.1
+    },
+    {
+      "id": "JN07",
+      "type": "scene",
+      "lines": [
+        "O peixe o vomitou em terra seca.",
+        "Jonas estava vivo. E mudado."
+      ],
+      "prompt": "{characterLock} on his hands and knees on a sandy beach at sunrise, water and seaweed around him, the massive creature receding into the ocean behind, golden warm sunrise light, steam rising from wet sand, expression of disbelief and gratitude. Vertical 9:16 composition.",
+      "kenBurns": "out",
+      "zoomStart": 1.1,
+      "zoomEnd": 1.0
+    },
+    {
+      "id": "JN08",
+      "type": "cta",
+      "lines": [
+        "Você não pode fugir de Deus.",
+        "Comenta AMÉM se essa história tocou você."
+      ],
+      "prompt": "{characterLock} silhouette walking toward sunrise on a long empty beach, his shadow stretching long behind him, sky exploding in warm orange and pink, single bird flying across the sun, sense of redemption and new purpose. Vertical 9:16 composition.",
+      "kenBurns": "in",
+      "zoomStart": 1.0,
+      "zoomEnd": 1.18
+    }
+  ]
+}
