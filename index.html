@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luz da Palavra — Hub de Conteúdo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      background: linear-gradient(180deg, #1a1206 0%, #0a0a0a 100%);
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    header p {
+      color: #888;
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      padding: 30px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #141414;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #222;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #FFD700;
+    }
+    .card video {
+      width: 100%;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+      background: #000;
+      display: block;
+    }
+    .card-info {
+      padding: 16px;
+    }
+    .card-info .number {
+      display: inline-block;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #000;
+      font-weight: 900;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    .card-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-info .ref {
+      color: #888;
+      font-size: 0.8rem;
+    }
+    .card-info .meta {
+      color: #555;
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #333;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✝ Luz da Palavra</h1>
+    <p>Conteúdo Cinematográfico — Pronto para TikTok</p>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    Stoic Content Factory v2.0 — Gerado automaticamente
+  </footer>
+
+  <script>
+    const POSTS = [
+      {
+        num: 1,
+        title: "O Fardo Insuportável",
+        ref: "Mateus 11:28-30",
+        file: "01_O_Fardo_Insuportvel_Video_Pronto_TikTok.mp4"
+      },
+      {
+        num: 2,
+        title: "A Batalha Invisível",
+        ref: "Efésios 6:12",
+        file: "02_A_Batalha_Invisvel_Video_Pronto_TikTok.mp4"
+      },
+      {
+        num: 3,
+        title: "O Espelho da Identidade",
+        ref: "2 Coríntios 3:18",
+        file: "03_O_Espelho_da_Identidade_Video_Pronto_TikTok.mp4"
+      },
+      {
+        num: 4,
+        title: "O Dono da Tempestade",
+        ref: "Marcos 4:39",
+        file: "04_O_Dono_da_Tempestade_Video_Pronto_TikTok.mp4"
+      },
+      {
+        num: 5,
+        title: "O Labirinto da Mente",
+        ref: "João 14:6",
+        file: "05_O_Labirinto_da_Mente_Video_Pronto_TikTok.mp4"
+      }
+    ];
+
+    const grid = document.getElementById('grid');
+
+    POSTS.forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = `post-${post.num}`;
+      
+      const videoUrl = `/videos/${encodeURIComponent(post.file)}?v=${Date.now()}`;
+      
+      card.innerHTML = `
+        <video 
+          id="video-${post.num}"
+          src="${videoUrl}"
+          controls 
+          preload="metadata"
+          playsinline
+          poster=""
+        ></video>
+        <div class="card-info">
+          <span class="number">POST ${post.num}</span>
+          <h3>${post.title}</h3>
+          <p class="ref">📖 ${post.ref}</p>
+          <p class="meta" id="meta-${post.num}">Carregando...</p>
+        </div>
+      `;
+      grid.appendChild(card);
+
+      // Show duration when metadata loads
+      const video = card.querySelector('video');
+      video.addEventListener('loadedmetadata', () => {
+        const dur = Math.round(video.duration);
+        document.getElementById(`meta-${post.num}`).textContent = `⏱ ${dur}s`;
+      });
+      video.addEventListener('error', () => {
+        document.getElementById(`meta-${post.num}`).textContent = '❌ Erro ao carregar';
+      });
+    });
+  </script>
+</body>
+</html>
