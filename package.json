@@ -1,28 +1,10 @@
 {
-  "name": "fetok-autoposter",
+  "name": "luz-da-palavra-hub",
   "version": "1.0.0",
-  "description": "FéTok — Automated TikTok verse posting pipeline",
-  "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "generate": "node src/batchGenerate.js",
-    "live-generate": "node src/liveVideoGenerator.js",
-    "dev": "node src/index.js",
-    "tiktok:bootstrap": "node src/tiktokAuth.js --bootstrap",
-    "tiktok:check": "node src/tiktokAuth.js --check",
-    "tiktok:dry-run": "node src/tiktokPoster.js --dry-run",
-    "tiktok:test-post": "node src/tiktokPoster.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "@sefinek/google-tts-api": "^2.1.13",
-    "axios": "^1.6.2",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "ffmpeg-static": "^5.2.0",
-    "fluent-ffmpeg": "^2.1.3",
-    "node-cron": "^3.0.3",
-    "opentype.js": "^1.3.5",
-    "pureimage": "^0.4.18",
-    "sharp": "^0.33.5"
+    "express": "^4.18.2"
   }
 }
