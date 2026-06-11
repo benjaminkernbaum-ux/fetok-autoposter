@@ -2,38 +2,73 @@
   "posts": [
     {
       "id": 1,
-      "title": "Slide 1: O Fim da Era dos Setups Mágicos",
+      "title": "Carrossel 1 — O Fim da Era dos Setups Mágicos",
       "reference": "Stoic Market",
+      "slides": [
+        "/images/stoic/carousel_slide1_manifesto_1781180895683.png",
+        "/images/stoic/carousel_slide2_problema_1781180903174.png",
+        "/images/stoic/carousel_slide3_modelo_1781180911874.png",
+        "/images/stoic/carousel_slide4_relatorio_1781180934337.png",
+        "/images/stoic/carousel_slide5_cta_1781180940302.png"
+      ],
       "image": "/images/stoic/carousel_slide1_manifesto_1781180895683.png",
-      "caption": "O fim da era dos setups mágicos. 🛑\n\nA verdade que ninguém te conta no Instagram: cruzar duas médias móveis ou esperar o rompimento de uma linha de tendência não vai te enriquecer. Se fosse simples assim, qualquer algoritmo básico de R$ 20 rodando em um computador velho já teria dominado o mercado financeiro global.\n\nO mercado real é movido por forças estruturais: liquidez global, decisões de taxas de juros dos bancos centrais (FED, BCB), fluxos macroeconômicos e geopolítica.\n\nIgnorar a macroeconomia e tentar operar puramente \"gráfico limpo\" é o equivalente a pilotar um avião vendado em plena tempestade, torcendo para que a física mude de ideia.\n\nNa Stoic Academy, nós eliminamos o ruído emocional e focamos no que realmente importa:\n\n🧠 Estoicismo: Aceitar as condições do mercado como elas são, controlando apenas o nosso risco e as nossas reações.\n📊 Macro Quantitativa: Decisões baseadas em dados estruturais, medidas pelo nosso algoritmo proprietário (StoicScore).\n\nSe você está cansado de operar com base em palpites e quer ter acesso aos dados reais que movem o mercado todos os dias, o seu lugar é conosco.\n\n🔗 Para acessar nosso relatório diário gratuito e entrar no canal exclusivo do Telegram, clique no link da nossa bio: @stoic.academy.br\n\n---\n#trading #forex #macroeconomia #investimentos #mercadofinanceiro #estoicismo #daytrade #analisegrafica #stoicscore"
+      "caption": "O fim da era dos setups mágicos. 🎯\n\nA verdade que ninguém te conta no Instagram: cruzar duas médias móveis ou esperar o rompimento de uma linha de tendência não vai te enriquecer. Se fosse simples assim, qualquer algoritmo básico de R$ 20 rodando em um computador velho já teria dominado o mercado financeiro global.\n\nO mercado real é movido por forças estruturais: liquidez global, decisões de taxas de juros dos bancos centrais (FED, BCB), fluxos macroeconômicos e geopolítica.\n\nIgnorar a macroeconomia e tentar operar puramente \"gráfico limpo\" é o equivalente a pilotar um avião vendado em plena tempestade.\n\nNa Stoic Academy, nós eliminamos o ruído emocional e focamos no que realmente importa:\n\n🏛 Estoicismo: Aceitar as condições do mercado como elas são, controlando apenas o nosso risco.\n📊 Macro Quantitativa: Decisões baseadas em dados estruturais, medidas pelo nosso algoritmo proprietário (StoicScore).\n\nSe você está cansado de operar com base em palpites e quer ter acesso aos dados reais que movem o mercado todos os dias, o seu lugar é conosco.\n\n📍 Para acessar nosso relatório diário gratuito e entrar no canal exclusivo do Telegram, clique no link da nossa bio: @stoic.academy.br\n\n#trading #forex #macroeconomia #investimentos #mercadofinanceiro #estoicismo #daytrade #analisegrafica #stoicscore"
     },
     {
-      "id": 2,
-      "title": "Slide 2: A Realidade Crua dos Mercados",
+      "id": 6,
+      "title": "Carrossel 2 — 5 Erros que Destroem Traders Iniciantes",
       "reference": "Stoic Market",
-      "image": "/images/stoic/carousel_slide2_problema_1781180903174.png",
-      "caption": "O fim da era dos setups mágicos. 🛑\n\n(Ver legenda no slide 1)"
+      "slides": [
+        "/images/stoic/stoic_c2_slide1_1781189960125.png",
+        "/images/stoic/stoic_c2_slide2_1781189969338.png",
+        "/images/stoic/stoic_c2_slide3_1781189977892.png",
+        "/images/stoic/stoic_c2_slide4_1781189987116.png",
+        "/images/stoic/stoic_c2_slide5_1781190010488.png"
+      ],
+      "image": "/images/stoic/stoic_c2_slide1_1781189960125.png",
+      "caption": "5 ERROS que destroem traders iniciantes. ♟️\n\nVocê comete algum desses? Seja honesto.\n\n❌ ERRO #1 — OPERAR SEM STOP LOSS\n93% dos traders que quebram não usavam gestão de risco. Stop loss não é opcional, é oxigênio.\n\n❌ ERRO #2 — IGNORAR A MACROECONOMIA\nO gráfico mostra o passado. A macro mostra o futuro. Quem opera só candle, opera cego.\n\n❌ ERRO #3 — OPERAR POR EMOÇÃO\nMedo e ganância são os piores conselheiros financeiros. O mercado não se importa com seus sentimentos.\n\n❌ ERRO #4 — NÃO TER UM PLANO DE TRADE\nEntrar no mercado sem um plano escrito é jogar cassino. Planeje a entrada, o alvo e a saída ANTES.\n\n❌ ERRO #5 — ACHAR QUE VAI FICAR RICO RÁPIDO\nTrading é maratona, não sprint. Consistência > rentabilidade de um mês.\n\n✅ A Stoic Academy existe para eliminar esses erros da sua operação. Nós usamos dados macro, algoritmos proprietários e filosofia estoica para operar com disciplina absoluta.\n\n📍 Acesse o relatório diário gratuito no link da bio → @stoic.academy.br\n\n#trading #errosdetrader #forex #macrotrading #investimentos #mercadofinanceiro #estoicismo #daytrade #stoicscore"
     },
     {
-      "id": 3,
-      "title": "Slide 3: O Modelo de Decisão StoicScore",
+      "id": 11,
+      "title": "Carrossel 3 — Psicologia Estoica para Traders",
       "reference": "Stoic Market",
-      "image": "/images/stoic/carousel_slide3_modelo_1781180911874.png",
-      "caption": "O fim da era dos setups mágicos. 🛑\n\n(Ver legenda no slide 1)"
+      "slides": [
+        "/images/stoic/stoic_c3_slide1_1781190021378.png",
+        "/images/stoic/stoic_c3_slide2_1781190030335.png",
+        "/images/stoic/stoic_c3_slide3_1781190039351.png",
+        "/images/stoic/stoic_c3_slide4_1781190061795.png",
+        "/images/stoic/stoic_c3_slide5_1781190072297.png"
+      ],
+      "image": "/images/stoic/stoic_c3_slide1_1781190021378.png",
+      "caption": "PSICOLOGIA ESTOICA para traders. 🏛\n\nO mercado não te destrói. Suas emoções destroem.\n\nMarco Aurélio governou o Império Romano mais poderoso do mundo. Ele enfrentou guerras, pandemias e traições — e nunca perdeu o controle emocional. Essa é a mentalidade que aplicamos no trading.\n\n🛡 PRINCÍPIO #1 — AMOR FATI\n\"Aceite cada resultado. O mercado não é justo nem injusto. Ele simplesmente É.\"\nTomou um stop? Aceite. Aprenda. Siga o plano.\n\n🧭 PRINCÍPIO #2 — MEMENTO MORI\n\"Cada operação pode ser a última. Trate seu capital com respeito absoluto.\"\nNunca arrisque mais do que você pode perder. Preserve o capital para lutar outro dia.\n\n⚖️ PRINCÍPIO #3 — DICOTOMIA DO CONTROLE\n\"Controle o que depende de você: seu risco, seu plano, sua disciplina. O resto é mercado.\"\nVocê não controla o preço. Controle sua reação a ele.\n\nDomine sua mente. Domine o mercado. 🧠\n\n📍 Acesse o canal exclusivo e o relatório macro diário no link da bio → @stoic.academy.br\n\n#estoicismo #trading #psicologiadotrader #mindset #marcoaurelio #forex #macrotrading #investimentos #stoicacademy #controleemocional"
     },
     {
-      "id": 4,
-      "title": "Slide 4: Relatório Completo Diário",
+      "id": 16,
+      "title": "Carrossel 4 — Macro Trading: O Jogo dos Profissionais",
       "reference": "Stoic Market",
-      "image": "/images/stoic/carousel_slide4_relatorio_1781180934337.png",
-      "caption": "O fim da era dos setups mágicos. 🛑\n\n(Ver legenda no slide 1)"
+      "slides": [
+        "/images/stoic/stoic_c4_slide1_1781190082166.png",
+        "/images/stoic/stoic_c4_slide2_1781190090865.png",
+        "/images/stoic/stoic_c4_slide3_1781190112780.png",
+        "/images/stoic/stoic_c4_slide4_1781190123207.png",
+        "/images/stoic/stoic_c4_slide5_1781190133205.png"
+      ],
+      "image": "/images/stoic/stoic_c4_slide1_1781190082166.png",
+      "caption": "MACRO TRADING: O jogo dos profissionais. 🌍\n\nEnquanto você olha candles, eles olham o mundo.\n\nOs maiores fundos do planeta — Bridgewater, Citadel, Renaissance — não operam com \"suporte e resistência\". Eles operam MACROECONOMIA.\n\n❌ TRADER VAREJO:\n• Segue indicadores atrasados\n• Opera por emoção e \"feeling\"\n• Não entende taxas de juros\n• Resultado: inconsistência\n\n✅ MACRO TRADER:\n• Lê o cenário econômico global\n• Opera com dados e probabilidades\n• Antecipa movimentos do mercado\n• Resultado: consistência\n\nOS 3 PILARES DO MACRO TRADING:\n\n1️⃣ POLÍTICA MONETÁRIA (FED/BCB)\nDecisões de juros movem trilhões de dólares. Se você não acompanha, está operando no escuro.\n\n2️⃣ FLUXO DE CAPITAIS\nDinheiro institucional flui entre países, classes de ativos e moedas. Siga o smart money.\n\n3️⃣ SENTIMENTO INSTITUCIONAL\nO que os grandes players estão posicionando? COT reports, opções e derivativos contam a história.\n\nEnquanto o varejo adivinha, nós calculamos. 📊\n\n📍 Chega de operar no escuro. Relatório macro diário gratuito no link da bio → @stoic.academy.br\n\n#macrotrading #forex #economia #investimentos #mercadofinanceiro #fed #taxadejuros #tradingprofissional #stoicacademy #stoicscore"
     },
     {
-      "id": 5,
-      "title": "Slide 5: Junte-se à Elite",
+      "id": 21,
+      "title": "Carrossel 5 — O Poder do StoicScore",
       "reference": "Stoic Market",
-      "image": "/images/stoic/carousel_slide5_cta_1781180940302.png",
-      "caption": "O fim da era dos setups mágicos. 🛑\n\n(Ver legenda no slide 1)"
+      "slides": [
+        "/images/stoic/stoic_c5_slide1_1781190141964.png",
+        "/images/stoic/stoic_c5_slide2_1781190163347.png",
+        "/images/stoic/stoic_c5_slide3_1781190172984.png",
+        "/images/stoic/stoic_c5_slide4_1781190182969.png",
+        "/images/stoic/stoic_c5_slide5_1781190190458.png"
+      ],
+      "image": "/images/stoic/stoic_c5_slide1_1781190141964.png",
+      "caption": "O PODER DO STOICSCORE. 🧠⚡\n\nNosso algoritmo proprietário que lê o mercado por você.\n\nO StoicScore é um indicador macro-quantitativo exclusivo da Stoic Academy. Ele analisa 4 dimensões fundamentais do mercado e te entrega um número de 0 a 100 todos os dias:\n\n📊 OS 4 INPUTS DO STOICSCORE:\n\n1️⃣ TAXA DE JUROS → Decisões do FED e BCB que definem a direção do dinheiro global\n2️⃣ LIQUIDEZ GLOBAL → Volume de capital disponível no sistema financeiro mundial\n3️⃣ SENTIMENTO → Posicionamento institucional e indicadores de medo/ganância\n4️⃣ FLUXO CAMBIAL → Movimentação de moedas e força relativa entre economias\n\n🎯 COMO FUNCIONA:\n• Score 0-30 → Viés BEARISH (mercado de risco elevado)\n• Score 31-60 → Neutro (aguardar confirmação)\n• Score 61-100 → Viés BULLISH (ambiente favorável)\n\n❌ SEM STOICSCORE: Entrada aleatória → Resultado aleatório\n✅ COM STOICSCORE: Entrada calculada → Resultado consistente\n🏆 COM STOIC ACADEMY: Entrada calculada + Controle emocional → Resultado extraordinário\n\nQuer o StoicScore diário na sua mão? Relatório gratuito todo dia. 📱\n\n📍 LINK NA BIO → @stoic.academy.br\n\n#stoicscore #trading #algoritmo #macrotrading #forex #investimentos #mercadofinanceiro #inteligenciaartificial #dadosmacro #stoicacademy"
     }
   ]
 }

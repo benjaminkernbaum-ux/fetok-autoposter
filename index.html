@@ -1045,13 +1045,13 @@
   <!-- Tab 4: STOIC MARKET -->
   <div id="content-stoic" class="tab-content">
     <div class="stats stoic-stats" id="stoic-stats">
-      <div>Banco Ativo: <span>5</span> slides de carrossel configurados</div>
+      <div>Banco Ativo: <span>0</span> carrosséis prontos para postar</div>
     </div>
     <div style="background: rgba(0, 255, 102, 0.03); border: 1px solid rgba(0, 255, 102, 0.25); border-left: 4px solid var(--green-neon); border-radius: var(--radius); padding: 18px; margin-bottom: 24px; font-size: 0.82rem; line-height: 1.5;">
       <span style="font-weight: 800; color: var(--green-neon); display: block; margin-bottom: 8px; font-size: 0.95rem;">🚀 Kit de Postagem Stoic Academy / Stoic Market</span>
-      <p style="color: var(--text-secondary);">Aqui estão os slides do primeiro carrossel oficial para o seu Instagram <strong style="color:#fff;">@stoic.academy.br</strong>. Baixe as imagens sequencialmente e copie a legenda completa de trading.</p>
+      <p style="color: var(--text-secondary);">Carrosséis prontos para o Instagram <strong style="color:#fff;">@stoic.academy.br</strong>. Cada carrossel tem 5 slides. Navegue entre os slides, baixe todos de uma vez e copie a legenda completa.</p>
     </div>
-    <div class="grid" id="stoic-grid"></div>
+    <div id="stoic-carousels"></div>
   </div>
 
   <!-- Tab 2: STORIES OF ENGAGEMENT -->
@@ -1345,32 +1345,159 @@ Equipe Luz da Palavra.
       }
     }
 
-    // renderStoicPosts
+    // renderStoicPosts — carousel-grouped view
     function renderStoicPosts() {
-      const grid = document.getElementById('stoic-grid');
+      const container = document.getElementById('stoic-carousels');
       const stats = document.getElementById('stoic-stats');
-      grid.innerHTML = '';
-      stats.innerHTML = `<div>Banco Ativo: <span>${STOIC_POSTS.length}</span> slides de carrossel configurados</div>`;
+      container.innerHTML = '';
+      stats.innerHTML = `<div>Banco Ativo: <span style="color:var(--green-neon);font-weight:800;">${STOIC_POSTS.length}</span> carrosséis prontos para postar</div>`;
 
-      STOIC_POSTS.forEach((post, i) => {
-        const card = document.createElement('div');
-        card.className = 'card stoic-card';
-        card.innerHTML = `
-          <img src="${post.image}" alt="${post.title}" loading="lazy" onclick="openModal('${post.image}')">
-          <div class="card-overlay">
-            <div class="actions">
-              <button class="btn-download stoic-download" onclick="event.stopPropagation(); downloadImage('${post.image}', '${post.title}')">⬇ Baixar</button>
-              <button class="btn-copy" onclick="event.stopPropagation(); copyStoicCaption(${i})">📋 Legenda</button>
-            </div>
+      STOIC_POSTS.forEach((post, idx) => {
+        const slides = post.slides || [post.image];
+        const carouselId = 'stoic-carousel-' + idx;
+
+        const block = document.createElement('div');
+        block.style.cssText = 'background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:28px; transition:border-color 0.3s;';
+        block.onmouseenter = () => block.style.borderColor = 'var(--green-neon)';
+        block.onmouseleave = () => block.style.borderColor = 'var(--border)';
+
+        // Header
+        const header = document.createElement('div');
+        header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;';
+        header.innerHTML = `
+          <div>
+            <span style="background:linear-gradient(135deg,var(--green-neon),#00b34a); color:#000; padding:4px 12px; border-radius:20px; font-weight:800; font-size:0.75rem; margin-right:8px;">CARROSSEL ${idx+1}</span>
+            <span style="color:var(--text-primary); font-weight:700; font-size:1rem;">${post.title.replace(/^Carrossel \d+ — /, '')}</span>
           </div>
-          <div class="card-info">
-            <span class="badge stoic-badge">SLIDE ${post.id || i+1}</span>
-            <h3>${post.title}</h3>
-            ${post.reference ? `<p class="ref stoic-ref">📊 ${post.reference}</p>` : ''}
+          <div style="display:flex; gap:8px;">
+            <button onclick="downloadAllSlides(${idx})" style="background:linear-gradient(135deg,var(--green-neon),#00b34a); color:#000; border:none; padding:8px 16px; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer;">⬇ Baixar Todos</button>
+            <button onclick="copyStoicCaption(${idx})" style="background:var(--bg); border:1px solid var(--green-neon); color:var(--green-neon); padding:8px 16px; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer;">📋 Copiar Legenda</button>
           </div>
         `;
-        grid.appendChild(card);
+        block.appendChild(header);
+
+        // Slides viewer
+        const viewer = document.createElement('div');
+        viewer.style.cssText = 'position:relative; border-radius:12px; overflow:hidden; background:#000; aspect-ratio:4/5; max-width:500px; margin:0 auto;';
+
+        // Image
+        const img = document.createElement('img');
+        img.src = slides[0];
+        img.id = carouselId + '-img';
+        img.style.cssText = 'width:100%; height:100%; object-fit:cover; cursor:pointer; transition:opacity 0.3s;';
+        img.onclick = () => openModal(img.src);
+        viewer.appendChild(img);
+
+        // Nav arrows
+        if (slides.length > 1) {
+          const leftBtn = document.createElement('button');
+          leftBtn.innerHTML = '‹';
+          leftBtn.style.cssText = 'position:absolute; left:8px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:#fff; border:none; width:36px; height:36px; border-radius:50%; font-size:1.4rem; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center;';
+          leftBtn.onclick = () => navigateSlide(idx, -1);
+          viewer.appendChild(leftBtn);
+
+          const rightBtn = document.createElement('button');
+          rightBtn.innerHTML = '›';
+          rightBtn.style.cssText = 'position:absolute; right:8px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:#fff; border:none; width:36px; height:36px; border-radius:50%; font-size:1.4rem; cursor:pointer; z-index:2; display:flex; align-items:center; justify-content:center;';
+          rightBtn.onclick = () => navigateSlide(idx, 1);
+          viewer.appendChild(rightBtn);
+
+          // Slide counter
+          const counter = document.createElement('div');
+          counter.id = carouselId + '-counter';
+          counter.style.cssText = 'position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.7); color:#fff; padding:4px 10px; border-radius:12px; font-size:0.75rem; font-weight:700; z-index:2;';
+          counter.textContent = `1 / ${slides.length}`;
+          viewer.appendChild(counter);
+
+          // Dots
+          const dots = document.createElement('div');
+          dots.id = carouselId + '-dots';
+          dots.style.cssText = 'position:absolute; bottom:12px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:2;';
+          slides.forEach((_, si) => {
+            const dot = document.createElement('div');
+            dot.style.cssText = `width:8px; height:8px; border-radius:50%; background:${si===0 ? 'var(--green-neon)' : 'rgba(255,255,255,0.4)'}; transition:background 0.3s; cursor:pointer;`;
+            dot.onclick = () => goToSlide(idx, si);
+            dots.appendChild(dot);
+          });
+          viewer.appendChild(dots);
+        }
+
+        block.appendChild(viewer);
+
+        // Thumbnail strip
+        if (slides.length > 1) {
+          const strip = document.createElement('div');
+          strip.style.cssText = 'display:flex; gap:8px; margin-top:12px; overflow-x:auto; padding-bottom:4px; justify-content:center;';
+          slides.forEach((src, si) => {
+            const thumb = document.createElement('img');
+            thumb.src = src;
+            thumb.style.cssText = `width:60px; height:75px; object-fit:cover; border-radius:6px; cursor:pointer; border:2px solid ${si===0 ? 'var(--green-neon)' : 'transparent'}; opacity:${si===0 ? '1' : '0.5'}; transition:all 0.3s;`;
+            thumb.id = carouselId + '-thumb-' + si;
+            thumb.onclick = () => goToSlide(idx, si);
+            strip.appendChild(thumb);
+          });
+          block.appendChild(strip);
+        }
+
+        container.appendChild(block);
       });
+
+      // Store current slide index per carousel
+      window._stoicSlideIdx = new Array(STOIC_POSTS.length).fill(0);
+    }
+
+    function navigateSlide(carouselIdx, dir) {
+      const post = STOIC_POSTS[carouselIdx];
+      const slides = post.slides || [post.image];
+      let cur = (window._stoicSlideIdx || [])[carouselIdx] || 0;
+      cur = (cur + dir + slides.length) % slides.length;
+      goToSlide(carouselIdx, cur);
+    }
+
+    function goToSlide(carouselIdx, slideIdx) {
+      const post = STOIC_POSTS[carouselIdx];
+      const slides = post.slides || [post.image];
+      const id = 'stoic-carousel-' + carouselIdx;
+      window._stoicSlideIdx[carouselIdx] = slideIdx;
+
+      // Update image
+      const img = document.getElementById(id + '-img');
+      if (img) { img.style.opacity='0'; setTimeout(()=>{img.src=slides[slideIdx]; img.style.opacity='1';},150); }
+
+      // Update counter
+      const counter = document.getElementById(id + '-counter');
+      if (counter) counter.textContent = `${slideIdx+1} / ${slides.length}`;
+
+      // Update dots
+      const dots = document.getElementById(id + '-dots');
+      if (dots) {
+        Array.from(dots.children).forEach((d,i) => d.style.background = i===slideIdx ? 'var(--green-neon)' : 'rgba(255,255,255,0.4)');
+      }
+
+      // Update thumbnails
+      slides.forEach((_, si) => {
+        const thumb = document.getElementById(id + '-thumb-' + si);
+        if (thumb) {
+          thumb.style.border = si===slideIdx ? '2px solid var(--green-neon)' : '2px solid transparent';
+          thumb.style.opacity = si===slideIdx ? '1' : '0.5';
+        }
+      });
+    }
+
+    function downloadAllSlides(carouselIdx) {
+      const post = STOIC_POSTS[carouselIdx];
+      const slides = post.slides || [post.image];
+      slides.forEach((src, i) => {
+        setTimeout(() => {
+          const a = document.createElement('a');
+          a.href = src;
+          a.download = `stoic_carousel${carouselIdx+1}_slide${i+1}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }, i * 400);
+      });
+      showToast(`⬇ Baixando ${slides.length} slides do carrossel ${carouselIdx+1}...`);
     }
 
     function copyStoicCaption(index) {
