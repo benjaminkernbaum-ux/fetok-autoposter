@@ -37,6 +37,17 @@ app.get('/api/posts', (req, res) => {
   }
 });
 
+// API: list stoic market posts
+app.get('/api/stoic-posts', (req, res) => {
+  const stoicFile = path.join(__dirname, 'data', 'stoic_posts.json');
+  try {
+    const posts = JSON.parse(fs.readFileSync(stoicFile, 'utf8'));
+    res.json(posts);
+  } catch (e) {
+    res.json({ posts: [], error: e.message });
+  }
+});
+
 // API: list all images in directory
 app.get('/api/images', (req, res) => {
   const imagesDir = path.join(__dirname, 'public', 'images');
