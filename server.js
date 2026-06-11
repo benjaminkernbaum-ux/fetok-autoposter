@@ -4,12 +4,21 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Serve static files from public/ with no cache for videos
-app.use('/videos', express.static(path.join(__dirname, 'public', 'videos'), {
+// Serve static images
+app.use('/images', express.static(path.join(__dirname, 'public', 'images'), {
   maxAge: 0,
   setHeaders: (res, filePath) => {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.setHeader('Pragma', 'no-cache');
+    if (filePath.endsWith('.png') || filePath.endsWith('.jpg')) {
+      res.setHeader('Content-Type', filePath.endsWith('.png') ? 'image/png' : 'image/jpeg');
+    }
+  }
+}));
+
+// Serve legacy videos too
+app.use('/videos', express.static(path.join(__dirname, 'public', 'videos'), {
+  maxAge: 0,
+  setHeaders: (res, filePath) => {
     if (filePath.endsWith('.mp4')) {
       res.setHeader('Content-Type', 'video/mp4');
       res.setHeader('Accept-Ranges', 'bytes');
@@ -17,20 +26,31 @@ app.use('/videos', express.static(path.join(__dirname, 'public', 'videos'), {
   }
 }));
 
-// API endpoint to list available videos
-app.get('/api/videos', (req, res) => {
-  const videosDir = path.join(__dirname, 'public', 'videos');
+// API: list images
+app.get('/api/posts', (req, res) => {
+  const postsFile = path.join(__dirname, 'data', 'posts.json');
   try {
-    const files = fs.readdirSync(videosDir)
-      .filter(f => f.endsWith('.mp4'))
+    const posts = JSON.parse(fs.readFileSync(postsFile, 'utf8'));
+    res.json(posts);
+  } catch (e) {
+    res.json({ posts: [], error: e.message });
+  }
+});
+
+// API: list all images in directory
+app.get('/api/images', (req, res) => {
+  const imagesDir = path.join(__dirname, 'public', 'images');
+  try {
+    const files = fs.readdirSync(imagesDir)
+      .filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f))
       .sort()
       .map(f => {
-        const stat = fs.statSync(path.join(videosDir, f));
-        return { filename: f, size: stat.size, url: `/videos/${encodeURIComponent(f)}` };
+        const stat = fs.statSync(path.join(imagesDir, f));
+        return { filename: f, size: stat.size, url: `/images/${encodeURIComponent(f)}` };
       });
-    res.json({ count: files.length, videos: files });
+    res.json({ count: files.length, images: files });
   } catch (e) {
-    res.json({ count: 0, videos: [], error: e.message });
+    res.json({ count: 0, images: [], error: e.message });
   }
 });
 
@@ -41,14 +61,12 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🔥 Luz da Palavra Hub running on port ${PORT}`);
-  // Log available videos
-  const videosDir = path.join(__dirname, 'public', 'videos');
+  console.log(`✝ Luz da Palavra Hub running on port ${PORT}`);
+  const imagesDir = path.join(__dirname, 'public', 'images');
   try {
-    const files = fs.readdirSync(videosDir).filter(f => f.endsWith('.mp4'));
-    console.log(`📹 ${files.length} videos available:`);
-    files.forEach(f => console.log(`  → ${f}`));
+    const files = fs.readdirSync(imagesDir).filter(f => /\.(png|jpg)$/i.test(f));
+    console.log(`🖼️  ${files.length} images available`);
   } catch (e) {
-    console.log('⚠️  No videos directory found');
+    console.log('⚠️  No images directory found');
   }
 });
