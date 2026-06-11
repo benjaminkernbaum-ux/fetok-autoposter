@@ -15,6 +15,7 @@
       --border-focus: #333333;
       --gold: #FFD700;
       --gold-dark: #ccab00;
+      --green-neon: #00ff66;
       --text-primary: #ffffff;
       --text-secondary: #aaaaaa;
       --text-tertiary: #666666;
@@ -86,6 +87,38 @@
       color: #000;
       border-color: var(--gold);
       box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+    }
+
+    .tab-btn.stoic-active {
+      background: linear-gradient(135deg, var(--green-neon), #00b34a) !important;
+      color: #000 !important;
+      border-color: var(--green-neon) !important;
+      box-shadow: 0 6px 20px rgba(0, 255, 102, 0.2) !important;
+    }
+
+    .tab-btn.stoic-btn:hover {
+      border-color: var(--green-neon);
+    }
+
+    .card.stoic-card:hover {
+      border-color: var(--green-neon);
+      box-shadow: 0 16px 40px rgba(0, 255, 102, 0.12);
+    }
+
+    .btn-download.stoic-download {
+      background: linear-gradient(135deg, var(--green-neon), #00b34a);
+    }
+
+    .card-info .badge.stoic-badge {
+      background: linear-gradient(135deg, var(--green-neon), #00b34a);
+    }
+
+    .card-info .ref.stoic-ref {
+      color: var(--green-neon);
+    }
+
+    .stats.stoic-stats span {
+      color: var(--green-neon);
     }
 
     .tab-content {
@@ -992,20 +1025,33 @@
 </head>
 <body>
   <header>
-    <h1>✝ Luz da Palavra</h1>
-    <p>Hub de Conteúdo & Planejamento de Monetização de Alta Performance</p>
+    <h1>✝ Luz da Palavra & 📈 Stoic Market</h1>
+    <p>Hub Unificado de Conteúdo, Autoprodução & Crescimento de Audiência</p>
   </header>
 
   <div class="tabs">
-    <button class="tab-btn active" id="tab-posts" onclick="switchTab('posts')">📱 Postagens</button>
-    <button class="tab-btn" id="tab-stories" onclick="switchTab('stories')">📖 Stories de Engajamento</button>
-    <button class="tab-btn" id="tab-monetization" onclick="switchTab('monetization')">💰 Monetização</button>
+    <button class="tab-btn active" id="tab-posts" onclick="switchTab('posts')">📱 Postagens (Luz)</button>
+    <button class="tab-btn" id="tab-stories" onclick="switchTab('stories')">📖 Stories (Luz)</button>
+    <button class="tab-btn stoic-btn" id="tab-stoic" onclick="switchTab('stoic')">📈 Stoic Market</button>
+    <button class="tab-btn" id="tab-monetization" onclick="switchTab('monetization')">💰 Monetização (Luz)</button>
   </div>
 
   <!-- Tab 1: POSTS -->
   <div id="content-posts" class="tab-content active">
     <div class="stats" id="stats"></div>
     <div class="grid" id="grid"></div>
+  </div>
+
+  <!-- Tab 4: STOIC MARKET -->
+  <div id="content-stoic" class="tab-content">
+    <div class="stats stoic-stats" id="stoic-stats">
+      <div>Banco Ativo: <span>5</span> slides de carrossel configurados</div>
+    </div>
+    <div style="background: rgba(0, 255, 102, 0.03); border: 1px solid rgba(0, 255, 102, 0.25); border-left: 4px solid var(--green-neon); border-radius: var(--radius); padding: 18px; margin-bottom: 24px; font-size: 0.82rem; line-height: 1.5;">
+      <span style="font-weight: 800; color: var(--green-neon); display: block; margin-bottom: 8px; font-size: 0.95rem;">🚀 Kit de Postagem Stoic Academy / Stoic Market</span>
+      <p style="color: var(--text-secondary);">Aqui estão os slides do primeiro carrossel oficial para o seu Instagram <strong style="color:#fff;">@stoic.academy.br</strong>. Baixe as imagens sequencialmente e copie a legenda completa de trading.</p>
+    </div>
+    <div class="grid" id="stoic-grid"></div>
   </div>
 
   <!-- Tab 2: STORIES OF ENGAGEMENT -->
@@ -1259,10 +1305,14 @@ Equipe Luz da Palavra.
 
   <script>
     let POSTS = [];
+    let STOIC_POSTS = [];
 
     // switchTab
     function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.classList.remove('stoic-active');
+      });
       document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
       
       if(tabId === 'posts') {
@@ -1272,11 +1322,63 @@ Equipe Luz da Palavra.
         document.getElementById('tab-stories').classList.add('active');
         document.getElementById('content-stories').classList.add('active');
         renderStories();
+      } else if (tabId === 'stoic') {
+        document.getElementById('tab-stoic').classList.add('stoic-active');
+        document.getElementById('content-stoic').classList.add('active');
+        loadStoicPosts();
       } else {
         document.getElementById('tab-monetization').classList.add('active');
         document.getElementById('content-monetization').classList.add('active');
         renderMonetization();
       }
+    }
+
+    // loadStoicPosts
+    async function loadStoicPosts() {
+      try {
+        const res = await fetch('/api/stoic-posts');
+        const data = await res.json();
+        STOIC_POSTS = data.posts || [];
+        renderStoicPosts();
+      } catch (e) {
+        console.error("Erro ao carregar posts Stoic:", e);
+      }
+    }
+
+    // renderStoicPosts
+    function renderStoicPosts() {
+      const grid = document.getElementById('stoic-grid');
+      const stats = document.getElementById('stoic-stats');
+      grid.innerHTML = '';
+      stats.innerHTML = `<div>Banco Ativo: <span>${STOIC_POSTS.length}</span> slides de carrossel configurados</div>`;
+
+      STOIC_POSTS.forEach((post, i) => {
+        const card = document.createElement('div');
+        card.className = 'card stoic-card';
+        card.innerHTML = `
+          <img src="${post.image}" alt="${post.title}" loading="lazy" onclick="openModal('${post.image}')">
+          <div class="card-overlay">
+            <div class="actions">
+              <button class="btn-download stoic-download" onclick="event.stopPropagation(); downloadImage('${post.image}', '${post.title}')">⬇ Baixar</button>
+              <button class="btn-copy" onclick="event.stopPropagation(); copyStoicCaption(${i})">📋 Legenda</button>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="badge stoic-badge">SLIDE ${post.id || i+1}</span>
+            <h3>${post.title}</h3>
+            ${post.reference ? `<p class="ref stoic-ref">📊 ${post.reference}</p>` : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function copyStoicCaption(index) {
+      const post = STOIC_POSTS[index];
+      const text = post.caption || '';
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('📋 Legenda de trading copiada!');
+      });
     }
 
     // loadPosts
