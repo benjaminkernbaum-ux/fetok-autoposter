@@ -9,6 +9,7 @@ import json
 import os
 import time
 import sys
+import subprocess
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -90,7 +91,7 @@ def fal_generate(prompt, model="fal-ai/flux-pro/v1.1-ultra"):
 
 
 def add_overlay(input_path, output_path, verse, reference):
-    """Add verse text overlay using FFmpeg."""
+    """Add verse text overlay using FFmpeg with chained drawtext filters to avoid Windows newline glyph box issue."""
     font = "C\\:/Windows/Fonts/arialbd.ttf"
 
     # Word-wrap verse at ~28 chars
@@ -107,19 +108,44 @@ def add_overlay(input_path, output_path, verse, reference):
     if cur:
         lines.append(cur)
 
-    verse_escaped = "\\n".join(lines).replace("'", "\u2019").replace(":", "\\:")
-    ref_escaped = reference.replace(":", "\\:")
+    # Calculate positions
+    fontsize_verse = 44
+    line_spacing = 14
+    num_lines = len(lines)
+    total_height = num_lines * fontsize_verse + (num_lines - 1) * line_spacing
 
     filters = [
-        "curves=master='0/0 0.25/0.15 0.7/0.55 1/0.85'",
-        f"drawtext=fontfile='{font}':text='{verse_escaped}':fontcolor=white:fontsize=44:x=(w-text_w)/2:y=(h-text_h)/2-40:line_spacing=14:borderw=3:bordercolor=black@0.7",
-        f"drawtext=fontfile='{font}':text='{ref_escaped}':fontcolor=#FFD700:fontsize=26:x=(w-text_w)/2:y=(h/2)+100:borderw=2:bordercolor=black@0.5",
-        f"drawtext=fontfile='{font}':text='@luzdapalavra':fontcolor=white@0.5:fontsize=18:x=(w-text_w)/2:y=h-100:borderw=1:bordercolor=black@0.3",
+        "curves=master='0/0 0.25/0.15 0.7/0.55 1/0.85'"
     ]
 
-    cmd = f'ffmpeg -y -i "{input_path}" -vf "{",".join(filters)}" -q:v 1 -update 1 "{output_path}" 2>nul'
-    ret = os.system(cmd)
-    return ret == 0
+    # Draw each line of the verse
+    for i, line in enumerate(lines):
+        line_escaped = line.replace("'", "\u2019").replace(":", "\\:")
+        y_pos = f"(h-{total_height})/2-40+{i * (fontsize_verse + line_spacing)}"
+        filters.append(
+            f"drawtext=fontfile='{font}':text='{line_escaped}':fontcolor=white:fontsize={fontsize_verse}:x=(w-text_w)/2:y={y_pos}:borderw=3:bordercolor=black@0.7"
+        )
+
+    # Draw reference
+    ref_escaped = reference.replace(":", "\\:")
+    filters.append(
+        f"drawtext=fontfile='{font}':text='{ref_escaped}':fontcolor=#FFD700:fontsize=26:x=(w-text_w)/2:y=(h/2)+100:borderw=2:bordercolor=black@0.5"
+    )
+
+    # Draw watermark
+    filters.append(
+        f"drawtext=fontfile='{font}':text='@luzdapalavra':fontcolor=white@0.5:fontsize=18:x=(w-text_w)/2:y=h-100:borderw=1:bordercolor=black@0.3"
+    )
+
+    cmd = [
+        "ffmpeg", "-y", "-i", input_path,
+        "-vf", ",".join(filters),
+        "-frames:v", "1", "-update", "1",
+        "-q:v", "1", output_path
+    ]
+    
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return result.returncode == 0
 
 
 # ═══════════════════════════════════════════════════════════
