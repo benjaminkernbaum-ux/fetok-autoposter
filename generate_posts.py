@@ -91,7 +91,7 @@ def fal_generate(prompt, model="fal-ai/flux-pro/v1.1-ultra"):
 
 def add_overlay(input_path, output_path, verse, reference):
     """Add verse text overlay using FFmpeg."""
-    font = "C\\\\:/Windows/Fonts/arialbd.ttf"
+    font = "C\\:/Windows/Fonts/arialbd.ttf"
 
     # Word-wrap verse at ~28 chars
     words = verse.split()
@@ -117,13 +117,13 @@ def add_overlay(input_path, output_path, verse, reference):
         f"drawtext=fontfile='{font}':text='@luzdapalavra':fontcolor=white@0.5:fontsize=18:x=(w-text_w)/2:y=h-100:borderw=1:bordercolor=black@0.3",
     ]
 
-    cmd = f'ffmpeg -y -i "{input_path}" -vf "{",".join(filters)}" -q:v 1 "{output_path}" 2>nul'
+    cmd = f'ffmpeg -y -i "{input_path}" -vf "{",".join(filters)}" -q:v 1 -update 1 "{output_path}" 2>nul'
     ret = os.system(cmd)
     return ret == 0
 
 
 # ═══════════════════════════════════════════════════════════
-# 15 POSTS — Same style as the successful TikTok prints
+# 30 POSTS — Expanded feed with 15 new visual devotionals
 # ═══════════════════════════════════════════════════════════
 POSTS = [
     {"id":1, "verse":"Porque todas as promessas de Deus são nEle sim, e por Ele o amém.", "ref":"2 Coríntios 1:20",
@@ -156,6 +156,36 @@ POSTS = [
      "bg":"Dramatic wooden cross on hilltop silhouetted against spectacular golden crimson sunset, divine light rays from behind cross, sacred powerful, cinematic 8k hyperrealistic, no text no watermarks"},
     {"id":15, "verse":"Sede fortes e corajosos, pois o Senhor vosso Deus está convosco.", "ref":"Josué 1:9",
      "bg":"Ancient warrior shield and sword against stone wall in golden torchlight, battle-worn but unbroken, divine golden light, biblical warrior atmosphere, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":16, "verse":"O Senhor te guardará de todo mal; guardará a tua alma.", "ref":"Salmos 121:7",
+     "bg":"Epic guardian angel wings made of glowing golden light wrapping protectively around a modern city street at night, soft holy starlight, warm divine atmosphere, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":17, "verse":"Entrega o teu caminho ao Senhor; confia nele, e ele o fará.", "ref":"Salmos 37:5",
+     "bg":"A beautiful winding path leading up towards a glowing golden gate in the skies, lush green pastures, dramatic colorful clouds, ray of light from heaven, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":18, "verse":"Ainda que eu andasse pelo vale da sombra da morte, não temeria mal algum.", "ref":"Salmos 23:4",
+     "bg":"A lone traveler walking on a path through a dark misty mountain valley, a brilliant warm golden light shining from above guiding the traveler, mystical atmosphere, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":19, "verse":"Alegrai-vos na esperança, sede pacientes na tribulação, perseverai na oração.", "ref":"Romanos 12:12",
+     "bg":"An ancient stone altar in a majestic cave with light streaming from an opening above, glowing purple wildflowers growing between stones, divine light rays, peaceful, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":20, "verse":"Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.", "ref":"Mateus 11:28",
+     "bg":"A peaceful calm lake at sunrise with still water reflecting warm soft pink and golden clouds, a rustic wooden dock extending into the water, serene holy presence, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":21, "verse":"Espera pelo Senhor, tem bom ânimo, e fortifique-se o teu coração.", "ref":"Salmos 27:14",
+     "bg":"A majestic old oak tree standing strong on a hill during a dramatic sunrise, golden sunlight filtering through the leaves, misty morning dew, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":22, "verse":"O Senhor é a minha luz e a minha salvação; a quem temerei?", "ref":"Salmos 27:1",
+     "bg":"A tall stone lighthouse on a rugged cliff sending a powerful beam of golden light through a stormy dark ocean, dramatic waves crashing, starry night sky above, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":23, "verse":"Se Deus é por nós, quem será contra nós?", "ref":"Romanos 8:31",
+     "bg":"A massive ancient stone fortress wall standing tall and unbroken, glowing golden energy shields radiating from it, dramatic sky with sun rays piercing through clouds, epic cinematic 8k, no text no watermarks"},
+    {"id":24, "verse":"Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.", "ref":"Salmos 46:1",
+     "bg":"A beautiful secret sanctuary built into the side of a mountain, surrounded by waterfalls and glowing flowers, warm divine sunlight illuminating the entrance, peace, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":25, "verse":"Os que esperam no Senhor renovarão as suas forças; subirão com asas como águias.", "ref":"Isaías 40:31",
+     "bg":"A majestic eagle soaring high above the clouds towards a bright golden sun, dramatic mountain peaks far below, epic freedom, divine golden rays, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":26, "verse":"Guarda o teu coração, porque dele procedem as fontes da vida.", "ref":"Provérbios 4:23",
+     "bg":"A glowing crystal fountain in a beautiful hidden palace garden at dusk, clear sparkling water, ancient pillars, mystical flowers, warm light rays, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":27, "verse":"Mil cairão ao teu lado, e dez mil à tua direita, mas não chegará a ti.", "ref":"Salmos 91:7",
+     "bg":"A glowing golden shield dome protecting a peaceful green field, outside the dome are dark storm clouds and lightning, inside is calm warm sunlight and red roses, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":28, "verse":"O choro pode durar uma noite, mas a alegria vem pela manhã.", "ref":"Salmos 30:5",
+     "bg":"A dramatic transition scene from dark rainy storm on one side to a bright sunny sky with a double rainbow on the other, green hills, dew drops glistening, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":29, "verse":"Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.", "ref":"João 14:27",
+     "bg":"A soft white dove flying in a serene forest filled with towering ancient trees and glowing sunbeams, white lilies on the forest floor, peaceful morning mist, cinematic 8k hyperrealistic, no text no watermarks"},
+    {"id":30, "verse":"Operando Deus, quem impedirá?", "ref":"Isaías 43:13",
+     "bg":"Parting of a stormy red sea, giant walls of glowing water on both sides, path of dry ground illuminated by a powerful pillar of fire in the distance, epic biblical miracle, cinematic 8k hyperrealistic, no text no watermarks"}
 ]
 
 
@@ -168,7 +198,7 @@ def main():
     results = []
     for p in POSTS:
         pid = p["id"]
-        final = OUTPUT_DIR / f"post_{pid:02d}.png"
+        final = OUTPUT_DIR / f"post_{pid:02d}.jpg"
 
         if final.exists():
             print(f"\n♻️  [{pid}] Already exists")
@@ -184,7 +214,7 @@ def main():
             continue
 
         # Download raw
-        raw = OUTPUT_DIR / f"raw_{pid:02d}.png"
+        raw = OUTPUT_DIR / f"raw_{pid:02d}.jpg"
         try:
             img = httpx.get(url, timeout=60).content
             raw.write_bytes(img)
@@ -212,7 +242,7 @@ def main():
             "id": p["id"],
             "title": p["verse"],
             "reference": p["ref"],
-            "image": f"/images/post_{p['id']:02d}.png",
+            "image": f"/images/post_{p['id']:02d}.jpg",
             "caption": f"✨ {p['verse']}\n\n📖 {p['ref']}\n\n❤️ Curta se crê\n📲 SALVA pra lembrar\n🔄 Compartilhe\n🔔 Siga @luzdapalavra\n\n#jesus #deus #fé #cristao #biblia #evangelho #fyp #viral\n\n🎬 @luzdapalavra"
         })
     (DATA_DIR / "posts.json").write_text(json.dumps({"posts": captions}, indent=2, ensure_ascii=False), encoding="utf-8")
