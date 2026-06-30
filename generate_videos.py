@@ -18,9 +18,24 @@ import httpx
 # ═══════════════════════════════════════════════════════════
 # CONFIG
 # ═══════════════════════════════════════════════════════════
-ELEVENLABS_API_KEY = "sk_9f26095632053599233aef40c2bcf41d23ca69f404998a7a"
-ELEVENLABS_VOICE_ID = "GIuLCSVfgJaUuh7hYOY8"
-ELEVENLABS_MODEL = "eleven_multilingual_v2"
+def load_env():
+    """Manually load .env file to avoid external dependency issues."""
+    for path in [Path(".env"), Path("C:/Users/benja/LuzDaPalavra/stoic-factory/.env")]:
+        if path.exists():
+            try:
+                for line in path.read_text(encoding="utf-8").splitlines():
+                    line = line.strip()
+                    if line and not line.startswith("#") and "=" in line:
+                        k, v = line.split("=", 1)
+                        os.environ[k.strip()] = v.strip()
+            except Exception as e:
+                print(f"⚠️ Failed to load env from {path}: {e}")
+
+load_env()
+
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
+ELEVENLABS_VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "GIuLCSVfgJaUuh7hYOY8")
+ELEVENLABS_MODEL = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
 
 IMAGE_DIR = Path("public/images")
 AUDIO_DIR = Path("cache/audio")
