@@ -1947,87 +1947,83 @@ Equipe Luz da Palavra.
     // Monetization Data Client Side
     const MONETIZATION_DATA = {
       pillars: [
-        { id: 'live_gifts', name: 'LIVE Gifts + Diamantes', icon: '💎', status: 'active', unlockAt: 94, description: 'Presentes virtuais durante transmissões ao vivo (LIVE já acessível pelo celular!)', range: 'R$ 500 — R$ 15.000 /mês' },
-        { id: 'creator_rewards', name: 'Creator Rewards Program', icon: '🎬', status: 'locked', unlockAt: 10000, description: 'Pagamento do TikTok no Brasil por vídeos qualificadas de mais de 1 min. RPM médio: R$ 0,15 - R$ 0,80.', range: 'RPM Médio: R$ 0,15 — R$ 0,80' },
-        { id: 'tiktok_shop', name: 'TikTok Shop & Afiliados', icon: '🛍️', status: 'locked', unlockAt: 5000, description: 'Comissões de produtos (Bíblias, devocionais e vestuário gospel) na Shopee/Amazon via Coleções.', range: 'Comissões: 8% — 20%' },
-        { id: 'brand_deals', name: 'Parcerias com Marcas', icon: '🤝', status: 'locked', unlockAt: 5000, description: 'Cachês fixos com editoras cristãs (CPAD, Vida) via Creator Marketplace.', range: 'R$ 500 — R$ 10.000 /mês' },
-        { id: 'subscriptions', name: 'Subscriptions + Tips', icon: '⭐', status: 'locked', unlockAt: 10000, description: 'Assinaturas mensais de devocionais e grupos de oração (R$ 9,90 a R$ 49,90).', range: 'R$ 1.500 — R$ 20.000 /mês' }
+        { id: 'live_gifts', name: 'Presentes em LIVE (Gifts)', icon: '💎', status: 'active', unlockAt: 0, description: 'Transmissões ao vivo focadas em Clamor e Oração da Madrugada. A audiência apoia com presentes digitais (rosas, corações) convertidos em dinheiro real.', range: 'Est. R$ 800 — R$ 8.000 /mês' },
+        { id: 'affiliate_bibles', name: 'Afiliado de Bíblias & Livros', icon: '📖', status: 'active', unlockAt: 0, description: 'Recomendação de Bíblias de Estudo, devocionais e planners físicos na Amazon e Shopee utilizando o link da bio.', range: 'Comissões: 8% — 15% por venda' },
+        { id: 'theology_courses', name: 'Cursos Teológicos Afiliados', icon: '🎓', status: 'active', unlockAt: 0, description: 'Indicação de cursos de teologia sistemática, formação de pregadores e hebraico bíblico na Kiwify com altas comissões (50% a 65%).', range: 'Comissões: R$ 35 — R$ 150 / venda' },
+        { id: 'print_on_demand', name: 'Loja Oficial (Print on Demand)', icon: '👕', status: 'locked', unlockAt: 1000, description: 'Venda de camisetas minimalistas cristãs e canecas devocionais personalizadas sem estoque via Reserva INK ou Montink.', range: 'Margem: R$ 30 — R$ 55 por peça' },
+        { id: 'creator_rewards', name: 'TikTok Creator Rewards', icon: '🎬', status: 'locked', unlockAt: 10000, description: 'Monetização direta por visualizações qualificadas em vídeos autorais de mais de 1 minuto de duração.', range: 'RPM Médio: R$ 0,15 — R$ 0,80 por 1K views' }
       ],
       milestones: [
-        { followers: 94, label: 'LIVE Desbloqueada', icon: '🔴', achieved: true },
-        { followers: 1000, label: 'LIVE Estável + Presentes', icon: '💎', achieved: false },
-        { followers: 2500, label: 'Micro-Influencer', icon: '📈', achieved: false },
-        { followers: 5000, label: 'TikTok Shop', icon: '🛍️', achieved: false },
-        { followers: 10000, label: 'Creator Rewards', icon: '💰', achieved: false },
-        { followers: 25000, label: 'Autoridade', icon: '👑', achieved: false },
-        { followers: 100000, label: 'Elite Gospel', icon: '💎', achieved: false }
+        { followers: 421, label: 'LIVE Desbloqueada', icon: '🔴', achieved: true },
+        { followers: 500, label: 'Primeiras Vendas', icon: '🌱', achieved: false },
+        { followers: 1000, label: 'Link na Bio Ativo', icon: '🔗', achieved: false },
+        { followers: 5000, label: 'TikTok Shop Afiliados', icon: '🛍️', achieved: false },
+        { followers: 10000, label: 'Programa de Recompensas', icon: '🎬', achieved: false },
+        { followers: 50000, label: 'Patrocínios Editoriais', icon: '🤝', achieved: false },
+        { followers: 100000, label: 'Elite Gospel Network', icon: '👑', achieved: false }
       ],
       lives: [
         {
-          name: 'Devocionais da Manhã',
-          emoji: '🌅',
-          day: 'Terça-feira às 06:30 BRT',
-          duration: '30-45 min',
-          color: '#ffc400',
-          steps: [
-            { t: '0:00', n: 'Abertura', d: 'Boas vindas + oração de abertura. Cumprimentar chat pelo nome.' },
-            { t: '5:00', n: 'Versículo', d: 'Leitura e contextualização do versículo do dia.' },
-            { t: '10:00', n: 'Reflexão', d: 'Mensagem de reflexão prática de fé para o dia.' },
-            { t: '20:00', n: 'Pedidos', d: 'Leitura de pedidos e orações direcionadas para o chat.' },
-            { t: '30:00', n: 'Fim', d: 'Oração de encerramento coletiva. CTA para seguir.' }
-          ],
-          triggers: '🌹 Encorajar: "Se essa palavra tocou seu coração, manda uma rosa!" · 🙏 Encorajar: "Quem crê no livramento hoje, manda um presente de fé!"'
-        },
-        {
-          name: 'Oração de Quinta',
-          emoji: '🙏',
-          day: 'Quinta-feira às 20:00 BRT',
-          duration: '45-60 min',
+          name: 'Clamor da Madrugada (03:00)',
+          emoji: '🌌',
+          day: 'Segunda a Sexta às 03:00 BRT',
+          duration: '60 min',
           color: '#af82ff',
           steps: [
-            { t: '0:00', n: 'Worship', d: 'Música gospel instrumental ao fundo. Clima de adoração.' },
-            { t: '5:00', n: 'Tema', d: 'Anunciar o tema da noite (Cura, Ansiedade, Família, Medo).' },
-            { t: '15:00', n: 'Estudo', d: 'Leitura de 3 versículos com aplicação profunda.' },
-            { t: '25:00', n: 'Pedidos', d: 'Interação e leitura de pedidos de orações urgentes.' },
-            { t: '35:00', n: 'Oração', d: 'Oração coletiva forte com música crescente (Worship).' }
+            { t: '0:00', n: 'Abertura & Louvor', d: 'Música de adoração suave (pad). Cumprimentar o chat com "A Paz do Senhor".' },
+            { t: '10:00', n: 'Leitura do Salmo', d: 'Leitura comentada de um Salmo de proteção (ex: Salmo 91 ou Salmo 121).' },
+            { t: '20:00', n: 'Palavra de Fé', d: 'Pequena reflexão bíblica focada em esperança, cura e provisão.' },
+            { t: '30:00', n: 'Pedidos de Oração', d: 'Digitar na tela: "Coloque seu nome e de sua família no chat para o clamor".' },
+            { t: '45:00', n: 'Clamor Final', d: 'Oração forte de quebra de correntes e libertação com música crescente.' }
           ],
-          triggers: '❤️ Encorajar: "Se Deus já te curou de algo na vida, manda um coração!" · ⭐ Encorajar: "Quem quer que essa oração alcance a família inteira agora, manda uma estrela!"'
+          triggers: '🌹 Encorajar: "Se você sente a presença do Espírito Santo, apoie nossa missão com uma rosa." · 🙏 Encorajar: "Quem crê no livramento e na provisão de Deus para hoje, apoie a live com um presente de fé!"'
         },
         {
-          name: 'Estudo Bíblico',
+          name: 'Consagração do Domingo (08:00)',
+          emoji: '🌅',
+          day: 'Domingos às 08:00 BRT',
+          duration: '45-60 min',
+          color: '#ffc400',
+          steps: [
+            { t: '0:00', n: 'Louvor Matinal', d: 'Começar o dia do Senhor com cânticos de adoração e gratidão.' },
+            { t: '5:00', n: 'Devocional da Semana', d: 'Mensagem e direcionamento bíblico para blindar a semana que se inicia.' },
+            { t: '25:00', n: 'Oração das Famílias', d: 'Leitura dos nomes dos lares enviados pelos irmãos no chat.' },
+            { t: '45:00', n: 'Bênção Apostólica', d: 'Encerramento com palavra de vitória e incentivo à comunhão na igreja.' }
+          ],
+          triggers: '❤️ Encorajar: "Abençoe esta live compartilhando com um irmão e apoiando com um presente de gratidão!" · ⭐ Encorajar: "Deixe seu testemunho no chat e envie uma estrela!"'
+        },
+        {
+          name: 'Estudo Bíblico & Teológico',
           emoji: '✝️',
-          day: 'Sábado às 15:00 BRT',
+          day: 'Sábados às 16:00 BRT',
           duration: '60 min',
           color: '#34c759',
           steps: [
-            { t: '0:00', n: 'Recap', d: 'Resumo dos versículos da semana. Testemunhos do canal.' },
-            { t: '10:00', n: 'Estudo', d: 'Estudo teológico de história (Davi, Elias, Graça, Fé).' },
-            { t: '30:00', n: 'Q&A', d: 'Perguntas e respostas. Esclarecimento de dúvidas do chat.' },
-            { t: '45:00', n: 'Desafio', d: 'Desafio prático de fé para a semana.' },
-            { t: '55:00', n: 'Fim', d: 'Bênção final e incentivo a compartilhar a live.' }
+            { t: '0:00', n: 'Apresentação do Tema', d: 'Introdução histórica e teológica do assunto (ex: A Armadura de Deus).' },
+            { t: '10:00', n: 'Estudo Profundo', d: 'Explicação detalhada versículo por versículo com mapas ou referências.' },
+            { t: '35:00', n: 'Perguntas & Respostas', d: 'Esclarecer dúvidas sobre teologia, fé e doutrina enviadas pelo chat.' },
+            { t: '50:00', n: 'Desafio Prático', d: 'Desafio semanal de aplicação da Palavra no dia a dia + Oração final.' }
           ],
-          triggers: '📖 Encorajar: "Se esse estudo trouxe entendimento novo, apoie com um presente!" · 🌹 Encorajar: "Quem aceita o desafio de fé dessa semana, manda uma rosa!"'
+          triggers: '📖 Encorajar: "Se você quer aprender mais profundamente, clique no link da bio e conheça o Curso de Teologia Sistemática!" · 🌹 Encorajar: "Se este estudo te abençoou, apoie com um presente!"'
         }
       ],
       phases: [
-        { emoji: '🌱', name: 'Fase Semente', range: '421-1K seg', time: '0-45 dias', color: '#34c759', income: 'R$ 700 — R$ 2.000', details: 'LIVE Gifts + Wallpapers digitais' },
-        { emoji: '🌿', name: 'Fase Crescimento', range: '5K-10K seg', time: '60-90 dias', color: '#ff9500', income: 'R$ 3.500 — R$ 10.500', details: 'LIVES + Afiliados Shopee + E-books' },
-        { emoji: '🌾', name: 'Fase Colheita', range: '10K+ seg', time: '90-180 dias', color: '#d4a853', income: 'R$ 13.500 — R$ 62.000', details: 'Creator Rewards + Assinaturas + Publis' }
+        { emoji: '🌱', name: 'Fase 1: Semente', range: '421-1K seg', time: '0-30 dias', color: '#34c759', income: 'R$ 500 — R$ 1.500', details: 'LIVE Gifts diários + Indicações de Bíblias (Shopee/Amazon)' },
+        { emoji: '🌿', name: 'Fase 2: Crescimento', range: '1K-5K seg', time: '30-90 dias', color: '#ff9500', income: 'R$ 2.000 — R$ 6.000', details: 'LIVE Gifts + Cursos Teológicos na Bio + E-books próprios' },
+        { emoji: '🌾', name: 'Fase 3: Colheita', range: '10K+ seg', time: '90-180 dias', color: '#d4a853', income: 'R$ 8.000 — R$ 25.000', details: 'Creator Rewards + Assinaturas de Devocionais + Parcerias Editoriais' }
       ],
       ownProducts: [
-        { emoji: '📖', name: 'E-book "21 Dias de Fé"', price: 'R$ 29,90', desc: 'Devocional diário estruturado, orações e tracker espiritual.', margin: '90%', phase: 'Fase 1' },
-        { emoji: '🙏', name: 'Guia de Oração Digital', price: 'R$ 19,90', desc: 'Guia com modelos de orações focadas em ansiedade, família e finanças.', margin: '90%', phase: 'Fase 1' },
-        { emoji: '📅', name: 'Planner Devocional Anual', price: 'R$ 49,90', desc: 'Planner impresso ou digital completo para registrar leituras e preces.', margin: '60%', phase: 'Fase 2' },
-        { emoji: '🎨', name: 'Pack de Wallpapers Premium', price: 'R$ 14,90', desc: 'Papéis de parede bíblicos com design editorial para celulares.', margin: '95%', phase: 'Fase 1' }
+        { emoji: '📖', name: 'E-book "31 Dias com Jesus"', price: 'R$ 29,90', desc: 'Devocional diário estruturado com reflexões profundas, meditações e orações.', margin: '90%', phase: 'Fase 2' },
+        { emoji: '🙏', name: 'Manual do Clamor Familiar', price: 'R$ 19,90', desc: 'Modelos de orações bíblicas focadas em restauração de lares e finanças.', margin: '90%', phase: 'Fase 1' },
+        { emoji: '📅', name: 'Planner Devocional Digital', price: 'R$ 14,90', desc: 'Planner em formato PDF para impressão e registro de leitura diária e jejuns.', margin: '95%', phase: 'Fase 1' },
+        { emoji: '🎨', name: 'Papéis de Parede Cinemáticos', price: 'R$ 9,90', desc: 'Pacote com 15 imagens cinemáticas da Bíblia em alta definição para celulares.', margin: '95%', phase: 'Fase 1' }
       ],
       affiliateProducts: [
-        { name: 'Curso de Formação Teológica Básica', cat: '🎓 Infoproduto (Kiwify/Hotmart)', price: 'R$ 97,00', comm: '50-60%', fit: '⭐⭐⭐⭐⭐' },
-        { name: 'Manual de Homilética e Esboço de Sermão', cat: '🎓 Infoproduto (Kiwify)', price: 'R$ 47,00', comm: '50-70%', fit: '⭐⭐⭐⭐⭐' },
-        { name: 'Pack de Mídia & Social Media para Igrejas', cat: '🎓 Infoproduto (Eduzz)', price: 'R$ 67,00', comm: '50%', fit: '⭐⭐⭐⭐' },
-        { name: 'Bíblia de Estudo NVI Premium Couro', cat: '📖 Livros (Amazon/Shopee)', price: 'R$ 80-250', comm: '10-15%', fit: '⭐⭐⭐⭐⭐' },
-        { name: 'Bíblia Devocional 365 Dias', cat: '📖 Livros (Amazon/Shopee)', price: 'R$ 60-120', comm: '10-15%', fit: '⭐⭐⭐⭐⭐' },
-        { name: 'Diário de Oração & Planner de Fé', cat: '📓 Papelaria (Shopee)', price: 'R$ 35-70', comm: '15-25%', fit: '⭐⭐⭐⭐⭐' },
-        { name: 'Pulseiras e Acessórios Cristãos em Couro', cat: '📿 Acessórios (Shopee)', price: 'R$ 20-60', comm: '15-20%', fit: '⭐⭐⭐⭐' }
+        { name: 'Curso de Formação Teológica Sistemática', cat: '🎓 Curso Teológico (Kiwify)', price: 'R$ 97,00', comm: '55% (R$ 53,35)', fit: '⭐⭐⭐⭐⭐' },
+        { name: 'Bíblia de Estudo NAA Couro Nobre', cat: '📖 Livro Físico (Amazon)', price: 'R$ 120,00', comm: '10% (R$ 12,00)', fit: '⭐⭐⭐⭐⭐' },
+        { name: 'Devocional "Café com Deus Pai" 2026', cat: '📖 Livro Físico (Amazon)', price: 'R$ 59,90', comm: '10% (R$ 5,99)', fit: '⭐⭐⭐⭐⭐' },
+        { name: 'Bíblia Feminina Letra Hipergigante Zíper', cat: '📖 Livro Físico (Shopee)', price: 'R$ 45,00', comm: '15% (R$ 6,75)', fit: '⭐⭐⭐⭐⭐' },
+        { name: 'Diário de Oração Criativo Espiral', cat: '📓 Papelaria (Shopee)', price: 'R$ 39,90', comm: '15% (R$ 5,98)', fit: '⭐⭐⭐⭐' }
       ]
     };
 
