@@ -91,16 +91,18 @@ def fal_generate(prompt, model="fal-ai/flux-pro/v1.1-ultra"):
 
 
 def add_overlay(input_path, output_path, verse, reference):
-    """Add verse text overlay using FFmpeg with chained drawtext filters to avoid Windows newline glyph box issue."""
-    font = "C\\:/Windows/Fonts/arialbd.ttf"
+    """Add verse text overlay using FFmpeg with premium editorial layout, large readable text, and background dimming."""
+    font_serif = "C\\:/Windows/Fonts/georgiab.ttf"
+    font_sans = "C\\:/Windows/Fonts/arialbd.ttf"
+    font_heavy = "C\\:/Windows/Fonts/ariblk.ttf"
 
-    # Word-wrap verse at ~28 chars
+    # Word-wrap verse at ~20 chars (ideal for large text on 9:16)
     words = verse.split()
     lines = []
     cur = ""
     for w in words:
         test = f"{cur} {w}".strip()
-        if len(test) > 28:
+        if len(test) > 20:
             lines.append(cur)
             cur = w
         else:
@@ -108,33 +110,41 @@ def add_overlay(input_path, output_path, verse, reference):
     if cur:
         lines.append(cur)
 
-    # Calculate positions
-    fontsize_verse = 44
-    line_spacing = 14
+    # Calculate Y positions dynamically
+    fontsize_verse = 76  # Large premium size
+    line_spacing = 24
     num_lines = len(lines)
     total_height = num_lines * fontsize_verse + (num_lines - 1) * line_spacing
 
     filters = [
-        "curves=master='0/0 0.25/0.15 0.7/0.55 1/0.85'"
+        "drawbox=x=0:y=0:w=iw:h=ih:color=black@0.35:t=fill",  # 35% Dark dimming overlay to make text pop
     ]
 
     # Draw each line of the verse
     for i, line in enumerate(lines):
         line_escaped = line.replace("'", "\u2019").replace(":", "\\:")
-        y_pos = f"(h-{total_height})/2-40+{i * (fontsize_verse + line_spacing)}"
+        # Y position centered with -120px offset to leave room for reference below
+        y_pos = f"(h-{total_height})/2-120+{i * (fontsize_verse + line_spacing)}"
         filters.append(
-            f"drawtext=fontfile='{font}':text='{line_escaped}':fontcolor=white:fontsize={fontsize_verse}:x=(w-text_w)/2:y={y_pos}:borderw=3:bordercolor=black@0.7"
+            f"drawtext=fontfile='{font_serif}':text='{line_escaped}':fontcolor=white:fontsize={fontsize_verse}:x=(w-text_w)/2:y={y_pos}:borderw=6:bordercolor=black@0.9"
         )
 
-    # Draw reference
-    ref_escaped = reference.replace(":", "\\:")
+    # Centered gold separator line below the verse text block
+    y_line = f"(h+{total_height})/2-70"
     filters.append(
-        f"drawtext=fontfile='{font}':text='{ref_escaped}':fontcolor=#FFD700:fontsize=26:x=(w-text_w)/2:y=(h/2)+100:borderw=2:bordercolor=black@0.5"
+        f"drawbox=x=(iw-160)/2:y={y_line}:w=160:h=4:color=#FFD700@0.8:t=fill"
     )
 
-    # Draw watermark
+    # Draw reference in gold below the separator
+    ref_escaped = reference.replace(":", "\\:")
+    y_ref = f"(h+{total_height})/2-10"
     filters.append(
-        f"drawtext=fontfile='{font}':text='@luzdapalavra':fontcolor=white@0.5:fontsize=18:x=(w-text_w)/2:y=h-100:borderw=1:bordercolor=black@0.3"
+        f"drawtext=fontfile='{font_heavy}':text='{ref_escaped}':fontcolor=#FFD700:fontsize=46:x=(w-text_w)/2:y={y_ref}:borderw=4:bordercolor=black@0.8"
+    )
+
+    # Draw watermark at the bottom
+    filters.append(
+        f"drawtext=fontfile='{font_sans}':text='@luzdapalavra':fontcolor=white@0.6:fontsize=34:x=(w-text_w)/2:y=h-200:borderw=2:bordercolor=black@0.5"
     )
 
     cmd = [
