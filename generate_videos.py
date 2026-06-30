@@ -196,45 +196,8 @@ def build_video(post_id, verse, reference, image_path, audio_path, music_path=No
         f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1080x1920:fps={fps}[kenburns]"
     )
 
-    # Dimming overlay + color grade
-    filters_overlay = [
-        "drawbox=x=0:y=0:w=iw:h=ih:color=black@0.30:t=fill",
-        "eq=contrast=1.12:brightness=-0.02:saturation=1.08",
-        "colorbalance=rs=0.03:gs=-0.02:bs=-0.05:rm=0.05:gm=0.02:bm=-0.03",
-    ]
-
-    # Text overlays — verse lines with timed appearance via `enable`
-    text_appear = intro_delay + 0.5
-
-    for i, line in enumerate(lines):
-        line_escaped = line.replace("'", "\u2019").replace(":", "\\:").replace('"', '\\"')
-        y_pos = f"(h-{total_height})/2-120+{i * (fontsize_verse + line_spacing)}"
-        line_start = text_appear + i * 0.2
-        filters_overlay.append(
-            f"drawtext=fontfile='{FONT_SERIF}':text='{line_escaped}':"
-            f"fontcolor=white:fontsize={fontsize_verse}:"
-            f"x=(w-text_w)/2:y={y_pos}:borderw=6:bordercolor=black@0.9:"
-            f"enable='gte(t\\,{line_start:.2f})'"
-        )
-
-    # Gold separator
-    sep_appear = text_appear + num_lines * 0.2 + 0.5
-    y_line = f"(h+{total_height})/2-70"
-    filters_overlay.append(
-        f"drawbox=x=(iw-160)/2:y={y_line}:w=160:h=4:color=#FFD700@0.8:t=fill:"
-        f"enable='gte(t\\,{sep_appear:.2f})'"
-    )
-
-    # Reference text
-    ref_escaped = reference.replace(":", "\\:")
-    ref_appear = sep_appear + 0.3
-    y_ref = f"(h+{total_height})/2-10"
-    filters_overlay.append(
-        f"drawtext=fontfile='{FONT_HEAVY}':text='{ref_escaped}':"
-        f"fontcolor=#FFD700:fontsize=46:"
-        f"x=(w-text_w)/2:y={y_ref}:borderw=4:bordercolor=black@0.8:"
-        f"enable='gte(t\\,{ref_appear:.2f})'"
-    )
+    # Overlay filters (since image already has text overlay burnt-in)
+    filters_overlay = []
 
     # CTA — appears near end
     cta_appear = total_duration - 4.0
@@ -243,12 +206,6 @@ def build_video(post_id, verse, reference, image_path, audio_path, music_path=No
         f"fontcolor=white:fontsize=36:"
         f"x=(w-text_w)/2:y=h-280:borderw=3:bordercolor=black@0.8:"
         f"enable='gte(t\\,{cta_appear:.2f})'"
-    )
-
-    # Watermark (always visible)
-    filters_overlay.append(
-        f"drawtext=fontfile='{FONT_SANS}':text='@luzdapalavra':fontcolor=white@0.5:fontsize=30:"
-        f"x=(w-text_w)/2:y=h-200:borderw=2:bordercolor=black@0.4"
     )
 
     # Film grain
