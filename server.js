@@ -37,6 +37,17 @@ app.get('/api/posts', (req, res) => {
   }
 });
 
+// API: list videos
+app.get('/api/videos', (req, res) => {
+  const videosFile = path.join(__dirname, 'data', 'videos.json');
+  try {
+    const videos = JSON.parse(fs.readFileSync(videosFile, 'utf8'));
+    res.json(videos);
+  } catch (e) {
+    res.json({ videos: [], error: e.message });
+  }
+});
+
 // API: list stoic market posts
 app.get('/api/stoic-posts', (req, res) => {
   const stoicFile = path.join(__dirname, 'data', 'stoic_posts.json');
