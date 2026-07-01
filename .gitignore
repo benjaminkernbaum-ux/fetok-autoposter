@@ -21,4 +21,7 @@ npm-debug.log
 public/videos/target_*
 public/images/target_frame_02.jpg
 public/images/target_frame_06.jpg
+public/images/analysis2/
+public/videos/target_audio_2.wav
+
 
