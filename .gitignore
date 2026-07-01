@@ -16,3 +16,9 @@ public/images/raw_*.jpg
 # Node
 node_modules/
 npm-debug.log
+
+# Target analysis files
+public/videos/target_*
+public/images/target_frame_02.jpg
+public/images/target_frame_06.jpg
+
